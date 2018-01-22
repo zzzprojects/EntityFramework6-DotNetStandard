@@ -2,7 +2,7 @@
 
 namespace System.Data.Entity.Internal
 {
-    using System.Data.Entity.Internal.ConfigFile;
+    //using System.Data.Entity.Internal.ConfigFile;
     using System.Data.Entity.Utilities;
 
     internal class QueryCacheConfig
@@ -10,29 +10,32 @@ namespace System.Data.Entity.Internal
         private const int DefaultSize = 1000;
         private const int DefaultCleaningIntervalInSeconds = 60;
 
-        private readonly EntityFrameworkSection _entityFrameworkSection;
+        //private readonly EntityFrameworkSection _entityFrameworkSection;
 
-        public QueryCacheConfig(EntityFrameworkSection entityFrameworkSection)
-        {
-            DebugCheck.NotNull(entityFrameworkSection);
+        //public QueryCacheConfig(EntityFrameworkSection entityFrameworkSection)
+        //{
+        //    DebugCheck.NotNull(entityFrameworkSection);
 
-            _entityFrameworkSection = entityFrameworkSection;
-        }
+        //    _entityFrameworkSection = entityFrameworkSection;
+        //}
 
         public int GetQueryCacheSize()
         {
-            var size = _entityFrameworkSection.QueryCache
-                .Size;
+            //var size = _entityFrameworkSection.QueryCache
+            //    .Size;
 
-            return (size != default(Int32)) ? size : DefaultSize;
+            //return (size != default(Int32)) ? size : DefaultSize;
+
+            return DefaultSize;
         }
 
         public int GetCleaningIntervalInSeconds()
         {
-            var cleaningIntervalInSeconds = _entityFrameworkSection.QueryCache
-                .CleaningIntervalInSeconds;
+            //var cleaningIntervalInSeconds = _entityFrameworkSection.QueryCache
+            //    .CleaningIntervalInSeconds;
 
-            return (cleaningIntervalInSeconds != default(Int32)) ? cleaningIntervalInSeconds : DefaultCleaningIntervalInSeconds;
+            //return (cleaningIntervalInSeconds != default(Int32)) ? cleaningIntervalInSeconds : DefaultCleaningIntervalInSeconds;
+            return DefaultCleaningIntervalInSeconds;
         }
     }
 }

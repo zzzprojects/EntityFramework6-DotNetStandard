@@ -46,8 +46,9 @@ namespace System.Data.Entity.Infrastructure
                 contextType,
                 reader =>
                 {
-                    var defaultSchema = GetDefaultSchema(contextType);
-                    return EdmxReader.Read(reader, defaultSchema);
+                    return default(DbCompiledModel);
+                    //var defaultSchema = GetDefaultSchema(contextType);
+                    //return EdmxReader.Read(reader, defaultSchema);
                 });
         }
 

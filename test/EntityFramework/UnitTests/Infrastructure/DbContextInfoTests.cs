@@ -30,28 +30,28 @@ namespace System.Data.Entity.Infrastructure
                 "connectionInfo",
                 Assert.Throws<ArgumentNullException>(() => new DbContextInfo(typeof(DbContext), (DbConnectionInfo)null)).ParamName);
 
-            Assert.Equal("contextType", Assert.Throws<ArgumentNullException>(() => new DbContextInfo(null, CreateEmptyConfig())).ParamName);
-            Assert.Equal(
-                "config", Assert.Throws<ArgumentNullException>(() => new DbContextInfo(typeof(DbContext), (Configuration)null)).ParamName);
+            //Assert.Equal("contextType", Assert.Throws<ArgumentNullException>(() => new DbContextInfo(null, CreateEmptyConfig())).ParamName);
+            //Assert.Equal(
+            //    "config", Assert.Throws<ArgumentNullException>(() => new DbContextInfo(typeof(DbContext), (Configuration)null)).ParamName);
 
-            Assert.Equal(
-                "contextType",
-                Assert.Throws<ArgumentNullException>(() => new DbContextInfo(null, CreateEmptyConfig(), new DbConnectionInfo("Name"))).
-                    ParamName);
-            Assert.Equal(
-                "config",
-                Assert.Throws<ArgumentNullException>(() => new DbContextInfo(typeof(DbContext), null, new DbConnectionInfo("Name"))).
-                    ParamName);
-            Assert.Equal(
-                "connectionInfo",
-                Assert.Throws<ArgumentNullException>(
-                    () => new DbContextInfo(typeof(DbContext), CreateEmptyConfig(), (DbConnectionInfo)null)).ParamName);
+            //Assert.Equal(
+            //    "contextType",
+            //    Assert.Throws<ArgumentNullException>(() => new DbContextInfo(null, CreateEmptyConfig(), new DbConnectionInfo("Name"))).
+            //        ParamName);
+            //Assert.Equal(
+            //    "config",
+            //    Assert.Throws<ArgumentNullException>(() => new DbContextInfo(typeof(DbContext), null, new DbConnectionInfo("Name"))).
+            //        ParamName);
+            //Assert.Equal(
+            //    "connectionInfo",
+            //    Assert.Throws<ArgumentNullException>(
+            //        () => new DbContextInfo(typeof(DbContext), CreateEmptyConfig(), (DbConnectionInfo)null)).ParamName);
 
 #pragma warning disable 618 // Obsolete ctor
-            Assert.Equal(
-                "connectionStringSettings",
-                Assert.Throws<ArgumentNullException>(
-                    () => new DbContextInfo(typeof(SimpleContext), (ConnectionStringSettingsCollection)null)).ParamName);
+            //Assert.Equal(
+            //    "connectionStringSettings",
+            //    Assert.Throws<ArgumentNullException>(
+            //        () => new DbContextInfo(typeof(SimpleContext), (ConnectionStringSettingsCollection)null)).ParamName);
 #pragma warning restore 618
 
             Assert.Equal(
@@ -65,18 +65,18 @@ namespace System.Data.Entity.Infrastructure
                 "modelProviderInfo",
                 Assert.Throws<ArgumentNullException>(() => new DbContextInfo(typeof(DbContext), (DbProviderInfo)null)).ParamName);
 
-            Assert.Equal(
-                "contextType",
-                Assert.Throws<ArgumentNullException>(
-                    () => new DbContextInfo(null, CreateEmptyConfig(), ProviderRegistry.SqlCe4_ProviderInfo)).ParamName);
-            Assert.Equal(
-                "config",
-                Assert.Throws<ArgumentNullException>(() => new DbContextInfo(typeof(DbContext), null, ProviderRegistry.SqlCe4_ProviderInfo))
-                    .ParamName);
-            Assert.Equal(
-                "modelProviderInfo",
-                Assert.Throws<ArgumentNullException>(() => new DbContextInfo(typeof(DbContext), CreateEmptyConfig(), (DbProviderInfo)null)).
-                    ParamName);
+            //Assert.Equal(
+            //    "contextType",
+            //    Assert.Throws<ArgumentNullException>(
+            //        () => new DbContextInfo(null, CreateEmptyConfig(), ProviderRegistry.SqlCe4_ProviderInfo)).ParamName);
+            //Assert.Equal(
+            //    "config",
+            //    Assert.Throws<ArgumentNullException>(() => new DbContextInfo(typeof(DbContext), null, ProviderRegistry.SqlCe4_ProviderInfo))
+            //        .ParamName);
+            //Assert.Equal(
+            //    "modelProviderInfo",
+            //    Assert.Throws<ArgumentNullException>(() => new DbContextInfo(typeof(DbContext), CreateEmptyConfig(), (DbProviderInfo)null)).
+            //        ParamName);
         }
 
         [Fact]
@@ -408,34 +408,34 @@ namespace System.Data.Entity.Infrastructure
             Assert.Equal("ShortNameDbContext", contextInfo.ConnectionStringName);
         }
 
-        [Fact]
-        public void Should_select_connection_string_from_supplied_candidates_normal_constructor()
-        {
-            Should_select_connection_string_from_supplied_candidates(typeof(ContextWithoutDefaultCtor));
-        }
+        //[Fact]
+        //public void Should_select_connection_string_from_supplied_candidates_normal_constructor()
+        //{
+        //    Should_select_connection_string_from_supplied_candidates(typeof(ContextWithoutDefaultCtor));
+        //}
 
-        [Fact]
-        public void Should_select_connection_string_from_supplied_candidates_init_constructor()
-        {
-            Should_select_connection_string_from_supplied_candidates(typeof(ContextWithoutDefaultCtorWithInit));
-        }
+        //[Fact]
+        //public void Should_select_connection_string_from_supplied_candidates_init_constructor()
+        //{
+        //    Should_select_connection_string_from_supplied_candidates(typeof(ContextWithoutDefaultCtorWithInit));
+        //}
 
-        private void Should_select_connection_string_from_supplied_candidates(Type contextType)
-        {
-            var connectionStringSettings
-                = new ConnectionStringSettingsCollection
-                {
-                    new ConnectionStringSettings("foo", "Initial Catalog=foo", "System.Data.SqlClient")
-                };
+//        private void Should_select_connection_string_from_supplied_candidates(Type contextType)
+//        {
+//            var connectionStringSettings
+//                = new ConnectionStringSettingsCollection
+//                {
+//                    new ConnectionStringSettings("foo", "Initial Catalog=foo", "System.Data.SqlClient")
+//                };
 
-#pragma warning disable 618 // Obsolete ctor
-            var contextInfo = new DbContextInfo(contextType, connectionStringSettings);
-#pragma warning restore 618
+////#pragma warning disable 618 // Obsolete ctor
+////            var contextInfo = new DbContextInfo(contextType, connectionStringSettings);
+////#pragma warning restore 618
 
-            Assert.Equal(DbConnectionStringOrigin.Configuration, contextInfo.ConnectionStringOrigin);
-            Assert.Equal("Initial Catalog=foo", contextInfo.ConnectionString);
-            Assert.Equal("foo", contextInfo.ConnectionStringName);
-        }
+//            Assert.Equal(DbConnectionStringOrigin.Configuration, contextInfo.ConnectionStringOrigin);
+//            Assert.Equal("Initial Catalog=foo", contextInfo.ConnectionString);
+//            Assert.Equal("foo", contextInfo.ConnectionStringName);
+//        }
 
         private class ContextWithConnectionString : DbContext
         {
@@ -858,157 +858,157 @@ namespace System.Data.Entity.Infrastructure
             }
         }
 
-        [Fact]
-        public void Should_obtain_DefaultConnectionFactory_from_supplied_config_but_this_can_be_overriden_normal_constructor()
-        {
-            Should_obtain_DefaultConnectionFactory_from_supplied_config_but_this_can_be_overriden(typeof(ContextWithoutDefaultCtor));
-        }
+        //[Fact]
+        //public void Should_obtain_DefaultConnectionFactory_from_supplied_config_but_this_can_be_overriden_normal_constructor()
+        //{
+        //    Should_obtain_DefaultConnectionFactory_from_supplied_config_but_this_can_be_overriden(typeof(ContextWithoutDefaultCtor));
+        //}
 
-        [Fact]
-        public void Should_obtain_DefaultConnectionFactory_from_supplied_config_but_this_can_be_overriden_init_constructor()
-        {
-            Should_obtain_DefaultConnectionFactory_from_supplied_config_but_this_can_be_overriden(typeof(ContextWithoutDefaultCtorWithInit));
-        }
+        //[Fact]
+        //public void Should_obtain_DefaultConnectionFactory_from_supplied_config_but_this_can_be_overriden_init_constructor()
+        //{
+        //    Should_obtain_DefaultConnectionFactory_from_supplied_config_but_this_can_be_overriden(typeof(ContextWithoutDefaultCtorWithInit));
+        //}
 
-        private void Should_obtain_DefaultConnectionFactory_from_supplied_config_but_this_can_be_overriden(Type contextType)
-        {
-            RunTestWithConnectionFactory(
-                Database.ResetDefaultConnectionFactory,
-                () =>
-                {
-                    var config = CreateEmptyConfig().AddDefaultConnectionFactory(
-                        typeof(FakeDbContextInfoConnectionFactory).FullName + ", EntityFramework.UnitTests",
-                        new string[0]);
+        //private void Should_obtain_DefaultConnectionFactory_from_supplied_config_but_this_can_be_overriden(Type contextType)
+        //{
+        //    RunTestWithConnectionFactory(
+        //        Database.ResetDefaultConnectionFactory,
+        //        () =>
+        //        {
+        //            var config = CreateEmptyConfig().AddDefaultConnectionFactory(
+        //                typeof(FakeDbContextInfoConnectionFactory).FullName + ", EntityFramework.UnitTests",
+        //                new string[0]);
 
-                    var contextInfo = new DbContextInfo(contextType, config);
+        //            var contextInfo = new DbContextInfo(contextType, config);
 
-                    Assert.IsType<FakeDbContextInfoConnectionFactory>(FunctionalTestsConfiguration.OriginalConnectionFactories.Last());
-                    Assert.Equal(DbConnectionStringOrigin.Convention, contextInfo.ConnectionStringOrigin);
-                    Assert.True(contextInfo.ConnectionString.Contains(@"Initial Catalog=foo"));
-                    Assert.Equal("System.Data.SqlClient", contextInfo.ConnectionProviderName);
-                    if (!DatabaseTestHelpers.IsSqlAzure(contextInfo.ConnectionString))
-                    {
-                        Assert.True(contextInfo.ConnectionString.Contains(@"Integrated Security=True"));
-                    }
+        //            Assert.IsType<FakeDbContextInfoConnectionFactory>(FunctionalTestsConfiguration.OriginalConnectionFactories.Last());
+        //            Assert.Equal(DbConnectionStringOrigin.Convention, contextInfo.ConnectionStringOrigin);
+        //            Assert.True(contextInfo.ConnectionString.Contains(@"Initial Catalog=foo"));
+        //            Assert.Equal("System.Data.SqlClient", contextInfo.ConnectionProviderName);
+        //            if (!DatabaseTestHelpers.IsSqlAzure(contextInfo.ConnectionString))
+        //            {
+        //                Assert.True(contextInfo.ConnectionString.Contains(@"Integrated Security=True"));
+        //            }
 
-                    if (!DatabaseTestHelpers.IsSqlAzure(contextInfo.ConnectionString)
-                        && !DatabaseTestHelpers.IsLocalDb(contextInfo.ConnectionString))
-                    {
-                        Assert.True(contextInfo.ConnectionString.Contains(@"Data Source=.\SQLEXPRESS"));
-                    }
-                });
-        }
+        //            if (!DatabaseTestHelpers.IsSqlAzure(contextInfo.ConnectionString)
+        //                && !DatabaseTestHelpers.IsLocalDb(contextInfo.ConnectionString))
+        //            {
+        //                Assert.True(contextInfo.ConnectionString.Contains(@"Data Source=.\SQLEXPRESS"));
+        //            }
+        //        });
+        //}
 
-        [Fact]
-        public void
-            Should_use_use_default_DefaultConnectionFactory_if_supplied_config_contains_no_DefaultConnectionFactory_normal_constructor()
-        {
-            Should_use_use_default_DefaultConnectionFactory_if_supplied_config_contains_no_DefaultConnectionFactory(
-                typeof(ContextWithoutDefaultCtor));
-        }
+        //[Fact]
+        //public void
+        //    Should_use_use_default_DefaultConnectionFactory_if_supplied_config_contains_no_DefaultConnectionFactory_normal_constructor()
+        //{
+        //    Should_use_use_default_DefaultConnectionFactory_if_supplied_config_contains_no_DefaultConnectionFactory(
+        //        typeof(ContextWithoutDefaultCtor));
+        //}
 
-        [Fact]
-        public void Should_use_use_default_DefaultConnectionFactory_if_supplied_config_contains_no_DefaultConnectionFactory_init_constructor
-            ()
-        {
-            Should_use_use_default_DefaultConnectionFactory_if_supplied_config_contains_no_DefaultConnectionFactory(
-                typeof(ContextWithoutDefaultCtorWithInit));
-        }
+        //[Fact]
+        //public void Should_use_use_default_DefaultConnectionFactory_if_supplied_config_contains_no_DefaultConnectionFactory_init_constructor
+        //    ()
+        //{
+        //    Should_use_use_default_DefaultConnectionFactory_if_supplied_config_contains_no_DefaultConnectionFactory(
+        //        typeof(ContextWithoutDefaultCtorWithInit));
+        //}
 
-        private void Should_use_use_default_DefaultConnectionFactory_if_supplied_config_contains_no_DefaultConnectionFactory(
-            Type contextType)
-        {
-            RunTestWithConnectionFactory(
-                Database.ResetDefaultConnectionFactory,
-                () =>
-                {
-                    var config = CreateEmptyConfig();
+        //private void Should_use_use_default_DefaultConnectionFactory_if_supplied_config_contains_no_DefaultConnectionFactory(
+        //    Type contextType)
+        //{
+        //    RunTestWithConnectionFactory(
+        //        Database.ResetDefaultConnectionFactory,
+        //        () =>
+        //        {
+        //            var config = CreateEmptyConfig();
 
-                    var contextInfo = new DbContextInfo(contextType, config);
+        //            var contextInfo = new DbContextInfo(contextType, config);
 
-                    Assert.Equal(DbConnectionStringOrigin.Convention, contextInfo.ConnectionStringOrigin);
-                    Assert.True(contextInfo.ConnectionString.Contains(@"Initial Catalog=foo"));
-                    Assert.Equal("System.Data.SqlClient", contextInfo.ConnectionProviderName);
-                    if (!DatabaseTestHelpers.IsSqlAzure(contextInfo.ConnectionString)
-                        && !DatabaseTestHelpers.IsLocalDb(contextInfo.ConnectionString))
-                    {
-                        Assert.True(contextInfo.ConnectionString.Contains(@"Data Source=.\SQLEXPRESS"));
-                    }
-                });
-        }
+        //            Assert.Equal(DbConnectionStringOrigin.Convention, contextInfo.ConnectionStringOrigin);
+        //            Assert.True(contextInfo.ConnectionString.Contains(@"Initial Catalog=foo"));
+        //            Assert.Equal("System.Data.SqlClient", contextInfo.ConnectionProviderName);
+        //            if (!DatabaseTestHelpers.IsSqlAzure(contextInfo.ConnectionString)
+        //                && !DatabaseTestHelpers.IsLocalDb(contextInfo.ConnectionString))
+        //            {
+        //                Assert.True(contextInfo.ConnectionString.Contains(@"Data Source=.\SQLEXPRESS"));
+        //            }
+        //        });
+        //}
 
-        [Fact]
-        public void Should_use_connectioin_string_from_supplied_config_even_if_DefaultConnectionFactory_is_also_present_normal_constructor()
-        {
-            Should_use_connectioin_string_from_supplied_config_even_if_DefaultConnectionFactory_is_also_present(
-                typeof(ContextWithoutDefaultCtor));
-        }
+        //[Fact]
+        //public void Should_use_connectioin_string_from_supplied_config_even_if_DefaultConnectionFactory_is_also_present_normal_constructor()
+        //{
+        //    Should_use_connectioin_string_from_supplied_config_even_if_DefaultConnectionFactory_is_also_present(
+        //        typeof(ContextWithoutDefaultCtor));
+        //}
 
-        [Fact]
-        public void Should_use_connectioin_string_from_supplied_config_even_if_DefaultConnectionFactory_is_also_present_init_constructor()
-        {
-            Should_use_connectioin_string_from_supplied_config_even_if_DefaultConnectionFactory_is_also_present(
-                typeof(ContextWithoutDefaultCtorWithInit));
-        }
+        //[Fact]
+        //public void Should_use_connectioin_string_from_supplied_config_even_if_DefaultConnectionFactory_is_also_present_init_constructor()
+        //{
+        //    Should_use_connectioin_string_from_supplied_config_even_if_DefaultConnectionFactory_is_also_present(
+        //        typeof(ContextWithoutDefaultCtorWithInit));
+        //}
 
-        private void Should_use_connectioin_string_from_supplied_config_even_if_DefaultConnectionFactory_is_also_present(Type contextType)
-        {
-            RunTestWithConnectionFactory(
-                Database.ResetDefaultConnectionFactory,
-                () =>
-                {
-                    var config =
-                        AddConnectionStrings(
-                            CreateEmptyConfig().AddDefaultConnectionFactory(
-                                typeof(FakeDbContextInfoConnectionFactory).FullName + ", EntityFramework.UnitTests",
-                                new string[0]));
+        //private void Should_use_connectioin_string_from_supplied_config_even_if_DefaultConnectionFactory_is_also_present(Type contextType)
+        //{
+        //    RunTestWithConnectionFactory(
+        //        Database.ResetDefaultConnectionFactory,
+        //        () =>
+        //        {
+        //            var config =
+        //                AddConnectionStrings(
+        //                    CreateEmptyConfig().AddDefaultConnectionFactory(
+        //                        typeof(FakeDbContextInfoConnectionFactory).FullName + ", EntityFramework.UnitTests",
+        //                        new string[0]));
 
-                    var contextInfo = new DbContextInfo(contextType, config);
+        //            var contextInfo = new DbContextInfo(contextType, config);
 
-                    Assert.Equal(DbConnectionStringOrigin.Configuration, contextInfo.ConnectionStringOrigin);
-                    Assert.Equal("Initial Catalog=foo", contextInfo.ConnectionString);
-                    Assert.Equal("foo", contextInfo.ConnectionStringName);
-                    Assert.Equal("System.Data.SqlClient", contextInfo.ConnectionProviderName);
-                });
-        }
+        //            Assert.Equal(DbConnectionStringOrigin.Configuration, contextInfo.ConnectionStringOrigin);
+        //            Assert.Equal("Initial Catalog=foo", contextInfo.ConnectionString);
+        //            Assert.Equal("foo", contextInfo.ConnectionStringName);
+        //            Assert.Equal("System.Data.SqlClient", contextInfo.ConnectionProviderName);
+        //        });
+        //}
 
-        [Fact]
-        public void Should_use_DefaultConnectionFactory_set_in_code_even_if_one_was_supplied_in_config_normal_constructor()
-        {
-            Should_use_DefaultConnectionFactory_set_in_code_even_if_one_was_supplied_in_config(typeof(ContextWithoutDefaultCtor));
-        }
+//        [Fact]
+//        public void Should_use_DefaultConnectionFactory_set_in_code_even_if_one_was_supplied_in_config_normal_constructor()
+//        {
+//            Should_use_DefaultConnectionFactory_set_in_code_even_if_one_was_supplied_in_config(typeof(ContextWithoutDefaultCtor));
+//        }
 
-        [Fact]
-        public void Should_use_DefaultConnectionFactory_set_in_code_even_if_one_was_supplied_in_config_init_constructor()
-        {
-            Should_use_DefaultConnectionFactory_set_in_code_even_if_one_was_supplied_in_config(typeof(ContextWithoutDefaultCtorWithInit));
-        }
+//        [Fact]
+//        public void Should_use_DefaultConnectionFactory_set_in_code_even_if_one_was_supplied_in_config_init_constructor()
+//        {
+//            Should_use_DefaultConnectionFactory_set_in_code_even_if_one_was_supplied_in_config(typeof(ContextWithoutDefaultCtorWithInit));
+//        }
 
-        public void Should_use_DefaultConnectionFactory_set_in_code_even_if_one_was_supplied_in_config(Type contextType)
-        {
-#pragma warning disable 612,618
-            RunTestWithConnectionFactory(
-                () => Database.DefaultConnectionFactory = new SqlConnectionFactory(),
-                () =>
-#pragma warning restore 612,618
-                {
-                    var config = CreateEmptyConfig().
-                        AddDefaultConnectionFactory(
-                            typeof(FakeDbContextInfoConnectionFactory).FullName + ", EntityFramework.UnitTests",
-                            new string[0]);
+//        public void Should_use_DefaultConnectionFactory_set_in_code_even_if_one_was_supplied_in_config(Type contextType)
+//        {
+//#pragma warning disable 612,618
+//            RunTestWithConnectionFactory(
+//                () => Database.DefaultConnectionFactory = new SqlConnectionFactory(),
+//                () =>
+//#pragma warning restore 612,618
+//                {
+//                    var config = CreateEmptyConfig().
+//                        AddDefaultConnectionFactory(
+//                            typeof(FakeDbContextInfoConnectionFactory).FullName + ", EntityFramework.UnitTests",
+//                            new string[0]);
 
-                    var contextInfo = new DbContextInfo(contextType, config);
+//                    var contextInfo = new DbContextInfo(contextType, config);
 
-                    Assert.Equal(DbConnectionStringOrigin.Convention, contextInfo.ConnectionStringOrigin);
-                    Assert.True(contextInfo.ConnectionString.Contains(@"Initial Catalog=foo"), "Connection string does not contain \"Initial Catalog=foo\", Actual ConnectionString: " + contextInfo.ConnectionString);
-                    Assert.Equal("System.Data.SqlClient", contextInfo.ConnectionProviderName);
-                    if (!DatabaseTestHelpers.IsSqlAzure(contextInfo.ConnectionString)
-                        && !DatabaseTestHelpers.IsLocalDb(contextInfo.ConnectionString))
-                    {
-                        Assert.True(contextInfo.ConnectionString.Contains(@"Data Source=.\SQLEXPRESS"), "Connection string does not target .\\SQLEXPRESS, Actual ConnectionString: " + contextInfo.ConnectionString);
-                    }
-                });
-        }
+//                    Assert.Equal(DbConnectionStringOrigin.Convention, contextInfo.ConnectionStringOrigin);
+//                    Assert.True(contextInfo.ConnectionString.Contains(@"Initial Catalog=foo"), "Connection string does not contain \"Initial Catalog=foo\", Actual ConnectionString: " + contextInfo.ConnectionString);
+//                    Assert.Equal("System.Data.SqlClient", contextInfo.ConnectionProviderName);
+//                    if (!DatabaseTestHelpers.IsSqlAzure(contextInfo.ConnectionString)
+//                        && !DatabaseTestHelpers.IsLocalDb(contextInfo.ConnectionString))
+//                    {
+//                        Assert.True(contextInfo.ConnectionString.Contains(@"Data Source=.\SQLEXPRESS"), "Connection string does not target .\\SQLEXPRESS, Actual ConnectionString: " + contextInfo.ConnectionString);
+//                    }
+//                });
+//        }
 
         [Fact]
         public void Setting_DefaultConnectionFactory_from_code_marks_DefaultConnectionFactory_as_changed_and_this_can_be_reset()
@@ -1112,93 +1112,93 @@ namespace System.Data.Entity.Infrastructure
             }
         }
 
-        [Fact]
-        public void Can_set_hard_coded_connection_from_supplied_config_normal_constructor()
-        {
-            Can_set_hard_coded_connection_from_supplied_config(typeof(SimpleContext));
-        }
+        //[Fact]
+        //public void Can_set_hard_coded_connection_from_supplied_config_normal_constructor()
+        //{
+        //    Can_set_hard_coded_connection_from_supplied_config(typeof(SimpleContext));
+        //}
 
-        [Fact]
-        public void Can_set_hard_coded_connection_from_supplied_config_init_constructor()
-        {
-            Can_set_hard_coded_connection_from_supplied_config(typeof(SimpleContextWithInit));
-        }
+        //[Fact]
+        //public void Can_set_hard_coded_connection_from_supplied_config_init_constructor()
+        //{
+        //    Can_set_hard_coded_connection_from_supplied_config(typeof(SimpleContextWithInit));
+        //}
 
-        private void Can_set_hard_coded_connection_from_supplied_config(Type contextType)
-        {
-            var connection = new DbConnectionInfo("GetMeFromSuppliedConfig");
-            var contextInfo = new DbContextInfo(
-                contextType,
-                CreateEmptyConfig().AddConnectionString(
-                    "GetMeFromSuppliedConfig", "Database=ConnectionFromSuppliedConfig", "System.Data.SqlClient"),
-                connection);
+        //private void Can_set_hard_coded_connection_from_supplied_config(Type contextType)
+        //{
+        //    var connection = new DbConnectionInfo("GetMeFromSuppliedConfig");
+        //    var contextInfo = new DbContextInfo(
+        //        contextType,
+        //        CreateEmptyConfig().AddConnectionString(
+        //            "GetMeFromSuppliedConfig", "Database=ConnectionFromSuppliedConfig", "System.Data.SqlClient"),
+        //        connection);
 
-            Assert.Equal(DbConnectionStringOrigin.DbContextInfo, contextInfo.ConnectionStringOrigin);
-            Assert.Equal("System.Data.SqlClient", contextInfo.ConnectionProviderName);
-            Assert.Equal("GetMeFromSuppliedConfig", contextInfo.ConnectionStringName);
-            Assert.True(contextInfo.IsConstructible);
+        //    Assert.Equal(DbConnectionStringOrigin.DbContextInfo, contextInfo.ConnectionStringOrigin);
+        //    Assert.Equal("System.Data.SqlClient", contextInfo.ConnectionProviderName);
+        //    Assert.Equal("GetMeFromSuppliedConfig", contextInfo.ConnectionStringName);
+        //    Assert.True(contextInfo.IsConstructible);
 
-            using (var context = contextInfo.CreateInstance())
-            {
-                Assert.Equal("ConnectionFromSuppliedConfig", context.Database.Connection.Database);
-                Assert.Equal(
-                    "ConnectionFromSuppliedConfig",
-                    ((EntityConnection)((IObjectContextAdapter)context).ObjectContext.Connection).StoreConnection.Database);
-            }
-        }
+        //    using (var context = contextInfo.CreateInstance())
+        //    {
+        //        Assert.Equal("ConnectionFromSuppliedConfig", context.Database.Connection.Database);
+        //        Assert.Equal(
+        //            "ConnectionFromSuppliedConfig",
+        //            ((EntityConnection)((IObjectContextAdapter)context).ObjectContext.Connection).StoreConnection.Database);
+        //    }
+        //}
 
-        [Fact]
-        public void Supplied_config_used_to_load_original_and_overriden_connection_normal_constructor()
-        {
-            Supplied_config_used_to_load_original_and_overriden_connection(typeof(ContextWithConnectionNameNotInAppConfigFile));
-        }
+        //[Fact]
+        //public void Supplied_config_used_to_load_original_and_overriden_connection_normal_constructor()
+        //{
+        //    Supplied_config_used_to_load_original_and_overriden_connection(typeof(ContextWithConnectionNameNotInAppConfigFile));
+        //}
 
-        [Fact]
-        public void Supplied_config_used_to_load_original_and_overriden_connection_init_constructor()
-        {
-            Supplied_config_used_to_load_original_and_overriden_connection(typeof(ContextWithConnectionNameNotInAppConfigFileWithInit));
-        }
+        //[Fact]
+        //public void Supplied_config_used_to_load_original_and_overriden_connection_init_constructor()
+        //{
+        //    Supplied_config_used_to_load_original_and_overriden_connection(typeof(ContextWithConnectionNameNotInAppConfigFileWithInit));
+        //}
 
-        private void Supplied_config_used_to_load_original_and_overriden_connection(Type contextType)
-        {
-            var connection = new DbConnectionInfo("GetMeFromSuppliedConfig");
-            var contextInfo = new DbContextInfo(
-                contextType,
-                CreateEmptyConfig()
-                    .AddConnectionString("GetMeFromSuppliedConfig", "Database=ConnectionFromSuppliedConfig", "System.Data.SqlClient")
-                    .AddConnectionString("WontFindMeInDefaultConfig", "Database=WontFindMeInDefaultConfig", "System.Data.SqlClient"),
-                connection);
+        //private void Supplied_config_used_to_load_original_and_overriden_connection(Type contextType)
+        //{
+        //    var connection = new DbConnectionInfo("GetMeFromSuppliedConfig");
+        //    var contextInfo = new DbContextInfo(
+        //        contextType,
+        //        CreateEmptyConfig()
+        //            .AddConnectionString("GetMeFromSuppliedConfig", "Database=ConnectionFromSuppliedConfig", "System.Data.SqlClient")
+        //            .AddConnectionString("WontFindMeInDefaultConfig", "Database=WontFindMeInDefaultConfig", "System.Data.SqlClient"),
+        //        connection);
 
-            using (var context = contextInfo.CreateInstance())
-            {
-                Assert.Equal("ConnectionFromSuppliedConfig", context.Database.Connection.Database);
-            }
-        }
+        //    using (var context = contextInfo.CreateInstance())
+        //    {
+        //        Assert.Equal("ConnectionFromSuppliedConfig", context.Database.Connection.Database);
+        //    }
+        //}
 
-        [Fact]
-        public void Exceptions_applying_new_connection_surfaced_and_context_type_is_unmapped_normal_constructor()
-        {
-            Exceptions_applying_new_connection_surfaced_and_context_type_is_unmapped(typeof(ContextWithConnectionNameNotInAppConfigFile));
-        }
+        //[Fact]
+        //public void Exceptions_applying_new_connection_surfaced_and_context_type_is_unmapped_normal_constructor()
+        //{
+        //    Exceptions_applying_new_connection_surfaced_and_context_type_is_unmapped(typeof(ContextWithConnectionNameNotInAppConfigFile));
+        //}
 
-        [Fact]
-        public void Exceptions_applying_new_connection_surfaced_and_context_type_is_unmapped_init_constructor()
-        {
-            Exceptions_applying_new_connection_surfaced_and_context_type_is_unmapped(
-                typeof(ContextWithConnectionNameNotInAppConfigFileWithInit));
-        }
+        //[Fact]
+        //public void Exceptions_applying_new_connection_surfaced_and_context_type_is_unmapped_init_constructor()
+        //{
+        //    Exceptions_applying_new_connection_surfaced_and_context_type_is_unmapped(
+        //        typeof(ContextWithConnectionNameNotInAppConfigFileWithInit));
+        //}
 
-        private void Exceptions_applying_new_connection_surfaced_and_context_type_is_unmapped(Type contextType)
-        {
-            var connection = new DbConnectionInfo("GetMeFromSuppliedConfig");
+        //private void Exceptions_applying_new_connection_surfaced_and_context_type_is_unmapped(Type contextType)
+        //{
+        //    var connection = new DbConnectionInfo("GetMeFromSuppliedConfig");
 
-            Assert.Equal(
-                Strings.DbContext_ConnectionStringNotFound("GetMeFromSuppliedConfig"),
-                Assert.Throws<InvalidOperationException>(
-                    () => new DbContextInfo(contextType, CreateEmptyConfig(), connection)).Message);
+        //    Assert.Equal(
+        //        Strings.DbContext_ConnectionStringNotFound("GetMeFromSuppliedConfig"),
+        //        Assert.Throws<InvalidOperationException>(
+        //            () => new DbContextInfo(contextType, CreateEmptyConfig(), connection)).Message);
 
-            Assert.Null(DbContextInfo.CurrentInfo);
-        }
+        //    Assert.Null(DbContextInfo.CurrentInfo);
+        //}
 
         [DbConfigurationType(typeof(FunctionalTestsConfiguration))]
         public class ContextWithConnectionNameNotInAppConfigFile : DbContext
@@ -1219,67 +1219,67 @@ namespace System.Data.Entity.Infrastructure
             }
         }
 
-        [Fact]
-        public void CreateInstance_should_use_passed_provider_info_when_building_model_even_when_config_is_passed_as_well_normal_constructor
-            ()
-        {
-            CreateInstance_should_use_passed_provider_info_when_building_model_even_when_config_is_passed_as_well(typeof(SimpleContext));
-        }
+        //[Fact]
+        //public void CreateInstance_should_use_passed_provider_info_when_building_model_even_when_config_is_passed_as_well_normal_constructor
+        //    ()
+        //{
+        //    CreateInstance_should_use_passed_provider_info_when_building_model_even_when_config_is_passed_as_well(typeof(SimpleContext));
+        //}
 
-        [Fact]
-        public void CreateInstance_should_use_passed_provider_info_when_building_model_even_when_config_is_passed_as_well_init_constructor()
-        {
-            CreateInstance_should_use_passed_provider_info_when_building_model_even_when_config_is_passed_as_well(
-                typeof(SimpleContextWithInit));
-        }
+        //[Fact]
+        //public void CreateInstance_should_use_passed_provider_info_when_building_model_even_when_config_is_passed_as_well_init_constructor()
+        //{
+        //    CreateInstance_should_use_passed_provider_info_when_building_model_even_when_config_is_passed_as_well(
+        //        typeof(SimpleContextWithInit));
+        //}
 
-        private void CreateInstance_should_use_passed_provider_info_when_building_model_even_when_config_is_passed_as_well(Type contextType)
-        {
-            var config = AddConnectionStrings(
-                CreateEmptyConfig().AddDefaultConnectionFactory(
-                    typeof(FakeDbContextInfoConnectionFactory).FullName + ", EntityFramework.UnitTests",
-                    new string[0]));
+        //private void CreateInstance_should_use_passed_provider_info_when_building_model_even_when_config_is_passed_as_well(Type contextType)
+        //{
+        //    var config = AddConnectionStrings(
+        //        CreateEmptyConfig().AddDefaultConnectionFactory(
+        //            typeof(FakeDbContextInfoConnectionFactory).FullName + ", EntityFramework.UnitTests",
+        //            new string[0]));
 
-            var contextInfo = new DbContextInfo(contextType, config, ProviderRegistry.SqlCe4_ProviderInfo);
+        //    var contextInfo = new DbContextInfo(contextType, config, ProviderRegistry.SqlCe4_ProviderInfo);
 
-            Assert.Equal(ProviderRegistry.SqlCe4_ProviderInfo.ProviderInvariantName, contextInfo.ConnectionProviderName);
-            Assert.Equal(string.Empty, contextInfo.ConnectionString);
+        //    Assert.Equal(ProviderRegistry.SqlCe4_ProviderInfo.ProviderInvariantName, contextInfo.ConnectionProviderName);
+        //    Assert.Equal(string.Empty, contextInfo.ConnectionString);
 
-            using (var context = contextInfo.CreateInstance())
-            {
-                var objectContext = ((IObjectContextAdapter)context).ObjectContext;
+        //    using (var context = contextInfo.CreateInstance())
+        //    {
+        //        var objectContext = ((IObjectContextAdapter)context).ObjectContext;
 
-                Assert.NotNull(objectContext);
-                Assert.Equal("SqlCeConnection", ((EntityConnection)objectContext.Connection).StoreConnection.GetType().Name);
-            }
-        }
+        //        Assert.NotNull(objectContext);
+        //        Assert.Equal("SqlCeConnection", ((EntityConnection)objectContext.Connection).StoreConnection.GetType().Name);
+        //    }
+        //}
 
-        [Fact]
-        public void CreateInstance_should_use_passed_connection_string_even_when_provider_info_is_passed_as_well_normal_constructor()
-        {
-            CreateInstance_should_use_passed_connection_string_even_when_provider_info_is_passed_as_well(typeof(ContextWithoutDefaultCtor));
-        }
+        //[Fact]
+        //public void CreateInstance_should_use_passed_connection_string_even_when_provider_info_is_passed_as_well_normal_constructor()
+        //{
+        //    CreateInstance_should_use_passed_connection_string_even_when_provider_info_is_passed_as_well(typeof(ContextWithoutDefaultCtor));
+        //}
 
-        [Fact]
-        public void CreateInstance_should_use_passed_connection_string_even_when_provider_info_is_passed_as_well_init_constructor()
-        {
-            CreateInstance_should_use_passed_connection_string_even_when_provider_info_is_passed_as_well(
-                typeof(ContextWithoutDefaultCtorWithInit));
-        }
+        //[Fact]
+        //public void CreateInstance_should_use_passed_connection_string_even_when_provider_info_is_passed_as_well_init_constructor()
+        //{
+        //    CreateInstance_should_use_passed_connection_string_even_when_provider_info_is_passed_as_well(
+        //        typeof(ContextWithoutDefaultCtorWithInit));
+        //}
 
-        private void CreateInstance_should_use_passed_connection_string_even_when_provider_info_is_passed_as_well(Type contextType)
-        {
-            var config = AddConnectionStrings(
-                CreateEmptyConfig().AddDefaultConnectionFactory(
-                    typeof(FakeDbContextInfoConnectionFactory).FullName + ", EntityFramework.UnitTests",
-                    new string[0]));
+        //private void CreateInstance_should_use_passed_connection_string_even_when_provider_info_is_passed_as_well(Type contextType)
+        //{
+        //    var config = AddConnectionStrings(
+        //        CreateEmptyConfig().AddDefaultConnectionFactory(
+        //            typeof(FakeDbContextInfoConnectionFactory).FullName + ", EntityFramework.UnitTests",
+        //            new string[0]));
 
-            var contextInfo = new DbContextInfo(contextType, config, ProviderRegistry.Sql2008_ProviderInfo);
+        //    var contextInfo = new DbContextInfo(contextType, config, ProviderRegistry.Sql2008_ProviderInfo);
 
-            Assert.Equal(DbConnectionStringOrigin.Configuration, contextInfo.ConnectionStringOrigin);
-            Assert.Equal("Initial Catalog=foo", contextInfo.ConnectionString);
-            Assert.Equal("foo", contextInfo.ConnectionStringName);
-        }
+        //    Assert.Equal(DbConnectionStringOrigin.Configuration, contextInfo.ConnectionStringOrigin);
+        //    Assert.Equal("Initial Catalog=foo", contextInfo.ConnectionString);
+        //    Assert.Equal("foo", contextInfo.ConnectionStringName);
+        //}
 
         [Fact] // CodePlex 291, 1316
         public void CreateInstance_should_not_cause_database_initializer_to_run_even_if_context_consturctor_would_cause_it()

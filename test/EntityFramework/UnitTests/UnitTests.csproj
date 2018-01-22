@@ -134,24 +134,6 @@
       <SubType>Designer</SubType>
     </None>
     <Compile Include="AssemblyTests.cs" />
-    <Compile Include="CommandLine\CommandLineWriteLineColorTests.cs" />
-    <Compile Include="CommandLine\CommandLineArgumentInvalidExceptionTests.cs" />
-    <Compile Include="CommandLine\CommandLineExceptionTests.cs" />
-    <Compile Include="CommandLine\CommandLineParameterAttributeTests.cs" />
-    <Compile Include="CommandLine\CommandLineRequiredArgumentMissingExceptionTests.cs" />
-    <Compile Include="CommandLine\TestHelpers\BadPositionArgMissingTwo.cs" />
-    <Compile Include="CommandLine\TestHelpers\BadPositionArgNoOne.cs" />
-    <Compile Include="CommandLine\CommandLineArgumentsAttributeTest.cs" />
-    <Compile Include="CommandLine\CommandLineTest.cs" />
-    <Compile Include="CommandLine\TestHelpers\InferredTestArgs.cs" />
-    <Compile Include="CommandLine\TestHelpers\PropWithNoCommandName.cs" />
-    <Compile Include="CommandLine\TestHelpers\TestArgs.cs" />
-    <Compile Include="CommandLine\TestHelpers\TestCommandEnvironment.cs" />
-    <Compile Include="CommandLine\TestHelpers\ThreeRequiredPositionArgs.cs" />
-    <Compile Include="CommandLine\TestHelpers\TwoPropsWithSameSwitch.cs" />
-    <Compile Include="CommandLine\TestHelpers\XCopyCommandArgs.cs" />
-    <Compile Include="ConnectionFactoryConfig\ConnectionFactoryConfigTests.cs" />
-    <Compile Include="ConnectionFactoryConfig\ReferenceRemoverTests.cs" />
     <Compile Include="Core\Common\CommandTrees\DbCommandTreeTests.cs" />
     <Compile Include="Core\Common\CommandTrees\DbExpressionBuilderTests.cs" />
     <Compile Include="Core\Common\CommandTrees\DbExpressionVisitorTests.cs" />
@@ -319,7 +301,6 @@
     <Compile Include="Infrastructure\DefaultDbModelStoreTests.cs" />
     <Compile Include="Infrastructure\DependencyResolution\TransactionContextInitializerResolverTests.cs" />
     <Compile Include="Infrastructure\DependencyResolution\TransactionHandlerResolverTests.cs" />
-    <Compile Include="Infrastructure\Design\AppConfigReaderTests.cs" />
     <Compile Include="Infrastructure\Interception\DatabaseLoggerTests.cs" />
     <Compile Include="Infrastructure\Interception\DbTransactionDispatcherTests.cs" />
     <Compile Include="Infrastructure\Interception\EnlistTransactionInterceptionContextTests.cs" />
@@ -349,7 +330,6 @@
     <Compile Include="Infrastructure\DbUpdateExceptionTests.cs" />
     <Compile Include="Infrastructure\DefaultDbProviderFactoryServiceTests.cs" />
     <Compile Include="Infrastructure\DefaultManifestTokenResolverTests.cs" />
-    <Compile Include="Infrastructure\DependencyResolution\AppConfigDependencyResolverTests.cs" />
     <Compile Include="Infrastructure\DependencyResolution\CachingDependencyResolverTests.cs" />
     <Compile Include="Infrastructure\DependencyResolution\ClrTypeAnnotationSerializerTests.cs" />
     <Compile Include="Infrastructure\DependencyResolution\CompositeResolverTests.cs" />
@@ -371,10 +351,6 @@
     <Compile Include="Infrastructure\DependencyResolution\RootDependencyResolverTests.cs" />
     <Compile Include="Infrastructure\DependencyResolution\SingletonDependencyResolverTests.cs" />
     <Compile Include="Infrastructure\DependencyResolution\WrappingDependencyResolverTests.cs" />
-    <Compile Include="Infrastructure\Design\ExecutorTests.cs" />
-    <Compile Include="Infrastructure\Design\ForwardingProxyTests.cs" />
-    <Compile Include="Infrastructure\Design\HandlerBaseTests.cs" />
-    <Compile Include="Infrastructure\Design\WrappedHandlerTests.cs" />
     <Compile Include="Infrastructure\Interception\DispatchersTests.cs" />
     <Compile Include="Infrastructure\Interception\EntityConnectionDispatcherTests.cs" />
     <Compile Include="Infrastructure\DbExecutionStrategyTests.cs" />
@@ -398,13 +374,9 @@
     <Compile Include="Infrastructure\Transactions\TransactionContextInitializerTests.cs" />
     <Compile Include="Infrastructure\Transactions\TransactionRowTests.cs" />
     <Compile Include="Internal\CommandTracerTests.cs" />
-    <Compile Include="Internal\ConfigFile\InterceptorsCollectionTests.cs" />
-    <Compile Include="Internal\ConfigFile\InterceptorElementTests.cs" />
-    <Compile Include="Internal\ConfigFile\ProviderCollectionTests.cs" />
     <Compile Include="Internal\DatabaseTableCheckerTests.cs" />
     <Compile Include="Internal\DbHelpersTests.cs" />
     <Compile Include="Internal\EagerInternalContextTests.cs" />
-    <Compile Include="Internal\ContextConfigTests.cs" />
     <Compile Include="Internal\InitializerConfigTests.cs" />
     <Compile Include="Internal\InterceptableDbCommandTests.cs" />
     <Compile Include="Internal\InternalCollectionEntryTests.cs" />
@@ -424,25 +396,6 @@
     <Compile Include="Internal\TestHelpers\NavigationEntryMetadataForMock.cs" />
     <Compile Include="Internal\TestHelpers\PropertyEntryMetadataForMock.cs" />
     <Compile Include="Internal\ThrowingMonitorTests.cs" />
-    <Compile Include="Migrations\AddMigrationCommandTests.cs" />
-    <Compile Include="Migrations\AnnotationValuesTests.cs" />
-    <Compile Include="Migrations\Builders\ParameterBuilderTests.cs" />
-    <Compile Include="Migrations\Infrastructure\MigratorLoggingDecoratorTests.cs" />
-    <Compile Include="Migrations\Infrastructure\DynamicToFunctionModificationCommandConverterTests.cs" />
-    <Compile Include="Migrations\Infrastructure\FunctionsModel.cs" />
-    <Compile Include="Migrations\Infrastructure\ModificationCommandTreeGeneratorTests.cs" />
-    <Compile Include="Migrations\Model\AlterProcedureOperationTests.cs" />
-    <Compile Include="Migrations\Model\AlterTableOperationTests.cs" />
-    <Compile Include="Migrations\Model\RenameIndexOperationTests.cs" />
-    <Compile Include="Migrations\Model\UpdateDatabaseOperationTests.cs" />
-    <Compile Include="Migrations\Model\MoveProcedureOperationTests.cs" />
-    <Compile Include="Migrations\Model\RenameProcedureOperationTests.cs" />
-    <Compile Include="Migrations\Model\ParameterModelTests.cs" />
-    <Compile Include="Migrations\Model\DropProcedureOperationTests.cs" />
-    <Compile Include="Migrations\Model\CreateProcedureOperationTests.cs" />
-    <Compile Include="Migrations\Utilities\IndentedTextWriterTests.cs" />
-    <Compile Include="Migrations\Utilities\MigrationsConfigurationFinderTests.cs" />
-    <Compile Include="Migrations\Utilities\PartialTrustMigrationsConfigurationFinderTests.cs" />
     <Compile Include="ModelConfiguration\Configuration\ConfigurationTypeActivatorTests.cs" />
     <Compile Include="ModelConfiguration\Configuration\ConfigurationTypeFilterTests.cs" />
     <Compile Include="ModelConfiguration\Configuration\ConfigurationTypesFinderTests.cs" />
@@ -494,10 +447,6 @@
     <Compile Include="QueryableExtensionsTests.cs" />
     <Compile Include="Spatial\DefaultServicesTests.cs" />
     <Compile Include="Spatial\SpatialHelpersTests.cs" />
-    <Compile Include="SqlServerCompact\SqlCeProviderServicesTests.cs" />
-    <Compile Include="SqlServerCompact\SqlGen\DmlSqlGeneratorTests.cs" />
-    <Compile Include="SqlServerCompact\SqlGen\SqlGeneratorTests.cs" />
-    <Compile Include="SqlServerCompact\SqlGen\SqlStringBuilderTests.cs" />
     <Compile Include="SqlServer\DefaultSqlExecutionStrategyTests.cs" />
     <Compile Include="SqlServer\SqlAzureExecutionStrategyTests.cs" />
     <Compile Include="SqlServer\SqlAzureRetriableExceptionDetectorTests.cs" />
@@ -528,8 +477,6 @@
     <Compile Include="Core\Objects\DataClasses\EntityReferenceTests.cs" />
     <Compile Include="Core\Objects\DataClasses\RelatedEndTests.cs" />
     <Compile Include="Core\Objects\ObjectContextTests.cs" />
-    <Compile Include="Internal\ConfigFile\EntityFrameworkSectionTests.cs" />
-    <Compile Include="Internal\ConfigFile\ProviderElementTests.cs" />
     <Compile Include="Internal\DatabaseCreatorTests.cs" />
     <Compile Include="Internal\DefaultModelCacheKeyFactoryTests.cs" />
     <Compile Include="Internal\DefaultModelCacheKeyTests.cs" />
@@ -542,20 +489,6 @@
     <Compile Include="Internal\TestHelpers\InternalContextForMock`.cs" />
     <Compile Include="Internal\TestHelpers\InternalReferenceEntryForMock.cs" />
     <Compile Include="Internal\TestHelpers\MockHelper.cs" />
-    <Compile Include="Migrations\Builders\ColumnBuilderTests.cs" />
-    <Compile Include="Migrations\Builders\TableBuilderTests.cs" />
-    <Compile Include="Migrations\DbMigrationsConfigurationTests.cs" />
-    <Compile Include="Migrations\DbMigrationsConfiguration`Tests.cs" />
-    <Compile Include="Migrations\DbMigrationTests.cs" />
-    <Compile Include="Migrations\DbMigratorTests.cs" />
-    <Compile Include="Migrations\Design\CSharpMigrationCodeGeneratorTests.cs" />
-    <Compile Include="Migrations\Design\MigrationCodeGeneratorTests.cs" />
-    <Compile Include="Migrations\Design\ToolingExceptionTests.cs" />
-    <Compile Include="Migrations\Design\VisualBasicMigrationCodeGeneratorTests.cs" />
-    <Compile Include="Migrations\Edm\ModelCompressorTests.cs" />
-    <Compile Include="Internal\ConfigFile\ParameterCollectionTests.cs" />
-    <Compile Include="Internal\ConfigFile\ParameterElementTests.cs" />
-    <Compile Include="Migrations\Utilities\MigrationWriterTests.cs" />
     <Compile Include="Spatial\DbSpatialDataReaderTests.cs" />
     <Compile Include="Spatial\DbSpatialServicesTests.cs" />
     <Compile Include="Spatial\SpatialServicesLoaderTests.cs" />
@@ -591,32 +524,7 @@
     <Compile Include="Utilities\TypeFinderTests.cs" />
     <Compile Include="Utilities\XContainerExtensionsTests.cs" />
     <Compile Include="Utilities\XDocumentExtensionsTests.cs" />
-    <Compile Include="Migrations\History\HistoryRepositoryTests.cs" />
-    <Compile Include="Migrations\DbSetMigrationsExtensionsTests.cs" />
-    <Compile Include="Migrations\Infrastructure\EdmModelDifferTests.cs" />
-    <Compile Include="Migrations\Infrastructure\MigrationAssemblyTests.cs" />
-    <Compile Include="Migrations\Infrastructure\MigratorScriptingDecoratorTests.cs" />
-    <Compile Include="Migrations\Model\AddColumnOperationTests.cs" />
-    <Compile Include="Migrations\Model\AddForeignKeyOperationTests.cs" />
-    <Compile Include="Migrations\Model\AddPrimaryKeyOperationTests.cs" />
-    <Compile Include="Migrations\Model\AlterColumnOperationTests.cs" />
-    <Compile Include="Migrations\Model\ColumnModelTests.cs" />
-    <Compile Include="Migrations\Model\CreateIndexOperationTests.cs" />
-    <Compile Include="Migrations\Model\CreateTableOperationTests.cs" />
-    <Compile Include="Migrations\Model\HistoryOperationTests.cs" />
-    <Compile Include="Migrations\Model\DropColumnOperationTests.cs" />
-    <Compile Include="Migrations\Model\DropForeignKeyOperationTests.cs" />
-    <Compile Include="Migrations\Model\DropIndexOperationTests.cs" />
-    <Compile Include="Migrations\Model\DropPrimaryKeyOperationTests.cs" />
-    <Compile Include="Migrations\Model\DropTableOperationTests.cs" />
-    <Compile Include="Migrations\Model\MoveTableOperationTests.cs" />
-    <Compile Include="Migrations\Model\RenameColumnOperationTests.cs" />
-    <Compile Include="Migrations\Model\RenameTableOperationTests.cs" />
-    <Compile Include="Migrations\Model\SqlOperationTests.cs" />
-    <Compile Include="SqlServerCompact\SqlCeMigrationSqlGeneratorTests.cs" />
     <Compile Include="SqlServer\SqlServerMigrationSqlGeneratorTests.cs" />
-    <Compile Include="Migrations\Utilities\ConfigurationFileUpdaterTests.cs" />
-    <Compile Include="Migrations\Utilities\DatabaseCreatorTests.cs" />
     <Compile Include="Spatial\DbGeographyTests.cs" />
     <Compile Include="Spatial\DbGeometryTests.cs" />
     <Compile Include="SqlServer\IDbSpatialValueTests.cs" />
@@ -633,9 +541,6 @@
     <Compile Include="SqlServer\Utilities\TypeUsageExtensionsTests.cs" />
     <Compile Include="Utilities\DynamicEqualityComparerLinqIntegrationTests.cs" />
     <Compile Include="Utilities\DynamicEqualityComparerTests.cs" />
-    <Compile Include="Migrations\Utilities\EmptyContextTests.cs" />
-    <Compile Include="Migrations\Utilities\TemplateProcessorTests.cs" />
-    <Compile Include="Migrations\Utilities\UtcNowGeneratorTests.cs" />
     <Compile Include="ModelConfiguration\EntityTypeConfigurationTests.cs" />
     <Compile Include="TestHelpers\Mock\MockAssembly.cs" />
     <Compile Include="TestHelpers\Mock\MockPropertyInfo.cs" />
@@ -747,7 +652,6 @@
     <Compile Include="ModelConfiguration\Utilities\PropertyPathTests.cs" />
     <Compile Include="Utilities\TypeExtensionsTests.cs" />
     <Compile Include="Properties\InternalsVisibleTo.cs" />
-    <Compile Include="Internal\AppConfigTests.cs" />
     <Compile Include="Internal\ClonedObjectContextTests.cs" />
     <Compile Include="Infrastructure\DbUpdateConcurrencyExceptionTests.cs" />
     <Compile Include="Infrastructure\DbConnectionInfoTests.cs" />
@@ -835,19 +739,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\EntityFramework.PowerShell.Utility\EntityFramework.PowerShell.Utility.csproj">
-      <Project>{73636c32-5633-4d12-aa7b-88dcc26acdb7}</Project>
-      <Name>EntityFramework.PowerShell.Utility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\src\EntityFramework.PowerShell\EntityFramework.PowerShell.csproj">
-      <Project>{1F3817E9-8070-4429-B134-9674698DD78C}</Project>
-      <Name>EntityFramework.PowerShell</Name>
-      <Aliases>global</Aliases>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\src\EntityFramework.SqlServerCompact\EntityFramework.SqlServerCompact.csproj">
-      <Project>{1ef9c524-7122-4677-b111-dd14bb2a9ea2}</Project>
-      <Name>EntityFramework.SqlServerCompact</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\src\EntityFramework.SqlServer\EntityFramework.SqlServer.csproj">
       <Project>{6f4bb80b-5f74-44d3-a77f-0025dfa48c1a}</Project>
       <Name>EntityFramework.SqlServer</Name>
@@ -855,11 +746,6 @@
     <ProjectReference Include="..\..\..\src\EntityFramework\EntityFramework.csproj">
       <Project>{E06D1C12-EFE8-4413-A15C-AE01FC158F2F}</Project>
       <Name>EntityFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\src\Migrate\Migrate.csproj">
-      <Project>{0D77532F-7478-4BBB-9790-95F52A3DADDA}</Project>
-      <Name>Migrate</Name>
-      <Aliases>migrate</Aliases>
     </ProjectReference>
     <ProjectReference Include="..\FunctionalTests.Transitional\FunctionalTests.Transitional.csproj">
       <Project>{3d65611f-e8fb-4a33-9196-7836969d6378}</Project>

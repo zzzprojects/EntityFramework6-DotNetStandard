@@ -158,10 +158,6 @@
       <Project>{e06d1c12-efe8-4413-a15c-ae01fc158f2f}</Project>
       <Name>EntityFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FunctionalTests.Transitional\FunctionalTests.Transitional.csproj">
-      <Project>{3d65611f-e8fb-4a33-9196-7836969d6378}</Project>
-      <Name>FunctionalTests.Transitional</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

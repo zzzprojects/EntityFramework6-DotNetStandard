@@ -23,11 +23,11 @@ namespace System.Data.Entity.Internal
                 return true;
             }
 
-            var model = internalContext.QueryForModel(existenceState);
-            if (model != null)
-            {
-                return internalContext.ModelMatches(model);
-            }
+            //var model = internalContext.QueryForModel(existenceState);
+            //if (model != null)
+            //{
+            //    return internalContext.ModelMatches(model);
+            //}
 
             // Migrations history was not found in the database so fall back to doing a model hash compare
             // to deal with databases created using EF 4.1 and 4.2.

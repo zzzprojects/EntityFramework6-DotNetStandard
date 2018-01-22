@@ -8,7 +8,7 @@ namespace System.Data.Entity.Internal
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Infrastructure.DependencyResolution;
     using System.Data.Entity.Infrastructure.Interception;
-    using System.Data.Entity.Internal.ConfigFile;
+    //using System.Data.Entity.Internal.ConfigFile;
     using System.Data.Entity.Resources;
     using System.Data.Entity.Utilities;
     using System.Linq;
@@ -21,9 +21,9 @@ namespace System.Data.Entity.Internal
         public const string EFSectionName = "entityFramework";
 
         private static readonly AppConfig _defaultInstance = new AppConfig();
-        private readonly KeyValueConfigurationCollection _appSettings;
-        private readonly ConnectionStringSettingsCollection _connectionStrings;
-        private readonly EntityFrameworkSection _entityFrameworkSettings;
+        //private readonly KeyValueConfigurationCollection _appSettings;
+        //private readonly ConnectionStringSettingsCollection _connectionStrings;
+        //private readonly EntityFrameworkSection _entityFrameworkSettings;
 
         private readonly Lazy<IDbConnectionFactory> _defaultConnectionFactory;
 
@@ -31,93 +31,93 @@ namespace System.Data.Entity.Internal
             new Lazy<IDbConnectionFactory>(() => null, isThreadSafe: true);
 
         private readonly ProviderServicesFactory _providerServicesFactory;
-        private readonly Lazy<IList<NamedDbProviderService>> _providerServices;
+        //private readonly Lazy<IList<NamedDbProviderService>> _providerServices;
 
-        // <summary>
-        // Initializes a new instance of AppConfig based on supplied configuration
-        // </summary>
-        // <param name="configuration"> Configuration to load settings from </param>
-        public AppConfig(Configuration configuration)
-            : this(
-                configuration.ConnectionStrings.ConnectionStrings,
-                configuration.AppSettings.Settings,
-                (EntityFrameworkSection)configuration.GetSection(EFSectionName))
-        {
-            DebugCheck.NotNull(configuration);
-        }
+        //// <summary>
+        //// Initializes a new instance of AppConfig based on supplied configuration
+        //// </summary>
+        //// <param name="configuration"> Configuration to load settings from </param>
+        //public AppConfig(Configuration configuration)
+        //    : this(
+        //        configuration.ConnectionStrings.ConnectionStrings,
+        //        configuration.AppSettings.Settings,
+        //        (EntityFrameworkSection)configuration.GetSection(EFSectionName))
+        //{
+        //    DebugCheck.NotNull(configuration);
+        //}
 
-        // <summary>
-        // Initializes a new instance of AppConfig based on supplied connection strings
-        // The default configuration for database initializers and default connection factory will be used
-        // </summary>
-        // <param name="connectionStrings"> Connection strings to be used </param>
-        public AppConfig(ConnectionStringSettingsCollection connectionStrings)
-            : this(connectionStrings, null, null)
-        {
-            DebugCheck.NotNull(connectionStrings);
-        }
+        //// <summary>
+        //// Initializes a new instance of AppConfig based on supplied connection strings
+        //// The default configuration for database initializers and default connection factory will be used
+        //// </summary>
+        //// <param name="connectionStrings"> Connection strings to be used </param>
+        //public AppConfig(ConnectionStringSettingsCollection connectionStrings)
+        //    : this(connectionStrings, null, null)
+        //{
+        //    DebugCheck.NotNull(connectionStrings);
+        //}
 
-        // <summary>
-        // Initializes a new instance of AppConfig based on the <see cref="ConfigurationManager" /> for the AppDomain
-        // </summary>
-        // <remarks>
-        // Use AppConfig.DefaultInstance instead of this constructor
-        // </remarks>
-        private AppConfig()
-            : this(
-                ConfigurationManager.ConnectionStrings,
-                Convert(ConfigurationManager.AppSettings),
-                (EntityFrameworkSection)ConfigurationManager.GetSection(EFSectionName))
-        {
-        }
+        //// <summary>
+        //// Initializes a new instance of AppConfig based on the <see cref="ConfigurationManager" /> for the AppDomain
+        //// </summary>
+        //// <remarks>
+        //// Use AppConfig.DefaultInstance instead of this constructor
+        //// </remarks>
+        //private AppConfig()
+        //    : this(
+        //        ConfigurationManager.ConnectionStrings,
+        //        Convert(ConfigurationManager.AppSettings),
+        //        (EntityFrameworkSection)ConfigurationManager.GetSection(EFSectionName))
+        //{
+        //}
 
         internal AppConfig(
-            ConnectionStringSettingsCollection connectionStrings,
-            KeyValueConfigurationCollection appSettings,
-            EntityFrameworkSection entityFrameworkSettings,
+            //ConnectionStringSettingsCollection connectionStrings,
+            //KeyValueConfigurationCollection appSettings,
+            //EntityFrameworkSection entityFrameworkSettings,
             ProviderServicesFactory providerServicesFactory = null)
         {
-            DebugCheck.NotNull(connectionStrings);
+            //DebugCheck.NotNull(connectionStrings);
 
-            _connectionStrings = connectionStrings;
-            _appSettings = appSettings ?? new KeyValueConfigurationCollection();
-            _entityFrameworkSettings = entityFrameworkSettings ?? new EntityFrameworkSection();
+            //_connectionStrings = connectionStrings;
+            //_appSettings = appSettings ?? new KeyValueConfigurationCollection();
+            //_entityFrameworkSettings = entityFrameworkSettings ?? new EntityFrameworkSection();
             _providerServicesFactory = providerServicesFactory ?? new ProviderServicesFactory();
 
-            _providerServices = new Lazy<IList<NamedDbProviderService>>(
-                () => _entityFrameworkSettings
-                          .Providers
-                          .OfType<ProviderElement>()
-                          .Select(
-                              e => new NamedDbProviderService(
-                                       e.InvariantName,
-                                       _providerServicesFactory.GetInstance(e.ProviderTypeName, e.InvariantName)))
-                          .ToList());
+            //_providerServices = new Lazy<IList<NamedDbProviderService>>(
+            //    () => _entityFrameworkSettings
+            //              .Providers
+            //              .OfType<ProviderElement>()
+            //              .Select(
+            //                  e => new NamedDbProviderService(
+            //                           e.InvariantName,
+            //                           _providerServicesFactory.GetInstance(e.ProviderTypeName, e.InvariantName)))
+            //              .ToList());
 
-            if (_entityFrameworkSettings.DefaultConnectionFactory.ElementInformation.IsPresent)
-            {
-                _defaultConnectionFactory = new Lazy<IDbConnectionFactory>(
-                    () =>
-                        {
-                            var setting = _entityFrameworkSettings.DefaultConnectionFactory;
+            //if (_entityFrameworkSettings.DefaultConnectionFactory.ElementInformation.IsPresent)
+            //{
+            //    _defaultConnectionFactory = new Lazy<IDbConnectionFactory>(
+            //        () =>
+            //            {
+            //                var setting = _entityFrameworkSettings.DefaultConnectionFactory;
 
-                            try
-                            {
-                                var type = setting.GetFactoryType();
-                                var args = setting.Parameters.GetTypedParameterValues();
-                                return (IDbConnectionFactory)Activator.CreateInstance(type, args);
-                            }
-                            catch (Exception ex)
-                            {
-                                throw new InvalidOperationException(
-                                    Strings.SetConnectionFactoryFromConfigFailed(setting.FactoryTypeName), ex);
-                            }
-                        }, isThreadSafe: true);
-            }
-            else
-            {
+            //                try
+            //                {
+            //                    var type = setting.GetFactoryType();
+            //                    var args = setting.Parameters.GetTypedParameterValues();
+            //                    return (IDbConnectionFactory)Activator.CreateInstance(type, args);
+            //                }
+            //                catch (Exception ex)
+            //                {
+            //                    throw new InvalidOperationException(
+            //                        Strings.SetConnectionFactoryFromConfigFailed(setting.FactoryTypeName), ex);
+            //                }
+            //            }, isThreadSafe: true);
+            //}
+            //else
+            //{
                 _defaultConnectionFactory = _defaultDefaultConnectionFactory;
-            }
+            //}
         }
 
         // <summary>
@@ -128,17 +128,17 @@ namespace System.Data.Entity.Internal
             return _defaultConnectionFactory.Value;
         }
 
-        // <summary>
-        // Gets the specified connection string from the configuration
-        // </summary>
-        // <param name="name"> Name of the connection string to get </param>
-        // <returns> The connection string, or null if there is no connection string with the specified name </returns>
-        public ConnectionStringSettings GetConnectionString(string name)
-        {
-            DebugCheck.NotEmpty(name);
+        //// <summary>
+        //// Gets the specified connection string from the configuration
+        //// </summary>
+        //// <param name="name"> Name of the connection string to get </param>
+        //// <returns> The connection string, or null if there is no connection string with the specified name </returns>
+        //public ConnectionStringSettings GetConnectionString(string name)
+        //{
+        //    DebugCheck.NotEmpty(name);
 
-            return _connectionStrings[name];
-        }
+        //    return _connectionStrings[name];
+        //}
 
         // <summary>
         // Gets a singleton instance of configuration based on the <see cref="ConfigurationManager" /> for the AppDomain
@@ -148,44 +148,44 @@ namespace System.Data.Entity.Internal
             get { return _defaultInstance; }
         }
 
-        private static KeyValueConfigurationCollection Convert(NameValueCollection collection)
-        {
-            var settings = new KeyValueConfigurationCollection();
-            foreach (var key in collection.AllKeys)
-            {
-                settings.Add(key, ConfigurationManager.AppSettings[key]);
-            }
-            return settings;
-        }
+        //private static KeyValueConfigurationCollection Convert(NameValueCollection collection)
+        //{
+        //    var settings = new KeyValueConfigurationCollection();
+        //    foreach (var key in collection.AllKeys)
+        //    {
+        //        settings.Add(key, ConfigurationManager.AppSettings[key]);
+        //    }
+        //    return settings;
+        //}
 
-        public virtual ContextConfig ContextConfigs
-        {
-            get { return new ContextConfig(_entityFrameworkSettings); }
-        }
+        //public virtual ContextConfig ContextConfigs
+        //{
+        //    get { return new ContextConfig(_entityFrameworkSettings); }
+        //}
 
-        public virtual InitializerConfig Initializers
-        {
-            get { return new InitializerConfig(_entityFrameworkSettings, _appSettings); }
-        }
+        //public virtual InitializerConfig Initializers
+        //{
+        //    get { return new InitializerConfig(_entityFrameworkSettings, _appSettings); }
+        //}
 
-        public virtual string ConfigurationTypeName
-        {
-            get { return _entityFrameworkSettings.ConfigurationTypeName; }
-        }
+        //public virtual string ConfigurationTypeName
+        //{
+        //    get { return _entityFrameworkSettings.ConfigurationTypeName; }
+        //}
 
-        public virtual IList<NamedDbProviderService> DbProviderServices
-        {
-            get { return _providerServices.Value; }
-        }
+        //public virtual IList<NamedDbProviderService> DbProviderServices
+        //{
+        //    get { return _providerServices.Value; }
+        //}
 
-        public virtual IEnumerable<IDbInterceptor> Interceptors
-        {
-            get { return _entityFrameworkSettings.Interceptors.Interceptors; }
-        }
+        //public virtual IEnumerable<IDbInterceptor> Interceptors
+        //{
+        //    get { return _entityFrameworkSettings.Interceptors.Interceptors; }
+        //}
 
         public virtual QueryCacheConfig QueryCache
         {
-            get { return new QueryCacheConfig(_entityFrameworkSettings); }
+            get { return new QueryCacheConfig(); }
         }
     }
 }

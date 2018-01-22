@@ -7,7 +7,7 @@ namespace System.Data.Entity.ModelConfiguration.Configuration
     using System.Data.Entity.ModelConfiguration.Conventions;
     using System.Data.Entity.Utilities;
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
+    
     using System.Reflection;
 
     /// <summary>
@@ -20,7 +20,7 @@ namespace System.Data.Entity.ModelConfiguration.Configuration
         private readonly IEnumerable<Func<PropertyInfo, bool>> _predicates;
 
         internal PropertyConventionConfiguration(ConventionsConfiguration conventionsConfiguration)
-            : this(conventionsConfiguration, Enumerable.Empty<Func<PropertyInfo, bool>>())
+            : this(conventionsConfiguration, System.Linq.Enumerable.Empty<Func<PropertyInfo, bool>>())
         {
             DebugCheck.NotNull(conventionsConfiguration);
         }

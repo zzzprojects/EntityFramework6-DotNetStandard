@@ -1040,34 +1040,34 @@ namespace System.Data.Entity.Core.EntityClient
 
             if (!userConnectionOptions.IsEmpty)
             {
-                // Check if we have the named connection, if yes, then use the connection string from the configuration manager settings
-                var namedConnection = userConnectionOptions[EntityConnectionStringBuilder.NameParameterName];
-                if (!string.IsNullOrEmpty(namedConnection))
-                {
-                    // There cannot be other parameters when the named connection is specified
-                    if (1 < userConnectionOptions.Parsetable.Count)
-                    {
-                        throw new ArgumentException(Strings.EntityClient_ExtraParametersWithNamedConnection);
-                    }
+                //// Check if we have the named connection, if yes, then use the connection string from the configuration manager settings
+                //var namedConnection = userConnectionOptions[EntityConnectionStringBuilder.NameParameterName];
+                //if (!string.IsNullOrEmpty(namedConnection))
+                //{
+                //    // There cannot be other parameters when the named connection is specified
+                //    if (1 < userConnectionOptions.Parsetable.Count)
+                //    {
+                //        throw new ArgumentException(Strings.EntityClient_ExtraParametersWithNamedConnection);
+                //    }
 
-                    // Find the named connection from the configuration, then extract the settings
-                    var setting = ConfigurationManager.ConnectionStrings[namedConnection];
-                    if (setting == null
-                        || setting.ProviderName != EntityClientProviderName)
-                    {
-                        throw new ArgumentException(Strings.EntityClient_InvalidNamedConnection);
-                    }
+                //    // Find the named connection from the configuration, then extract the settings
+                //    var setting = ConfigurationManager.ConnectionStrings[namedConnection];
+                //    if (setting == null
+                //        || setting.ProviderName != EntityClientProviderName)
+                //    {
+                //        throw new ArgumentException(Strings.EntityClient_InvalidNamedConnection);
+                //    }
 
-                    effectiveConnectionOptions = new DbConnectionOptions(
-                        setting.ConnectionString, EntityConnectionStringBuilder.ValidKeywords);
+                //    effectiveConnectionOptions = new DbConnectionOptions(
+                //        setting.ConnectionString, EntityConnectionStringBuilder.ValidKeywords);
 
-                    // Check for a nested Name keyword
-                    var nestedNamedConnection = effectiveConnectionOptions[EntityConnectionStringBuilder.NameParameterName];
-                    if (!string.IsNullOrEmpty(nestedNamedConnection))
-                    {
-                        throw new ArgumentException(Strings.EntityClient_NestedNamedConnection(namedConnection));
-                    }
-                }
+                //    // Check for a nested Name keyword
+                //    var nestedNamedConnection = effectiveConnectionOptions[EntityConnectionStringBuilder.NameParameterName];
+                //    if (!string.IsNullOrEmpty(nestedNamedConnection))
+                //    {
+                //        throw new ArgumentException(Strings.EntityClient_NestedNamedConnection(namedConnection));
+                //    }
+                //}
 
                 //Validate the connection string has the required Keywords( Provider and Metadata)
                 //We trim the values for both the Keywords, so a string value with only spaces will throw an exception

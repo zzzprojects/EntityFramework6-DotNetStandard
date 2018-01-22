@@ -67,18 +67,20 @@ namespace System.Data.Entity.Core.Objects.Internal
                     new AssemblyName(String.Format(CultureInfo.InvariantCulture, "EntityFrameworkDynamicProxies-{0}", assembly.FullName));
                 assemblyName.Version = new Version(1, 0, 0, 0);
 
-                var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(
-                    assemblyName, s_ProxyAssemblyBuilderAccess);
+                //var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(
+                //    assemblyName, s_ProxyAssemblyBuilderAccess);
 
-                if (s_ProxyAssemblyBuilderAccess == AssemblyBuilderAccess.RunAndSave)
-                {
-                    // Make the module persistable if the AssemblyBuilderAccess is changed to be RunAndSave.
-                    moduleBuilder = assemblyBuilder.DefineDynamicModule("EntityProxyModule", "EntityProxyModule.dll");
-                }
-                else
-                {
+                var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, s_ProxyAssemblyBuilderAccess);
+
+                //if (s_ProxyAssemblyBuilderAccess == AssemblyBuilderAccess.RunAndSave)
+                //{
+                //    // Make the module persistable if the AssemblyBuilderAccess is changed to be RunAndSave.
+                //    moduleBuilder = assemblyBuilder.DefineDynamicModule("EntityProxyModule", "EntityProxyModule.dll");
+                //}
+                //else
+                //{
                     moduleBuilder = assemblyBuilder.DefineDynamicModule("EntityProxyModule");
-                }
+                //}
 
                 _moduleBuilders.Add(assembly, moduleBuilder);
             }
@@ -694,7 +696,7 @@ namespace System.Data.Entity.Core.Objects.Internal
                     }
                 }
 
-                return hadProxyProperties ? TypeBuilder.CreateType() : null;
+                return hadProxyProperties ? TypeBuilder.CreateTypeInfo() : null;
             }
 
             private TypeBuilder TypeBuilder

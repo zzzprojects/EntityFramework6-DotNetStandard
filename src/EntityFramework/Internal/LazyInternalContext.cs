@@ -11,8 +11,8 @@ namespace System.Data.Entity.Internal
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Infrastructure.DependencyResolution;
     using System.Data.Entity.Infrastructure.Interception;
-    using System.Data.Entity.Migrations.History;
-    using System.Data.Entity.Migrations.Infrastructure;
+    //using System.Data.Entity.Migrations.History;
+    //using System.Data.Entity.Migrations.Infrastructure;
     using System.Data.Entity.ModelConfiguration.Utilities;
     using System.Data.Entity.Resources;
     using System.Data.Entity.Utilities;
@@ -33,8 +33,8 @@ namespace System.Data.Entity.Internal
         #region Fields and constructors
 
         // The initialization strategy to use for Code First if no other strategy is set for a context.
-        private static readonly CreateDatabaseIfNotExists<DbContext> _defaultCodeFirstInitializer =
-            new CreateDatabaseIfNotExists<DbContext>();
+        //private static readonly CreateDatabaseIfNotExists<DbContext> _defaultCodeFirstInitializer =
+        //    new CreateDatabaseIfNotExists<DbContext>();
 
         // A cache from context type and provider invariant name to DbCompiledModel objects such that the model for a derived context type is only used once.
         private static readonly
@@ -289,19 +289,19 @@ namespace System.Data.Entity.Internal
             }
         }
 
-        // <summary>
-        // Gets or sets an object representing a config file used for looking for DefaultConnectionFactory entries
-        // and connection strings.
-        // </summary>
-        public override AppConfig AppConfig
-        {
-            get { return base.AppConfig; }
-            set
-            {
-                base.AppConfig = value;
-                _internalConnection.AppConfig = value;
-            }
-        }
+        //// <summary>
+        //// Gets or sets an object representing a config file used for looking for DefaultConnectionFactory entries
+        //// and connection strings.
+        //// </summary>
+        //public override AppConfig AppConfig
+        //{
+        //    get { return base.AppConfig; }
+        //    set
+        //    {
+        //        base.AppConfig = value;
+        //        _internalConnection.AppConfig = value;
+        //    }
+        //}
 
         // <summary>
         // Gets the name of the underlying connection string.
@@ -371,7 +371,7 @@ namespace System.Data.Entity.Internal
             Debug.Assert(_creatingModel == false);
             Debug.Assert(_objectContext == null);
 
-            connection.AppConfig = AppConfig;
+            //connection.AppConfig = AppConfig;
 
             if (connection.ConnectionHasModel
                 != _internalConnection.ConnectionHasModel)
@@ -489,19 +489,19 @@ namespace System.Data.Entity.Internal
         {
             var contextType = internalContext.Owner.GetType();
 
-            DbModelStore modelStore = null;
-            if (!(internalContext.Owner is HistoryContext))
-            {
-                modelStore = DbConfiguration.DependencyResolver.GetService<DbModelStore>();
-                if (modelStore != null)
-                {
-                    var compiledModel = modelStore.TryLoad(contextType);
-                    if (compiledModel != null)
-                    {
-                        return compiledModel;
-                    }
-                }
-            }
+            //DbModelStore modelStore = null;
+            //if (!(internalContext.Owner is HistoryContext))
+            //{
+            //    modelStore = DbConfiguration.DependencyResolver.GetService<DbModelStore>();
+            //    if (modelStore != null)
+            //    {
+            //        var compiledModel = modelStore.TryLoad(contextType);
+            //        if (compiledModel != null)
+            //        {
+            //            return compiledModel;
+            //        }
+            //    }
+            //}
 
             var modelBuilder = internalContext.CreateModelBuilder();
 
@@ -512,10 +512,10 @@ namespace System.Data.Entity.Internal
 
             internalContext._modelBeingInitialized = model;
 
-            if (modelStore != null)
-            {
-                modelStore.Save(contextType, model);
-            }
+            //if (modelStore != null)
+            //{
+            //    modelStore.Save(contextType, model);
+            //}
 
             return model.Compile();
         }
@@ -686,7 +686,7 @@ namespace System.Data.Entity.Internal
         // <value> The default initializer. </value>
         public override IDatabaseInitializer<DbContext> DefaultInitializer
         {
-            get { return _model != null ? _defaultCodeFirstInitializer : null; }
+            get { return null; }
         }
 
         #endregion

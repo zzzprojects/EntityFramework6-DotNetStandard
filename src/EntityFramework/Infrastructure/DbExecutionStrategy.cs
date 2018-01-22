@@ -7,7 +7,7 @@ namespace System.Data.Entity.Infrastructure
     using System.Data.Entity.Resources;
     using System.Data.Entity.Utilities;
     using System.Diagnostics.CodeAnalysis;
-    using System.Runtime.Remoting.Messaging;
+    //using System.Runtime.Remoting.Messaging;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Transactions;
@@ -103,8 +103,10 @@ namespace System.Data.Entity.Infrastructure
         /// </summary>
         protected internal static bool Suspended
         {
-            get { return (bool?)CallContext.LogicalGetData(ContextName) ?? false; }
-            set { CallContext.LogicalSetData(ContextName, value); }
+            get { return false; }
+            set { }
+            //get { return (bool?)CallContext.LogicalGetData(ContextName) ?? false; }
+            //set { CallContext.LogicalSetData(ContextName, value); }
         }
 
         /// <summary>

@@ -2,8 +2,9 @@
 
 namespace System.Data.Entity.Core.Mapping
 {
+    using System.Collections.Generic;
     using System.Data.Entity.Core.Metadata.Edm;
-    using System.Data.Entity.Migrations.Extensions;
+    //using System.Data.Entity.Migrations.Extensions;
     using System.Linq;
     using Xunit;
 
@@ -143,6 +144,17 @@ namespace System.Data.Entity.Core.Mapping
             Assert.True(mapping.IsReadOnly);
             parameterBindings.Each(b => Assert.True(b.IsReadOnly));
             resultBindings.Each(b => Assert.True(b.IsReadOnly));
+        }
+    }
+
+    public static class Extensions
+    {
+        public static void Each<T>(this IEnumerable<T> items, Action<T> action)
+        {
+            foreach (var item in items)
+            {
+                action(item);
+            }
         }
     }
 }

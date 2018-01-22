@@ -520,16 +520,16 @@ namespace System.Data.Entity
         {
         }
 
-        [Fact]
-        public void SetInitializer_registers_different_initializer()
-        {
-            var mockInitializer = new Mock<IDatabaseInitializer<FakeForSirdi>>();
-            Database.SetInitializer(mockInitializer.Object);
+        //[Fact]
+        //public void SetInitializer_registers_different_initializer()
+        //{
+        //    var mockInitializer = new Mock<IDatabaseInitializer<FakeForSirdi>>();
+        //    Database.SetInitializer(mockInitializer.Object);
 
-            var mock = new Mock<InternalContextForMockWithRealContext<FakeForSirdi>>();
-            mock.Setup(m => m.AppConfig).Returns(new AppConfig(CreateEmptyConfig()));
-            new Database(mock.Object).Initialize(force: true);
-        }
+        //    var mock = new Mock<InternalContextForMockWithRealContext<FakeForSirdi>>();
+        //    mock.Setup(m => m.AppConfig).Returns(new AppConfig(CreateEmptyConfig()));
+        //    new Database(mock.Object).Initialize(force: true);
+        //}
 
         public class FakeForSirdifdct1 : DbContextUsingMockInternalContext
         {
@@ -539,52 +539,52 @@ namespace System.Data.Entity
         {
         }
 
-        [Fact]
-        public void SetInitializer_registers_different_initializers_for_different_context_types()
-        {
-            var mockInitializer1 = new Mock<IDatabaseInitializer<FakeForSirdifdct1>>();
-            Database.SetInitializer(mockInitializer1.Object);
+        //[Fact]
+        //public void SetInitializer_registers_different_initializers_for_different_context_types()
+        //{
+        //    var mockInitializer1 = new Mock<IDatabaseInitializer<FakeForSirdifdct1>>();
+        //    Database.SetInitializer(mockInitializer1.Object);
 
-            var mockInitializer2 = new Mock<IDatabaseInitializer<FakeForSirdifdct2>>();
-            Database.SetInitializer(mockInitializer2.Object);
+        //    var mockInitializer2 = new Mock<IDatabaseInitializer<FakeForSirdifdct2>>();
+        //    Database.SetInitializer(mockInitializer2.Object);
 
-            // Initialize for first type and verify correct initializer called
-            var mock = new Mock<InternalContextForMockWithRealContext<FakeForSirdifdct1>>();
-            mock.Setup(m => m.AppConfig).Returns(new AppConfig(CreateEmptyConfig()));
-            new Database(mock.Object).Initialize(force: true);
+        //    // Initialize for first type and verify correct initializer called
+        //    var mock = new Mock<InternalContextForMockWithRealContext<FakeForSirdifdct1>>();
+        //    mock.Setup(m => m.AppConfig).Returns(new AppConfig(CreateEmptyConfig()));
+        //    new Database(mock.Object).Initialize(force: true);
 
-            mockInitializer1.Verify(i => i.InitializeDatabase(It.IsAny<FakeForSirdifdct1>()), Times.Once());
-            mockInitializer2.Verify(i => i.InitializeDatabase(It.IsAny<FakeForSirdifdct2>()), Times.Never());
+        //    mockInitializer1.Verify(i => i.InitializeDatabase(It.IsAny<FakeForSirdifdct1>()), Times.Once());
+        //    mockInitializer2.Verify(i => i.InitializeDatabase(It.IsAny<FakeForSirdifdct2>()), Times.Never());
 
-            // Initialize for second type and verify correct initializer called
-            var mock2 = new Mock<InternalContextForMockWithRealContext<FakeForSirdifdct2>>();
-            mock2.Setup(m => m.AppConfig).Returns(new AppConfig(CreateEmptyConfig()));
-            new Database(mock2.Object).Initialize(force: true);
+        //    // Initialize for second type and verify correct initializer called
+        //    var mock2 = new Mock<InternalContextForMockWithRealContext<FakeForSirdifdct2>>();
+        //    mock2.Setup(m => m.AppConfig).Returns(new AppConfig(CreateEmptyConfig()));
+        //    new Database(mock2.Object).Initialize(force: true);
 
-            mockInitializer1.Verify(i => i.InitializeDatabase(It.IsAny<FakeForSirdifdct1>()), Times.Once());
-            mockInitializer2.Verify(i => i.InitializeDatabase(It.IsAny<FakeForSirdifdct2>()), Times.Once());
-        }
+        //    mockInitializer1.Verify(i => i.InitializeDatabase(It.IsAny<FakeForSirdifdct1>()), Times.Once());
+        //    mockInitializer2.Verify(i => i.InitializeDatabase(It.IsAny<FakeForSirdifdct2>()), Times.Once());
+        //}
 
         public class FakeForCsiaftsctrfi : DbContextUsingMockInternalContext
         {
         }
 
-        [Fact]
-        public void Calling_SetInitializer_again_for_the_same_context_type_replaces_first_initializer()
-        {
-            var mockInitializer1 = new Mock<IDatabaseInitializer<FakeForCsiaftsctrfi>>();
-            Database.SetInitializer(mockInitializer1.Object);
+        //[Fact]
+        //public void Calling_SetInitializer_again_for_the_same_context_type_replaces_first_initializer()
+        //{
+        //    var mockInitializer1 = new Mock<IDatabaseInitializer<FakeForCsiaftsctrfi>>();
+        //    Database.SetInitializer(mockInitializer1.Object);
 
-            var mockInitializer2 = new Mock<IDatabaseInitializer<FakeForCsiaftsctrfi>>();
-            Database.SetInitializer(mockInitializer2.Object);
+        //    var mockInitializer2 = new Mock<IDatabaseInitializer<FakeForCsiaftsctrfi>>();
+        //    Database.SetInitializer(mockInitializer2.Object);
 
-            var mock = new Mock<InternalContextForMockWithRealContext<FakeForCsiaftsctrfi>>();
-            mock.Setup(m => m.AppConfig).Returns(new AppConfig(CreateEmptyConfig()));
-            new Database(mock.Object).Initialize(force: true);
+        //    var mock = new Mock<InternalContextForMockWithRealContext<FakeForCsiaftsctrfi>>();
+        //    mock.Setup(m => m.AppConfig).Returns(new AppConfig(CreateEmptyConfig()));
+        //    new Database(mock.Object).Initialize(force: true);
 
-            mockInitializer1.Verify(i => i.InitializeDatabase(It.IsAny<FakeForCsiaftsctrfi>()), Times.Never());
-            mockInitializer2.Verify(i => i.InitializeDatabase(It.IsAny<FakeForCsiaftsctrfi>()), Times.Once());
-        }
+        //    mockInitializer1.Verify(i => i.InitializeDatabase(It.IsAny<FakeForCsiaftsctrfi>()), Times.Never());
+        //    mockInitializer2.Verify(i => i.InitializeDatabase(It.IsAny<FakeForCsiaftsctrfi>()), Times.Once());
+        //}
 
         public class FakeForDisicdoine : DbContext
         {
@@ -624,19 +624,19 @@ namespace System.Data.Entity
         {
         }
 
-        [Fact]
-        public void Initialization_strategy_can_be_removed_by_calling_SetInitializer_null()
-        {
-            var mockInitializer = new Mock<IDatabaseInitializer<FakeForIscbrbcsin>>();
-            Database.SetInitializer(mockInitializer.Object);
-            Database.SetInitializer<FakeForIscbrbcsin>(null);
+        //[Fact]
+        //public void Initialization_strategy_can_be_removed_by_calling_SetInitializer_null()
+        //{
+        //    var mockInitializer = new Mock<IDatabaseInitializer<FakeForIscbrbcsin>>();
+        //    Database.SetInitializer(mockInitializer.Object);
+        //    Database.SetInitializer<FakeForIscbrbcsin>(null);
 
-            var mock = new Mock<InternalContextForMockWithRealContext<FakeForIscbrbcsin>>();
-            mock.Setup(m => m.AppConfig).Returns(new AppConfig(CreateEmptyConfig()));
-            new Database(mock.Object).Initialize(force: true);
+        //    var mock = new Mock<InternalContextForMockWithRealContext<FakeForIscbrbcsin>>();
+        //    mock.Setup(m => m.AppConfig).Returns(new AppConfig(CreateEmptyConfig()));
+        //    new Database(mock.Object).Initialize(force: true);
 
-            mockInitializer.Verify(i => i.InitializeDatabase(It.IsAny<FakeForIscbrbcsin>()), Times.Never());
-        }
+        //    mockInitializer.Verify(i => i.InitializeDatabase(It.IsAny<FakeForIscbrbcsin>()), Times.Never());
+        //}
 
         #endregion
 

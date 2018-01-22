@@ -7,7 +7,7 @@ namespace System.Data.Entity.Core.Mapping
     using System.Data.Entity.Core.Common;
     using System.Data.Entity.Core.Metadata.Edm;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Migrations.Extensions;
+    //using System.Data.Entity.Migrations.Extensions;
     using System.Data.Entity.Resources;
     using System.Linq;
     using Xunit;
@@ -192,9 +192,17 @@ namespace System.Data.Entity.Core.Mapping
 
             Assert.Equal(resultMappings.Count, functionImportMapping.ResultMappings.Count);
 
-            functionImportMapping.ResultMappings.Each(m => Assert.False(m.IsReadOnly));
+            foreach (var m in functionImportMapping.ResultMappings)
+            {
+                Assert.False(m.IsReadOnly);
+            }
+
             functionImportMapping.SetReadOnly();
-            functionImportMapping.ResultMappings.Each(m => Assert.True(m.IsReadOnly));
+
+            foreach (var m in functionImportMapping.ResultMappings)
+            {
+                Assert.True(m.IsReadOnly);
+            }
         }
 
         private static EntityContainerMapping GetContainerMapping(out DbProviderManifest providerManifest)

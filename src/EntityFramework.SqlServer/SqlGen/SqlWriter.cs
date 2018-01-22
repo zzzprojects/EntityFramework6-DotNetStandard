@@ -2,8 +2,9 @@
 
 namespace System.Data.Entity.SqlServer.SqlGen
 {
-    using System.Data.Entity.Migrations.Utilities;
+    using System.CodeDom.Compiler;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.IO;
     using System.Text;
 
@@ -15,7 +16,7 @@ namespace System.Data.Entity.SqlServer.SqlGen
     {
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Transferring ownership")]
         public SqlWriter(StringBuilder b)
-            : base(new StringWriter(b, Culture))
+            : base(new StringWriter(b, CultureInfo.InvariantCulture))
         // Culture must match what is used by underlying IndentedTextWriter
         {
         }

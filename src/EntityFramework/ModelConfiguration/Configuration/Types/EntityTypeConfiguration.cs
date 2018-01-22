@@ -2,7 +2,7 @@
 
 namespace System.Data.Entity.ModelConfiguration.Configuration.Types
 {
-    using Migrations.Model;
+    //using Migrations.Model;
     using System.Collections.Generic;
     using System.Data.Entity.Core.Common;
     using System.Data.Entity.Core.Mapping;
@@ -541,54 +541,54 @@ namespace System.Data.Entity.ModelConfiguration.Configuration.Types
             }
         }
 
-        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
-        private void ConfigureIndexes(DbDatabaseMapping mapping, EntityType entityType)
-        {
-            DebugCheck.NotNull(mapping);
-            DebugCheck.NotNull(entityType);
+        //[SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
+        //private void ConfigureIndexes(DbDatabaseMapping mapping, EntityType entityType)
+        //{
+        //    DebugCheck.NotNull(mapping);
+        //    DebugCheck.NotNull(entityType);
 
-            var entityTypeMappings = mapping.GetEntityTypeMappings(entityType);
+        //    var entityTypeMappings = mapping.GetEntityTypeMappings(entityType);
 
-            if (_keyConfiguration != null)
-            {
-                entityTypeMappings
-                    .SelectMany(etm => etm.Fragments)
-                    .Each(f => _keyConfiguration.Configure(f.Table));
-            }
+        //    if (_keyConfiguration != null)
+        //    {
+        //        entityTypeMappings
+        //            .SelectMany(etm => etm.Fragments)
+        //            .Each(f => _keyConfiguration.Configure(f.Table));
+        //    }
 
-            foreach (var indexConfiguration in _indexConfigurations)
-            {
-                foreach (var entityTypeMapping in entityTypeMappings)
-                {
-                    var propertyMappings = indexConfiguration.Key
-                        .ToDictionary(
-                            icp => icp,
-                            icp => entityTypeMapping.GetPropertyMapping(
-                                entityType.GetDeclaredPrimitiveProperty(icp)));
+        //    foreach (var indexConfiguration in _indexConfigurations)
+        //    {
+        //        foreach (var entityTypeMapping in entityTypeMappings)
+        //        {
+        //            var propertyMappings = indexConfiguration.Key
+        //                .ToDictionary(
+        //                    icp => icp,
+        //                    icp => entityTypeMapping.GetPropertyMapping(
+        //                        entityType.GetDeclaredPrimitiveProperty(icp)));
 
-                    if (indexConfiguration.Key.Count > 1 && string.IsNullOrEmpty(indexConfiguration.Value.Name))
-                    {
-                        indexConfiguration.Value.Name = IndexOperation.BuildDefaultName(
-                            indexConfiguration.Key.Select(icp => propertyMappings[icp].ColumnProperty.Name));
-                    }
+        //            if (indexConfiguration.Key.Count > 1 && string.IsNullOrEmpty(indexConfiguration.Value.Name))
+        //            {
+        //                indexConfiguration.Value.Name = IndexOperation.BuildDefaultName(
+        //                    indexConfiguration.Key.Select(icp => propertyMappings[icp].ColumnProperty.Name));
+        //            }
 
-                    int sortOrder = 0;
+        //            int sortOrder = 0;
 
-                    foreach (var indexConfigurationProperty in indexConfiguration.Key)
-                    {
-                        var propertyMapping = propertyMappings[indexConfigurationProperty];
+        //            foreach (var indexConfigurationProperty in indexConfiguration.Key)
+        //            {
+        //                var propertyMapping = propertyMappings[indexConfigurationProperty];
                         
-                        indexConfiguration.Value.Configure(
-                            propertyMapping.ColumnProperty, 
-                            (indexConfiguration.Key.Count != 1 ?
-                                sortOrder :
-                                -1));
+        //                indexConfiguration.Value.Configure(
+        //                    propertyMapping.ColumnProperty, 
+        //                    (indexConfiguration.Key.Count != 1 ?
+        //                        sortOrder :
+        //                        -1));
 
-                        ++sortOrder;
-                    }
-                }
-            }
-        }
+        //                ++sortOrder;
+        //            }
+        //        }
+        //    }
+        //}
 
         private void ConfigureAssociations(EntityType entityType, EdmModel model)
         {
@@ -703,7 +703,7 @@ namespace System.Data.Entity.ModelConfiguration.Configuration.Types
             }
 
             ConfigurePropertyMappings(databaseMapping, entityType, providerManifest);
-            ConfigureIndexes(databaseMapping, entityType);
+            //ConfigureIndexes(databaseMapping, entityType);
             ConfigureAssociationMappings(databaseMapping, entityType, providerManifest);
             ConfigureDependentKeys(databaseMapping, providerManifest);
             ConfigureModificationStoredProcedures(databaseMapping, entityType, providerManifest);

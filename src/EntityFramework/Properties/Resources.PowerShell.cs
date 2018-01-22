@@ -149,13 +149,13 @@ namespace System.Data.Entity.Migrations.Resources
     [GeneratedCode("Resources.PowerShell.tt", "1.0.0.0")]
     internal static class Error
     {
-        // <summary>
-        // Migrations.Infrastructure.MigrationsException with message like "Migrations have already been enabled in project '{0}'. To overwrite the existing migrations configuration, use the -Force parameter."
-        // </summary>
-        internal static Exception MigrationsAlreadyEnabled(object p0)
-        {
-            return new Migrations.Infrastructure.MigrationsException(Strings.MigrationsAlreadyEnabled(p0));
-        }
+        //// <summary>
+        //// Migrations.Infrastructure.MigrationsException with message like "Migrations have already been enabled in project '{0}'. To overwrite the existing migrations configuration, use the -Force parameter."
+        //// </summary>
+        //internal static Exception MigrationsAlreadyEnabled(object p0)
+        //{
+        //    return new Migrations.Infrastructure.MigrationsException(Strings.MigrationsAlreadyEnabled(p0));
+        //}
 
         // <summary>
         // The exception that is thrown when the value of an argument is outside the allowable range of values as defined by the invoked method.

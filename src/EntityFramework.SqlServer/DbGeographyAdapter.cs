@@ -6,6 +6,7 @@ namespace System.Data.Entity.SqlServer
     using System.Data.Entity.Spatial;
     using System.Data.Entity.SqlServer.Resources;
     using System.Data.Entity.SqlServer.Utilities;
+    using System.Data.Entity.Utilities;
 
     internal class DbGeographyAdapter : IDbSpatialValue
     {

@@ -244,12 +244,12 @@ namespace System.Data.Entity.Core.Objects
             Debug.Assert(_workspace != null);
 
             // load config file properties
-            var value = ConfigurationManager.AppSettings[UseLegacyPreserveChangesBehavior];
-            var useV35Behavior = false;
-            if (Boolean.TryParse(value, out useV35Behavior))
-            {
-                ContextOptions.UseLegacyPreserveChangesBehavior = useV35Behavior;
-            }
+            //var value = ConfigurationManager.AppSettings[UseLegacyPreserveChangesBehavior];
+            //var useV35Behavior = false;
+            //if (Boolean.TryParse(value, out useV35Behavior))
+            //{
+            //    ContextOptions.UseLegacyPreserveChangesBehavior = useV35Behavior;
+            //}
 
             InitializeMappingViewCacheFactory();
         }

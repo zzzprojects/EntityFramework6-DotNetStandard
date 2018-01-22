@@ -7,7 +7,6 @@ namespace System.Data.Entity.ModelConfiguration.Configuration
     using System.Data.Entity.ModelConfiguration.Conventions;
     using System.Data.Entity.Utilities;
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
 
     /// <summary>
     /// Allows configuration to be performed for a lightweight convention based on
@@ -19,7 +18,7 @@ namespace System.Data.Entity.ModelConfiguration.Configuration
         private readonly IEnumerable<Func<Type, bool>> _predicates;
 
         internal TypeConventionConfiguration(ConventionsConfiguration conventionsConfiguration)
-            : this(conventionsConfiguration, Enumerable.Empty<Func<Type, bool>>())
+            : this(conventionsConfiguration, System.Linq.Enumerable.Empty<Func<Type, bool>>())
         {
             DebugCheck.NotNull(conventionsConfiguration);
         }

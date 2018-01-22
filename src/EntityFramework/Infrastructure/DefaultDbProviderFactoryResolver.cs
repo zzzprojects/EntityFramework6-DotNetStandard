@@ -7,6 +7,7 @@ namespace System.Data.Entity.Infrastructure
 {
     using System.Data.Common;
     using System.Data.Entity.Utilities;
+    using System.Data.SqlClient;
 
     internal class DefaultDbProviderFactoryResolver : IDbProviderFactoryResolver
     {
@@ -14,7 +15,8 @@ namespace System.Data.Entity.Infrastructure
         {
             Check.NotNull(connection, "connection");
 
-            return DbProviderFactories.GetFactory(connection);
+            return SqlClientFactory.Instance;
+            //return DbProviderFactories.GetFactory(connection);
         }
     }
 }

@@ -690,10 +690,10 @@ namespace System.Data.Entity.Internal
                 new DbContext("LazyConnectionTest"),
                 new DbConnectionInfo("LazyConnectionTest")))
             {
-                connection.AppConfig =
-                    new AppConfig(
-                        CreateEmptyConfig().AddConnectionString(
-                            "LazyConnectionTest", "Database=FromOverridenConfig", "System.Data.SqlClient"));
+                //connection.AppConfig =
+                //    new AppConfig(
+                //        CreateEmptyConfig().AddConnectionString(
+                //            "LazyConnectionTest", "Database=FromOverridenConfig", "System.Data.SqlClient"));
 
                 Assert.IsType<SqlConnection>(connection.Connection);
                 Assert.Equal("FromOverridenConfig", connection.Connection.Database);

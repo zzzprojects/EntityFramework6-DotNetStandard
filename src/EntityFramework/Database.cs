@@ -33,7 +33,8 @@ namespace System.Data.Entity
         // The default factory object used to create a DbConnection from a database name.
         private static readonly Lazy<IDbConnectionFactory> _defaultDefaultConnectionFactory =
             new Lazy<IDbConnectionFactory>(
-                () => AppConfig.DefaultInstance.TryGetDefaultConnectionFactory() ?? new SqlConnectionFactory(), isThreadSafe: true);
+                //() => AppConfig.DefaultInstance.TryGetDefaultConnectionFactory() ?? new SqlConnectionFactory(), isThreadSafe: true);
+                () => new SqlConnectionFactory(), isThreadSafe: true);
 
         private static volatile Lazy<IDbConnectionFactory> _defaultConnectionFactory = _defaultDefaultConnectionFactory;
 
@@ -234,61 +235,61 @@ namespace System.Data.Entity
 
         #region Instance DDL Operations using full context
 
-        /// <summary>
-        /// Creates a new database on the database server for the model defined in the backing context.
-        /// Note that calling this method before the database initialization strategy has run will disable
-        /// executing that strategy.
-        /// </summary>
-        public void Create()
-        {
-            Create(DatabaseExistenceState.Unknown);
-        }
+        ///// <summary>
+        ///// Creates a new database on the database server for the model defined in the backing context.
+        ///// Note that calling this method before the database initialization strategy has run will disable
+        ///// executing that strategy.
+        ///// </summary>
+        //public void Create()
+        //{
+        //    Create(DatabaseExistenceState.Unknown);
+        //}
 
-        internal void Create(DatabaseExistenceState existenceState)
-        {
-            if (existenceState == DatabaseExistenceState.Unknown)
-            {
-                if (_internalContext.DatabaseOperations.Exists(
-                    _internalContext.Connection, 
-                    _internalContext.CommandTimeout,
-                    new Lazy<StoreItemCollection>(CreateStoreItemCollection)))
-                {
-                    var interceptionContext = new DbInterceptionContext();
-                    interceptionContext = interceptionContext.WithDbContext(_internalContext.Owner);
+        //internal void Create(DatabaseExistenceState existenceState)
+        //{
+        //    if (existenceState == DatabaseExistenceState.Unknown)
+        //    {
+        //        if (_internalContext.DatabaseOperations.Exists(
+        //            _internalContext.Connection, 
+        //            _internalContext.CommandTimeout,
+        //            new Lazy<StoreItemCollection>(CreateStoreItemCollection)))
+        //        {
+        //            var interceptionContext = new DbInterceptionContext();
+        //            interceptionContext = interceptionContext.WithDbContext(_internalContext.Owner);
 
-                    throw Error.Database_DatabaseAlreadyExists(
-                        DbInterception.Dispatch.Connection.GetDatabase(_internalContext.Connection, interceptionContext));
-                }
-                existenceState = DatabaseExistenceState.DoesNotExist;
-            }
+        //            throw Error.Database_DatabaseAlreadyExists(
+        //                DbInterception.Dispatch.Connection.GetDatabase(_internalContext.Connection, interceptionContext));
+        //        }
+        //        existenceState = DatabaseExistenceState.DoesNotExist;
+        //    }
 
-            using (var clonedObjectContext = _internalContext.CreateObjectContextForDdlOps())
-            {
-                _internalContext.CreateDatabase(clonedObjectContext.ObjectContext, existenceState);
-            }
-        }
+        //    using (var clonedObjectContext = _internalContext.CreateObjectContextForDdlOps())
+        //    {
+        //        _internalContext.CreateDatabase(clonedObjectContext.ObjectContext, existenceState);
+        //    }
+        //}
 
-        /// <summary>
-        /// Creates a new database on the database server for the model defined in the backing context, but only
-        /// if a database with the same name does not already exist on the server.
-        /// </summary>
-        /// <returns> True if the database did not exist and was created; false otherwise. </returns>
-        public bool CreateIfNotExists()
-        {
-            if (_internalContext.DatabaseOperations.Exists(
-                _internalContext.Connection,
-                _internalContext.CommandTimeout,
-                new Lazy<StoreItemCollection>(CreateStoreItemCollection)))
-            {
-                return false;
-            }
+        ///// <summary>
+        ///// Creates a new database on the database server for the model defined in the backing context, but only
+        ///// if a database with the same name does not already exist on the server.
+        ///// </summary>
+        ///// <returns> True if the database did not exist and was created; false otherwise. </returns>
+        //public bool CreateIfNotExists()
+        //{
+        //    if (_internalContext.DatabaseOperations.Exists(
+        //        _internalContext.Connection,
+        //        _internalContext.CommandTimeout,
+        //        new Lazy<StoreItemCollection>(CreateStoreItemCollection)))
+        //    {
+        //        return false;
+        //    }
 
-            using (var clonedObjectContext = _internalContext.CreateObjectContextForDdlOps())
-            {
-                _internalContext.CreateDatabase(clonedObjectContext.ObjectContext, DatabaseExistenceState.DoesNotExist);
-            }
-            return true;
-        }
+        //    using (var clonedObjectContext = _internalContext.CreateObjectContextForDdlOps())
+        //    {
+        //        _internalContext.CreateDatabase(clonedObjectContext.ObjectContext, DatabaseExistenceState.DoesNotExist);
+        //    }
+        //    return true;
+        //}
 
         /// <summary>
         /// Checks whether or not the database exists on the server.
@@ -302,32 +303,32 @@ namespace System.Data.Entity
                 new Lazy<StoreItemCollection>(CreateStoreItemCollection));
         }
 
-        /// <summary>
-        /// Deletes the database on the database server if it exists, otherwise does nothing.
-        /// Calling this method from outside of an initializer will mark the database as having
-        /// not been initialized. This means that if an attempt is made to use the database again
-        /// after it has been deleted, then any initializer set will run again and, usually, will
-        /// try to create the database again automatically.
-        /// </summary>
-        /// <returns> True if the database did exist and was deleted; false otherwise. </returns>
-        public bool Delete()
-        {
-            if (!_internalContext.DatabaseOperations.Exists(
-                _internalContext.Connection, 
-                _internalContext.CommandTimeout,
-                new Lazy<StoreItemCollection>(CreateStoreItemCollection)))
-            {
-                return false;
-            }
+        ///// <summary>
+        ///// Deletes the database on the database server if it exists, otherwise does nothing.
+        ///// Calling this method from outside of an initializer will mark the database as having
+        ///// not been initialized. This means that if an attempt is made to use the database again
+        ///// after it has been deleted, then any initializer set will run again and, usually, will
+        ///// try to create the database again automatically.
+        ///// </summary>
+        ///// <returns> True if the database did exist and was deleted; false otherwise. </returns>
+        //public bool Delete()
+        //{
+        //    if (!_internalContext.DatabaseOperations.Exists(
+        //        _internalContext.Connection, 
+        //        _internalContext.CommandTimeout,
+        //        new Lazy<StoreItemCollection>(CreateStoreItemCollection)))
+        //    {
+        //        return false;
+        //    }
 
-            using (var clonedObjectContext = _internalContext.CreateObjectContextForDdlOps())
-            {
-                _internalContext.DatabaseOperations.Delete(clonedObjectContext.ObjectContext);
-                _internalContext.MarkDatabaseNotInitialized();
-            }
+        //    using (var clonedObjectContext = _internalContext.CreateObjectContextForDdlOps())
+        //    {
+        //        _internalContext.DatabaseOperations.Delete(clonedObjectContext.ObjectContext);
+        //        _internalContext.MarkDatabaseNotInitialized();
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         #endregion
 

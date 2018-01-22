@@ -167,14 +167,6 @@
     <EmbeddedResource Include="TestModels\TemplateModels\Schemas\MonsterModel.ssdl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\EntityFramework.SqlServerCompact\EntityFramework.SqlServerCompact.csproj">
-      <Project>{1ef9c524-7122-4677-b111-dd14bb2a9ea2}</Project>
-      <Name>EntityFramework.SqlServerCompact</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\src\EntityFramework.SqlServerCompact\EntityFramework.SqlServerCompact.Legacy.csproj">
-      <Project>{54bfa36b-8105-468e-aa22-f2e1d3b28b54}</Project>
-      <Name>EntityFramework.SqlServerCompact.Legacy</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\src\EntityFramework.SqlServer\EntityFramework.SqlServer.csproj">
       <Project>{6f4bb80b-5f74-44d3-a77f-0025dfa48c1a}</Project>
       <Name>EntityFramework.SqlServer</Name>
@@ -182,10 +174,6 @@
     <ProjectReference Include="..\..\..\src\EntityFramework\EntityFramework.csproj">
       <Project>{E06D1C12-EFE8-4413-A15C-AE01FC158F2F}</Project>
       <Name>EntityFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FunctionalTests.Transitional\FunctionalTests.Transitional.csproj">
-      <Project>{3d65611f-e8fb-4a33-9196-7836969d6378}</Project>
-      <Name>FunctionalTests.Transitional</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

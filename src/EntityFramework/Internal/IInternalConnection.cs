@@ -38,11 +38,11 @@ namespace System.Data.Entity.Internal
         // </summary>
         DbConnectionStringOrigin ConnectionStringOrigin { get; }
 
-        // <summary>
-        // Gets or sets an object representing a config file used for looking for DefaultConnectionFactory entries
-        // and connection strins.
-        // </summary>
-        AppConfig AppConfig { get; set; }
+        //// <summary>
+        //// Gets or sets an object representing a config file used for looking for DefaultConnectionFactory entries
+        //// and connection strins.
+        //// </summary>
+        //AppConfig AppConfig { get; set; }
 
         // <summary>
         // Gets or sets the provider to be used when creating the underlying connection.

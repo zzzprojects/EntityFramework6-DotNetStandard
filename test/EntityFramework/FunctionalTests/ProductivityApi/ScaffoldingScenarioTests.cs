@@ -24,32 +24,32 @@ namespace ProductivityApiTests
             }
         }
 
-        [Fact]
-        public void DbContextInfo_can_provide_a_database_first_model()
-        {
-            using (var context = new DbContextInfo(
-                typeof(DatabaseFirstContext),
-                AddConnectionStrings(CreateEmptyConfig())).CreateInstance())
-            {
-                // Will throw if DbFirstConnectionString is not found and used.
-                var objectContext = ((IObjectContextAdapter)context).ObjectContext;
-                Assert.Equal("AdvancedPatternsModelFirstContext", objectContext.DefaultContainerName);
-            }
-        }
+        //[Fact]
+        //public void DbContextInfo_can_provide_a_database_first_model()
+        //{
+        //    using (var context = new DbContextInfo(
+        //        typeof(DatabaseFirstContext),
+        //        AddConnectionStrings(CreateEmptyConfig())).CreateInstance())
+        //    {
+        //        // Will throw if DbFirstConnectionString is not found and used.
+        //        var objectContext = ((IObjectContextAdapter)context).ObjectContext;
+        //        Assert.Equal("AdvancedPatternsModelFirstContext", objectContext.DefaultContainerName);
+        //    }
+        //}
 
-        [Fact]
-        public void DbContextInfo_can_provide_a_database_first_model_even_when_given_provider_information()
-        {
-            using (var context = new DbContextInfo(
-                typeof(DatabaseFirstContext),
-                AddConnectionStrings(CreateEmptyConfig()),
-                new DbProviderInfo("Please.Do.Not.Use.Me", "8002")).CreateInstance())
-            {
-                // Will throw if DbFirstConnectionString is not found and used.
-                var objectContext = ((IObjectContextAdapter)context).ObjectContext;
-                Assert.Equal("AdvancedPatternsModelFirstContext", objectContext.DefaultContainerName);
-            }
-        }
+        //[Fact]
+        //public void DbContextInfo_can_provide_a_database_first_model_even_when_given_provider_information()
+        //{
+        //    using (var context = new DbContextInfo(
+        //        typeof(DatabaseFirstContext),
+        //        AddConnectionStrings(CreateEmptyConfig()),
+        //        new DbProviderInfo("Please.Do.Not.Use.Me", "8002")).CreateInstance())
+        //    {
+        //        // Will throw if DbFirstConnectionString is not found and used.
+        //        var objectContext = ((IObjectContextAdapter)context).ObjectContext;
+        //        Assert.Equal("AdvancedPatternsModelFirstContext", objectContext.DefaultContainerName);
+        //    }
+        //}
 
         [Fact]
         public void DbContextInfo_can_provide_a_code_first_model_without_hitting_the_database()
@@ -66,23 +66,23 @@ namespace ProductivityApiTests
             }
         }
 
-        [Fact]
-        public void DbContextInfo_can_provide_a_code_first_model_without_hitting_the_database_when_also_give_config()
-        {
-            Database.SetInitializer<CodeFirstScaffoldingContextWithConnection>(null);
+        //[Fact]
+        //public void DbContextInfo_can_provide_a_code_first_model_without_hitting_the_database_when_also_give_config()
+        //{
+        //    Database.SetInitializer<CodeFirstScaffoldingContextWithConnection>(null);
 
-            using (var context = new DbContextInfo(
-                typeof(CodeFirstScaffoldingContextWithConnection),
-                AddConnectionStrings(CreateEmptyConfig()),
-                new DbProviderInfo("System.Data.SqlClient", "2008")).CreateInstance())
-            {
-                // Will throw if CodeFirstConnectionString is not found and will throw if it is used to
-                // make a connection since it points to a server that does not exist.
-                var objectContext = ((IObjectContextAdapter)context).ObjectContext;
-                Assert.Equal("CodeFirstScaffoldingContextWithConnection", objectContext.DefaultContainerName);
-                Assert.Equal("Bar", ((CodeFirstScaffoldingContextWithConnection)context).ExtraInfo);
-            }
-        }
+        //    using (var context = new DbContextInfo(
+        //        typeof(CodeFirstScaffoldingContextWithConnection),
+        //        AddConnectionStrings(CreateEmptyConfig()),
+        //        new DbProviderInfo("System.Data.SqlClient", "2008")).CreateInstance())
+        //    {
+        //        // Will throw if CodeFirstConnectionString is not found and will throw if it is used to
+        //        // make a connection since it points to a server that does not exist.
+        //        var objectContext = ((IObjectContextAdapter)context).ObjectContext;
+        //        Assert.Equal("CodeFirstScaffoldingContextWithConnection", objectContext.DefaultContainerName);
+        //        Assert.Equal("Bar", ((CodeFirstScaffoldingContextWithConnection)context).ExtraInfo);
+        //    }
+        //}
 
         private Configuration AddConnectionStrings(Configuration config)
         {
