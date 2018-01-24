@@ -489,18 +489,18 @@ namespace System.Data.Entity.Internal
         {
             var contextType = internalContext.Owner.GetType();
 
-            //DbModelStore modelStore = null;
+            DbModelStore modelStore = null;
             //if (!(internalContext.Owner is HistoryContext))
             //{
-            //    modelStore = DbConfiguration.DependencyResolver.GetService<DbModelStore>();
-            //    if (modelStore != null)
-            //    {
-            //        var compiledModel = modelStore.TryLoad(contextType);
-            //        if (compiledModel != null)
-            //        {
-            //            return compiledModel;
-            //        }
-            //    }
+                modelStore = DbConfiguration.DependencyResolver.GetService<DbModelStore>();
+                if (modelStore != null)
+                {
+                    var compiledModel = modelStore.TryLoad(contextType);
+                    if (compiledModel != null)
+                    {
+                        return compiledModel;
+                    }
+                }
             //}
 
             var modelBuilder = internalContext.CreateModelBuilder();
@@ -512,10 +512,10 @@ namespace System.Data.Entity.Internal
 
             internalContext._modelBeingInitialized = model;
 
-            //if (modelStore != null)
-            //{
-            //    modelStore.Save(contextType, model);
-            //}
+            if (modelStore != null)
+            {
+                modelStore.Save(contextType, model);
+            }
 
             return model.Compile();
         }

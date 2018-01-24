@@ -161,11 +161,11 @@ namespace System.Data.Entity.Internal
                     if (UnderlyingConnection == null)
                     {
                         var connectionString = _nameOrConnectionString;
-                        //string name;
-                        //if (_connectionInfo != null)
-                        //{
-                        //    connectionString = _connectionInfo.GetConnectionString(AppConfig).ConnectionString;
-                        //}
+                        string name;
+                        if (_connectionInfo != null)
+                        {
+                            connectionString = _connectionInfo.GetConnectionString();
+                        }
                         //else if (DbHelpers.TryGetConnectionName(_nameOrConnectionString, out name))
                         //{
                         //    var setting = FindConnectionInConfig(name, AppConfig);
@@ -255,18 +255,17 @@ namespace System.Data.Entity.Internal
                 //Debug.Assert(AppConfig != null);
 
                 string name;
-                //if (_connectionInfo != null)
-                //{
-                //    var connection = _connectionInfo.GetConnectionString(AppConfig);
-                //    //InitializeFromConnectionStringSetting(connection);
+                if (_connectionInfo != null)
+                {
+                    var connection = _connectionInfo.GetConnectionString();
+                    //InitializeFromConnectionStringSetting(connection);
 
-                //    _connectionStringOrigin = DbConnectionStringOrigin.DbContextInfo;
-                //    _connectionStringName = connection.Name;
-                //}
+                    _connectionStringOrigin = DbConnectionStringOrigin.DbContextInfo;
+                    //_connectionStringName = connection.Name;
+                }
                 //    // If the name or connection string is a simple name or is in the form "name=xyz" then use
                 //    // that name to try to load from the app/web config file. 
-                //else 
-                if (!DbHelpers.TryGetConnectionName(_nameOrConnectionString, out name))
+                else if (!DbHelpers.TryGetConnectionName(_nameOrConnectionString, out name))
                 {
                     // If the connection string is of the form name=, but the name was not found in the config file
                     // then always throw since we always interpret name= to mean find in the config file only.

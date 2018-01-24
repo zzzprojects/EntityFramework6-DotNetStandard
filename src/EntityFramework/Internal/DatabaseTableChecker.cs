@@ -63,7 +63,7 @@ namespace System.Data.Entity.Internal
                     // At this point we know no model tables exist. If the history table exists and has an entry
                     // for this context, then treat this as a non-empty database, otherwise treat is as existing
                     // but empty.
-                    return DatabaseExistenceState.ExistsConsideredEmpty;
+                    return DatabaseExistenceState.Exists;
                 }
                 catch (Exception ex)
                 {

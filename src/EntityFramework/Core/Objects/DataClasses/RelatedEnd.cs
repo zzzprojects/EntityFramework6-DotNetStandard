@@ -2689,27 +2689,27 @@ namespace System.Data.Entity.Core.Objects.DataClasses
                      ReferenceEquals(EntityKey.NoEntitySetKey, entityKey));
         }
 
-        // This method is required to maintain compatibility with the v1 binary serialization format. 
-        // In particular, it recreates a entity wrapper from the serialized owner.
-        // Note that this is only expected to work for non-POCO entities, since serialization of POCO
-        // entities will not result in serialization of the RelationshipManager or its related objects.
-        /// <summary>
-        /// Used internally to deserialize entity objects along with the
-        /// <see
-        ///     cref="T:System.Data.Entity.Core.Objects.DataClasses.RelationshipManager" />
-        /// instances.
-        /// </summary>
-        /// <param name="context">The serialized stream.</param>
-        [OnDeserialized]
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
-        public void OnDeserialized(StreamingContext context)
-        {
-#pragma warning disable 612 // Disable "obsolete" warning for the _owner field. Used for backwards compatibility.
-            _wrappedOwner = EntityWrapperFactory.WrapEntityUsingContext(_owner, ObjectContext);
-#pragma warning restore 612
-        }
+//        // This method is required to maintain compatibility with the v1 binary serialization format. 
+//        // In particular, it recreates a entity wrapper from the serialized owner.
+//        // Note that this is only expected to work for non-POCO entities, since serialization of POCO
+//        // entities will not result in serialization of the RelationshipManager or its related objects.
+//        /// <summary>
+//        /// Used internally to deserialize entity objects along with the
+//        /// <see
+//        ///     cref="T:System.Data.Entity.Core.Objects.DataClasses.RelationshipManager" />
+//        /// instances.
+//        /// </summary>
+//        /// <param name="context">The serialized stream.</param>
+//        [OnDeserialized]
+//        [Browsable(false)]
+//        [EditorBrowsable(EditorBrowsableState.Never)]
+//        [SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
+//        public void OnDeserialized(StreamingContext context)
+//        {
+//#pragma warning disable 612 // Disable "obsolete" warning for the _owner field. Used for backwards compatibility.
+//            _wrappedOwner = EntityWrapperFactory.WrapEntityUsingContext(_owner, ObjectContext);
+//#pragma warning restore 612
+//        }
 
         [NonSerialized]
         private NavigationProperty navigationPropertyCache;

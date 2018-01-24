@@ -1262,42 +1262,42 @@ namespace System.Data.Entity.Core
 
         #region Serialization
 
-        /// <summary>
-        /// Helper method that is used to deserialize an <see cref="T:System.Data.Entity.Core.EntityKey" />.
-        /// </summary>
-        /// <param name="context">Describes the source and destination of a given serialized stream, and provides an additional caller-defined context.</param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Browsable(false)]
-        [OnDeserializing]
-        [SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
-        public void OnDeserializing(StreamingContext context)
-        {
-            if (RequiresDeserialization)
-            {
-                DeserializeMembers();
-            }
-        }
+        ///// <summary>
+        ///// Helper method that is used to deserialize an <see cref="T:System.Data.Entity.Core.EntityKey" />.
+        ///// </summary>
+        ///// <param name="context">Describes the source and destination of a given serialized stream, and provides an additional caller-defined context.</param>
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //[Browsable(false)]
+        //[OnDeserializing]
+        //[SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
+        //public void OnDeserializing(StreamingContext context)
+        //{
+        //    if (RequiresDeserialization)
+        //    {
+        //        DeserializeMembers();
+        //    }
+        //}
 
-        /// <summary>
-        /// Helper method that is used to deserialize an <see cref="T:System.Data.Entity.Core.EntityKey" />.
-        /// </summary>
-        /// <param name="context">Describes the source and destination of a given serialized stream and provides an additional caller-defined context.</param>
-        [OnDeserialized]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Browsable(false)]
-        [SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
-        public void OnDeserialized(StreamingContext context)
-        {
-            _entitySetName = LookupSingletonName(_entitySetName);
-            _entityContainerName = LookupSingletonName(_entityContainerName);
-            if (_keyNames != null)
-            {
-                for (var i = 0; i < _keyNames.Length; i++)
-                {
-                    _keyNames[i] = LookupSingletonName(_keyNames[i]);
-                }
-            }
-        }
+        ///// <summary>
+        ///// Helper method that is used to deserialize an <see cref="T:System.Data.Entity.Core.EntityKey" />.
+        ///// </summary>
+        ///// <param name="context">Describes the source and destination of a given serialized stream and provides an additional caller-defined context.</param>
+        //[OnDeserialized]
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //[Browsable(false)]
+        //[SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
+        //public void OnDeserialized(StreamingContext context)
+        //{
+        //    _entitySetName = LookupSingletonName(_entitySetName);
+        //    _entityContainerName = LookupSingletonName(_entityContainerName);
+        //    if (_keyNames != null)
+        //    {
+        //        for (var i = 0; i < _keyNames.Length; i++)
+        //        {
+        //            _keyNames[i] = LookupSingletonName(_keyNames[i]);
+        //        }
+        //    }
+        //}
 
         // <summary>
         // Dev Note: this must be called from within a _lock block on _nameLookup

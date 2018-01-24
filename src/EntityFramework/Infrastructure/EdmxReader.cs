@@ -12,24 +12,24 @@ namespace System.Data.Entity.Infrastructure
     /// </summary>
     public static class EdmxReader
     {
-        ///// <summary>
-        ///// Reads a metadata model from .edmx.
-        ///// </summary>
-        ///// <param name="reader">XML reader for the .edmx</param>
-        ///// <param name="defaultSchema">Default database schema used by the model.</param>
-        ///// <returns>The loaded metadata model.</returns>
-        //public static DbCompiledModel Read(XmlReader reader, string defaultSchema)
-        //{
-        //    Check.NotNull(reader, "reader");
+        /// <summary>
+        /// Reads a metadata model from .edmx.
+        /// </summary>
+        /// <param name="reader">XML reader for the .edmx</param>
+        /// <param name="defaultSchema">Default database schema used by the model.</param>
+        /// <returns>The loaded metadata model.</returns>
+        public static DbCompiledModel Read(XmlReader reader, string defaultSchema)
+        {
+            Check.NotNull(reader, "reader");
 
-        //    var document = XDocument.Load(reader);
+            var document = XDocument.Load(reader);
 
-        //    DbProviderInfo providerInfo;
-        //    var mappingItemCollection = document.GetStorageMappingItemCollection(out providerInfo);
+            DbProviderInfo providerInfo;
+            var mappingItemCollection = document.GetStorageMappingItemCollection(out providerInfo);
 
-        //    return new DbCompiledModel(
-        //        CodeFirstCachedMetadataWorkspace.Create(mappingItemCollection, providerInfo),
-        //        defaultSchema);
-        //}
+            return new DbCompiledModel(
+                CodeFirstCachedMetadataWorkspace.Create(mappingItemCollection, providerInfo),
+                defaultSchema);
+        }
     }
 }
