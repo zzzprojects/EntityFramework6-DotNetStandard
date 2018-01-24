@@ -837,34 +837,34 @@ namespace System.Data.Entity.Core.Objects.DataClasses
             }
         }
 
-        // This method is required to maintain compatibility with the v1 binary serialization format. 
-        // In particular, it recreates a entity wrapper from the serialized cached value.
-        // Note that this is only expected to work for non-POCO entities, since serialization of POCO
-        // entities will not result in serialization of the RelationshipManager or its related objects.
-        /// <summary>This method is used internally to serialize related entity objects.</summary>
-        /// <param name="context">The serialized stream.</param>
-        [OnDeserialized]
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
-        public void OnRefDeserialized(StreamingContext context)
-        {
-            _wrappedCachedValue = EntityWrapperFactory.WrapEntityUsingContext(_cachedValue, ObjectContext);
-        }
+        //// This method is required to maintain compatibility with the v1 binary serialization format. 
+        //// In particular, it recreates a entity wrapper from the serialized cached value.
+        //// Note that this is only expected to work for non-POCO entities, since serialization of POCO
+        //// entities will not result in serialization of the RelationshipManager or its related objects.
+        ///// <summary>This method is used internally to serialize related entity objects.</summary>
+        ///// <param name="context">The serialized stream.</param>
+        //[OnDeserialized]
+        //[Browsable(false)]
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //[SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
+        //public void OnRefDeserialized(StreamingContext context)
+        //{
+        //    _wrappedCachedValue = EntityWrapperFactory.WrapEntityUsingContext(_cachedValue, ObjectContext);
+        //}
 
-        /// <summary>This method is used internally to serialize related entity objects.</summary>
-        /// <param name="context">The serialized stream.</param>
-        [OnSerializing]
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
-        public void OnSerializing(StreamingContext context)
-        {
-            if (!(WrappedOwner.Entity is IEntityWithRelationships))
-            {
-                throw new InvalidOperationException(Strings.RelatedEnd_CannotSerialize("EntityReference"));
-            }
-        }
+        ///// <summary>This method is used internally to serialize related entity objects.</summary>
+        ///// <param name="context">The serialized stream.</param>
+        //[OnSerializing]
+        //[Browsable(false)]
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //[SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
+        //public void OnSerializing(StreamingContext context)
+        //{
+        //    if (!(WrappedOwner.Entity is IEntityWithRelationships))
+        //    {
+        //        throw new InvalidOperationException(Strings.RelatedEnd_CannotSerialize("EntityReference"));
+        //    }
+        //}
 
         #region Add
 

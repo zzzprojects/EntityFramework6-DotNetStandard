@@ -1198,36 +1198,36 @@ namespace System.Data.Entity.Core.Objects.DataClasses
             yield break;
         }
 
-        /// <summary>
-        /// Called by Object Services to prepare an <see cref="T:System.Data.Entity.Core.EntityKey" /> for binary serialization with a serialized relationship.
-        /// </summary>
-        /// <param name="context">Describes the source and destination of a given serialized stream, and provides an additional caller-defined context.</param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Browsable(false)]
-        [OnSerializing]
-        [SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
-        public void OnSerializing(StreamingContext context)
-        {
-            var wrappedOwner = WrappedOwner;
-            if (!(wrappedOwner.Entity is IEntityWithRelationships))
-            {
-                throw new InvalidOperationException(Strings.RelatedEnd_CannotSerialize("RelationshipManager"));
-            }
-            // If we are attached to a context we need to go fixup the detached entity key on any EntityReferences
-            if (wrappedOwner.Context != null
-                && wrappedOwner.MergeOption != MergeOption.NoTracking)
-            {
-                foreach (RelatedEnd relatedEnd in GetAllRelatedEnds())
-                {
-                    var reference = relatedEnd as EntityReference;
-                    if (reference != null
-                        && reference.EntityKey != null)
-                    {
-                        reference.DetachedEntityKey = reference.EntityKey;
-                    }
-                }
-            }
-        }
+        ///// <summary>
+        ///// Called by Object Services to prepare an <see cref="T:System.Data.Entity.Core.EntityKey" /> for binary serialization with a serialized relationship.
+        ///// </summary>
+        ///// <param name="context">Describes the source and destination of a given serialized stream, and provides an additional caller-defined context.</param>
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //[Browsable(false)]
+        //[OnSerializing]
+        //[SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
+        //public void OnSerializing(StreamingContext context)
+        //{
+        //    var wrappedOwner = WrappedOwner;
+        //    if (!(wrappedOwner.Entity is IEntityWithRelationships))
+        //    {
+        //        throw new InvalidOperationException(Strings.RelatedEnd_CannotSerialize("RelationshipManager"));
+        //    }
+        //    // If we are attached to a context we need to go fixup the detached entity key on any EntityReferences
+        //    if (wrappedOwner.Context != null
+        //        && wrappedOwner.MergeOption != MergeOption.NoTracking)
+        //    {
+        //        foreach (RelatedEnd relatedEnd in GetAllRelatedEnds())
+        //        {
+        //            var reference = relatedEnd as EntityReference;
+        //            if (reference != null
+        //                && reference.EntityKey != null)
+        //            {
+        //                reference.DetachedEntityKey = reference.EntityKey;
+        //            }
+        //        }
+        //    }
+        //}
 
         // ----------------
         // Internal Methods
@@ -1574,29 +1574,29 @@ namespace System.Data.Entity.Core.Objects.DataClasses
         // Private Methods
         // ----------------
 
-        // This method is required to maintain compatibility with the v1 binary serialization format. 
-        // In particular, it recreates a entity wrapper from the serialized owner.
-        // Note that this is only expected to work for non-POCO entities, since serialization of POCO
-        // entities will not result in serialization of the RelationshipManager or its related objects.
-        /// <summary>
-        /// Used internally to deserialize entity objects along with the
-        /// <see
-        ///     cref="T:System.Data.Entity.Core.Objects.DataClasses.RelationshipManager" />
-        /// instances.
-        /// </summary>
-        /// <param name="context">The serialized stream.</param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Browsable(false)]
-        [OnDeserialized]
-        [SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
-        public void OnDeserialized(StreamingContext context)
-        {
-            // Note that when deserializing, the context is always null since we never serialize
-            // the context with the entity.
-            _entityWrapperFactory = new EntityWrapperFactory();
-            _expensiveLoader = new ExpensiveOSpaceLoader();
-            _wrappedOwner = EntityWrapperFactory.WrapEntityUsingContext(_owner, null);
-        }
+        //// This method is required to maintain compatibility with the v1 binary serialization format. 
+        //// In particular, it recreates a entity wrapper from the serialized owner.
+        //// Note that this is only expected to work for non-POCO entities, since serialization of POCO
+        //// entities will not result in serialization of the RelationshipManager or its related objects.
+        ///// <summary>
+        ///// Used internally to deserialize entity objects along with the
+        ///// <see
+        /////     cref="T:System.Data.Entity.Core.Objects.DataClasses.RelationshipManager" />
+        ///// instances.
+        ///// </summary>
+        ///// <param name="context">The serialized stream.</param>
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //[Browsable(false)]
+        //[OnDeserialized]
+        //[SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
+        //public void OnDeserialized(StreamingContext context)
+        //{
+        //    // Note that when deserializing, the context is always null since we never serialize
+        //    // the context with the entity.
+        //    _entityWrapperFactory = new EntityWrapperFactory();
+        //    _expensiveLoader = new ExpensiveOSpaceLoader();
+        //    _wrappedOwner = EntityWrapperFactory.WrapEntityUsingContext(_owner, null);
+        //}
 
         // <summary>
         // Searches the list of relationships for an entry with the specified relationship name and role names

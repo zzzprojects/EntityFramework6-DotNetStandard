@@ -862,51 +862,51 @@ namespace System.Data.Entity.Core.Objects.DataClasses
             // no-op
         }
 
-        // This method is required to maintain compatibility with the v1 binary serialization format. 
-        // In particular, it takes the dictionary of wrapped entities and creates a hash set of
-        // raw entities that will be serialized.
-        // Note that this is only expected to work for non-POCO entities, since serialization of POCO
-        // entities will not result in serialization of the RelationshipManager or its related objects.
-        /// <summary>Used internally to serialize entity objects.</summary>
-        /// <param name="context">The streaming context.</param>
-        [SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
-        [OnSerializing]
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public void OnSerializing(StreamingContext context)
-        {
-            if (!(WrappedOwner.Entity is IEntityWithRelationships))
-            {
-                throw new InvalidOperationException(Strings.RelatedEnd_CannotSerialize("EntityCollection"));
-            }
-            _relatedEntities = _wrappedRelatedEntities == null ? null : new HashSet<TEntity>(_wrappedRelatedEntities.Keys, ObjectReferenceEqualityComparer.Default);
-        }
+        //// This method is required to maintain compatibility with the v1 binary serialization format. 
+        //// In particular, it takes the dictionary of wrapped entities and creates a hash set of
+        //// raw entities that will be serialized.
+        //// Note that this is only expected to work for non-POCO entities, since serialization of POCO
+        //// entities will not result in serialization of the RelationshipManager or its related objects.
+        ///// <summary>Used internally to serialize entity objects.</summary>
+        ///// <param name="context">The streaming context.</param>
+        //[SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
+        //[OnSerializing]
+        //[Browsable(false)]
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //public void OnSerializing(StreamingContext context)
+        //{
+        //    if (!(WrappedOwner.Entity is IEntityWithRelationships))
+        //    {
+        //        throw new InvalidOperationException(Strings.RelatedEnd_CannotSerialize("EntityCollection"));
+        //    }
+        //    _relatedEntities = _wrappedRelatedEntities == null ? null : new HashSet<TEntity>(_wrappedRelatedEntities.Keys, ObjectReferenceEqualityComparer.Default);
+        //}
 
-        // This method is required to maintain compatibility with the v1 binary serialization format. 
-        // In particular, it takes the _relatedEntities HashSet and recreates the dictionary of wrapped
-        // entities from it.  This is because the dictionary is not serialized.
-        // Note that this is only expected to work for non-POCO entities, since serialization of POCO
-        // entities will not result in serialization of the RelationshipManager or its related objects.
-        /// <summary>Used internally to deserialize entity objects.</summary>
-        /// <param name="context">The streaming context.</param>
-        [OnDeserialized]
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
-        public void OnCollectionDeserialized(StreamingContext context)
-        {
-            if (_relatedEntities != null)
-            {
-                // We need to call this here so that the hash set will be fully constructed
-                // ready for access.  Normally, this would happen later in the process.
-                _relatedEntities.OnDeserialization(null);
-                _wrappedRelatedEntities = new Dictionary<TEntity, IEntityWrapper>(ObjectReferenceEqualityComparer.Default);
-                foreach (var entity in _relatedEntities)
-                {
-                    _wrappedRelatedEntities.Add(entity, EntityWrapperFactory.WrapEntityUsingContext(entity, ObjectContext));
-                }
-            }
-        }
+        //// This method is required to maintain compatibility with the v1 binary serialization format. 
+        //// In particular, it takes the _relatedEntities HashSet and recreates the dictionary of wrapped
+        //// entities from it.  This is because the dictionary is not serialized.
+        //// Note that this is only expected to work for non-POCO entities, since serialization of POCO
+        //// entities will not result in serialization of the RelationshipManager or its related objects.
+        ///// <summary>Used internally to deserialize entity objects.</summary>
+        ///// <param name="context">The streaming context.</param>
+        //[OnDeserialized]
+        //[Browsable(false)]
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //[SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly")]
+        //public void OnCollectionDeserialized(StreamingContext context)
+        //{
+        //    if (_relatedEntities != null)
+        //    {
+        //        // We need to call this here so that the hash set will be fully constructed
+        //        // ready for access.  Normally, this would happen later in the process.
+        //        _relatedEntities.OnDeserialization(null);
+        //        _wrappedRelatedEntities = new Dictionary<TEntity, IEntityWrapper>(ObjectReferenceEqualityComparer.Default);
+        //        foreach (var entity in _relatedEntities)
+        //        {
+        //            _wrappedRelatedEntities.Add(entity, EntityWrapperFactory.WrapEntityUsingContext(entity, ObjectContext));
+        //        }
+        //    }
+        //}
 
         // Identical code is in EntityReference, but this can't be moved to the base class because it relies on the
         // knowledge of the generic type, and the base class isn't generic
