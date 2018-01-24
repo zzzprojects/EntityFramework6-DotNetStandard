@@ -51,11 +51,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{41D51222
 		src\NuGet\EntityFramework.SqlServerCompact\tools\install.ps1 = src\NuGet\EntityFramework.SqlServerCompact\tools\install.ps1
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework", "src\EntityFramework\EntityFramework.csproj", "{E06D1C12-EFE8-4413-A15C-AE01FC158F2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFramework", "src\EntityFramework\EntityFramework.csproj", "{E06D1C12-EFE8-4413-A15C-AE01FC158F2F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{24A9C4D1-E189-4D3A-A2D7-36D3ED51D277}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServer", "src\EntityFramework.SqlServer\EntityFramework.SqlServer.csproj", "{6F4BB80B-5F74-44D3-A77F-0025DFA48C1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFramework.SqlServer", "src\EntityFramework.SqlServer\EntityFramework.SqlServer.csproj", "{6F4BB80B-5F74-44D3-A77F-0025DFA48C1A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EntityFramework.SqlServerCompact.Legacy", "EntityFramework.SqlServerCompact.Legacy", "{C2B11BAB-58B7-4EEF-A5AB-1646B1063753}"
 	ProjectSection(SolutionItems) = preProject
@@ -76,6 +76,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{66E974
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreTestApp", "NetCoreTestApp\NetCoreTestApp.csproj", "{8F14DB6B-70B0-47E2-8408-E877462C9065}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +103,14 @@ Global
 		{6F4BB80B-5F74-44D3-A77F-0025DFA48C1A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F4BB80B-5F74-44D3-A77F-0025DFA48C1A}.ReleaseNet40|Any CPU.ActiveCfg = Release|Any CPU
 		{6F4BB80B-5F74-44D3-A77F-0025DFA48C1A}.ReleaseNet40|Any CPU.Build.0 = Release|Any CPU
+		{8F14DB6B-70B0-47E2-8408-E877462C9065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F14DB6B-70B0-47E2-8408-E877462C9065}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F14DB6B-70B0-47E2-8408-E877462C9065}.DebugNet40|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F14DB6B-70B0-47E2-8408-E877462C9065}.DebugNet40|Any CPU.Build.0 = Debug|Any CPU
+		{8F14DB6B-70B0-47E2-8408-E877462C9065}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F14DB6B-70B0-47E2-8408-E877462C9065}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F14DB6B-70B0-47E2-8408-E877462C9065}.ReleaseNet40|Any CPU.ActiveCfg = Release|Any CPU
+		{8F14DB6B-70B0-47E2-8408-E877462C9065}.ReleaseNet40|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
