@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Data.Entity;
 
 namespace NetCoreTestApp
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Test app for EF6 on .NET Standard 2.0 / .NET Core.
     /// 
@@ -18,10 +21,15 @@ namespace NetCoreTestApp
     {
         static void Main(string[] args)
         {
+            MainAsync().Wait();
+        }
+
+        static async Task MainAsync()
+        {
             using (var context =
                 new MyDbContext("Data Source=.\\SQLEXPRESS;Initial Catalog=Ef6NetCoreTest;Integrated Security=true"))
             {
-                var posts = context.BlogPosts.ToList();
+                var posts = await context.BlogPosts.Where(i => i.Title == "Test 2").ToListAsync();
 
                 foreach (var post in posts)
                 {
