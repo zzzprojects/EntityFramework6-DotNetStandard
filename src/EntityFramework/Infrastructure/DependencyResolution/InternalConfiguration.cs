@@ -29,13 +29,13 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
             ResolverChain appConfigChain = null,
             ResolverChain normalResolverChain = null,
             RootDependencyResolver rootResolver = null,
-            //AppConfigDependencyResolver appConfigResolver = null,
+            AppConfigDependencyResolver appConfigResolver = null,
             Func<DbDispatchers> dispatchers = null)
         {
             _rootResolver = rootResolver ?? new RootDependencyResolver();
             _resolvers = new CompositeResolver<ResolverChain, ResolverChain>(appConfigChain ?? new ResolverChain(), normalResolverChain ?? new ResolverChain());
             _resolvers.Second.Add(_rootResolver);
-            //_resolvers.First.Add(appConfigResolver ?? new AppConfigDependencyResolver(AppConfig.DefaultInstance, this));
+            _resolvers.First.Add(appConfigResolver ?? new AppConfigDependencyResolver(AppConfig.DefaultInstance, this));
             _dispatchers = dispatchers ?? (() => DbInterception.Dispatch);
         }
 

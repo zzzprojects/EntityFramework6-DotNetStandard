@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>System.Data.Entity.SqlServer</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -9,7 +10,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.ProviderManifest.xml" />
+    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinition.ssdl" />
+    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinitionVersion3.ssdl" />
+    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinitionVersion3_Sql8.ssdl" />
+    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinition_Sql8.ssdl" />
+    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaMapping.msl" />
+    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaMappingVersion3.msl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.ProviderManifest.xml" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinition.ssdl" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinitionVersion3.ssdl" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinitionVersion3_Sql8.ssdl" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinition_Sql8.ssdl" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaMapping.msl" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaMappingVersion3.msl" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EntityFramework\EntityFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\System\Data\SqlClient\" />
   </ItemGroup>
 
 </Project>

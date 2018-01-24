@@ -2,13 +2,57 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>System.Data.Entity</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\System.Data.Resources.AnnotationSchema.xsd" />
+    <None Remove="Properties\System.Data.Resources.CodeGenerationSchema.xsd" />
+    <None Remove="Properties\System.Data.Resources.CSDLSchema_1.xsd" />
+    <None Remove="Properties\System.Data.Resources.CSDLSchema_1_1.xsd" />
+    <None Remove="Properties\System.Data.Resources.CSDLSchema_2.xsd" />
+    <None Remove="Properties\System.Data.Resources.CSDLSchema_3.xsd" />
+    <None Remove="Properties\System.Data.Resources.CSMSL_1.xsd" />
+    <None Remove="Properties\System.Data.Resources.CSMSL_2.xsd" />
+    <None Remove="Properties\System.Data.Resources.CSMSL_3.xsd" />
+    <None Remove="Properties\System.Data.Resources.DbProviderServices.ConceptualSchemaDefinition.csdl" />
+    <None Remove="Properties\System.Data.Resources.DbProviderServices.ConceptualSchemaDefinitionVersion3.csdl" />
+    <None Remove="Properties\system.data.resources.entitystoreschemagenerator.xsd" />
+    <None Remove="Properties\System.Data.Resources.ProviderServices.ProviderManifest.xsd" />
+    <None Remove="Properties\System.Data.Resources.SSDLSchema.xsd" />
+    <None Remove="Properties\System.Data.Resources.SSDLSchema_2.xsd" />
+    <None Remove="Properties\System.Data.Resources.SSDLSchema_3.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\System.Data.Resources.AnnotationSchema.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.CodeGenerationSchema.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.CSDLSchema_1.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.CSDLSchema_1_1.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.CSDLSchema_2.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.CSDLSchema_3.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.CSMSL_1.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.CSMSL_2.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.CSMSL_3.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.DbProviderServices.ConceptualSchemaDefinition.csdl" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.DbProviderServices.ConceptualSchemaDefinitionVersion3.csdl" />
+    <EmbeddedResource Include="Properties\system.data.resources.entitystoreschemagenerator.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.ProviderServices.ProviderManifest.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.SSDLSchema.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.SSDLSchema_2.xsd" />
+    <EmbeddedResource Include="Properties\System.Data.Resources.SSDLSchema_3.xsd" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.4.2" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
     <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\System\Data\EntityModel\" />
+    <Folder Include="Resources\System\Data\MappingSpecification\" />
   </ItemGroup>
 
 </Project>

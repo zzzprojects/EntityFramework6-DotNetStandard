@@ -57,16 +57,16 @@ namespace System.Data.Entity.Core.SchemaObjectModel
                 {
                     new XmlSchemaResource(
                         XmlConstants.EntityStoreSchemaGeneratorNamespace,
-                        "System.Data.Resources.EntityStoreSchemaGenerator.xsd")
+                        "System.Data.Entity.Properties.System.Data.Resources.EntityStoreSchemaGenerator.xsd")
                 };
 
-            var ssdlSchema = new XmlSchemaResource(XmlConstants.TargetNamespace_1, "System.Data.Resources.SSDLSchema.xsd", ssdlImports);
+            var ssdlSchema = new XmlSchemaResource(XmlConstants.TargetNamespace_1, "System.Data.Entity.Properties.System.Data.Resources.SSDLSchema.xsd", ssdlImports);
             schemaResourceMap.Add(ssdlSchema.NamespaceUri, ssdlSchema);
 
             if (schemaVersion >= XmlConstants.StoreVersionForV2)
             {
                 var ssdlSchema2 = new XmlSchemaResource(
-                    XmlConstants.TargetNamespace_2, "System.Data.Resources.SSDLSchema_2.xsd", ssdlImports);
+                    XmlConstants.TargetNamespace_2, "System.Data.Entity.Properties.System.Data.Resources.SSDLSchema_2.xsd", ssdlImports);
                 schemaResourceMap.Add(ssdlSchema2.NamespaceUri, ssdlSchema2);
             }
 
@@ -75,12 +75,12 @@ namespace System.Data.Entity.Core.SchemaObjectModel
                 Debug.Assert(XmlConstants.SchemaVersionLatest == XmlConstants.StoreVersionForV3, "Did you add a new schema version");
 
                 var ssdlSchema3 = new XmlSchemaResource(
-                    XmlConstants.TargetNamespace_3, "System.Data.Resources.SSDLSchema_3.xsd", ssdlImports);
+                    XmlConstants.TargetNamespace_3, "System.Data.Entity.Properties.System.Data.Resources.SSDLSchema_3.xsd", ssdlImports);
                 schemaResourceMap.Add(ssdlSchema3.NamespaceUri, ssdlSchema3);
             }
 
             var providerManifest = new XmlSchemaResource(
-                XmlConstants.ProviderManifestNamespace, "System.Data.Resources.ProviderServices.ProviderManifest.xsd");
+                XmlConstants.ProviderManifestNamespace, "System.Data.Entity.Properties.System.Data.Resources.ProviderServices.ProviderManifest.xsd");
             schemaResourceMap.Add(providerManifest.NamespaceUri, providerManifest);
         }
 
@@ -119,38 +119,38 @@ namespace System.Data.Entity.Core.SchemaObjectModel
                 {
                     new XmlSchemaResource(
                         XmlConstants.CodeGenerationSchemaNamespace,
-                        "System.Data.Resources.CodeGenerationSchema.xsd")
+                        "System.Data.Entity.Properties.System.Data.Resources.CodeGenerationSchema.xsd")
                 };
 
             XmlSchemaResource[] csdl2Imports =
                 {
                     new XmlSchemaResource(
                         XmlConstants.CodeGenerationSchemaNamespace,
-                        "System.Data.Resources.CodeGenerationSchema.xsd"),
+                        "System.Data.Entity.Properties.System.Data.Resources.CodeGenerationSchema.xsd"),
                     new XmlSchemaResource(
-                        XmlConstants.AnnotationNamespace, "System.Data.Resources.AnnotationSchema.xsd")
+                        XmlConstants.AnnotationNamespace, "System.Data.Entity.Properties.System.Data.Resources.AnnotationSchema.xsd")
                 };
 
             XmlSchemaResource[] csdl3Imports =
                 {
                     new XmlSchemaResource(
                         XmlConstants.CodeGenerationSchemaNamespace,
-                        "System.Data.Resources.CodeGenerationSchema.xsd"),
+                        "System.Data.Entity.Properties.System.Data.Resources.CodeGenerationSchema.xsd"),
                     new XmlSchemaResource(
-                        XmlConstants.AnnotationNamespace, "System.Data.Resources.AnnotationSchema.xsd")
+                        XmlConstants.AnnotationNamespace, "System.Data.Entity.Properties.System.Data.Resources.AnnotationSchema.xsd")
                 };
 
-            var csdlSchema_1 = new XmlSchemaResource(XmlConstants.ModelNamespace_1, "System.Data.Resources.CSDLSchema_1.xsd", csdlImports);
+            var csdlSchema_1 = new XmlSchemaResource(XmlConstants.ModelNamespace_1, "System.Data.Entity.Properties.System.Data.Resources.CSDLSchema_1.xsd", csdlImports);
             schemaResourceMap.Add(csdlSchema_1.NamespaceUri, csdlSchema_1);
 
             var csdlSchema_1_1 = new XmlSchemaResource(
-                XmlConstants.ModelNamespace_1_1, "System.Data.Resources.CSDLSchema_1_1.xsd", csdlImports);
+                XmlConstants.ModelNamespace_1_1, "System.Data.Entity.Properties.System.Data.Resources.CSDLSchema_1_1.xsd", csdlImports);
             schemaResourceMap.Add(csdlSchema_1_1.NamespaceUri, csdlSchema_1_1);
 
             if (schemaVersion >= XmlConstants.EdmVersionForV2)
             {
                 var csdlSchema_2 = new XmlSchemaResource(
-                    XmlConstants.ModelNamespace_2, "System.Data.Resources.CSDLSchema_2.xsd", csdl2Imports);
+                    XmlConstants.ModelNamespace_2, "System.Data.Entity.Properties.System.Data.Resources.CSDLSchema_2.xsd", csdl2Imports);
                 schemaResourceMap.Add(csdlSchema_2.NamespaceUri, csdlSchema_2);
             }
 
@@ -159,7 +159,7 @@ namespace System.Data.Entity.Core.SchemaObjectModel
                 Debug.Assert(XmlConstants.SchemaVersionLatest == XmlConstants.EdmVersionForV3, "Did you add a new schema version");
 
                 var csdlSchema_3 = new XmlSchemaResource(
-                    XmlConstants.ModelNamespace_3, "System.Data.Resources.CSDLSchema_3.xsd", csdl3Imports);
+                    XmlConstants.ModelNamespace_3, "System.Data.Entity.Properties.System.Data.Resources.CSDLSchema_3.xsd", csdl3Imports);
                 schemaResourceMap.Add(csdlSchema_3.NamespaceUri, csdlSchema_3);
             }
         }
