@@ -9,7 +9,7 @@ namespace System.Data.Entity.Infrastructure
     using System.Data.Entity.Core.EntityClient;
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure.Interception;
-    //using System.Data.Entity.Migrations.Infrastructure;
+    using System.Data.Entity.Migrations.Infrastructure;
     using System.Data.Entity.Utilities;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
@@ -160,15 +160,15 @@ namespace System.Data.Entity.Infrastructure
         /// <inheritdoc/>
         public override string BuildDatabaseInitializationScript()
         {
-            //if (TransactionContext != null)
-            //{
-            //    var sqlStatements = TransactionContextInitializer<TransactionContext>.GenerateMigrationStatements(TransactionContext);
+            if (TransactionContext != null)
+            {
+                var sqlStatements = TransactionContextInitializer<TransactionContext>.GenerateMigrationStatements(TransactionContext);
 
-            //    var sqlBuilder = new StringBuilder();
-            //    MigratorScriptingDecorator.BuildSqlScript(sqlStatements, sqlBuilder);
+                var sqlBuilder = new StringBuilder();
+                MigratorScriptingDecorator.BuildSqlScript(sqlStatements, sqlBuilder);
 
-            //    return sqlBuilder.ToString();
-            //}
+                return sqlBuilder.ToString();
+            }
 
             return null;
         }

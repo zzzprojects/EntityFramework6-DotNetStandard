@@ -3,7 +3,6 @@
 namespace System.Data.Entity.SqlServer.Utilities
 {
     using System.Data.Entity.Core.Metadata.Edm;
-    using System.Data.Entity.Utilities;
 
     internal static class PrimitiveTypeExtensions
     {

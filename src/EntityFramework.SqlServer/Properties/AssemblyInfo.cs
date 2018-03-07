@@ -2,6 +2,6 @@
 
 using System.Reflection;
 
-[assembly: AssemblyTitle("EntityFramework.SqlServer")]
+//[assembly: AssemblyTitle("EntityFramework.SqlServer")]
 [assembly: AssemblyDescription("EntityFramework.SqlServer.dll")]
 [assembly: AssemblyDefaultAlias("EntityFramework.SqlServer.dll")]

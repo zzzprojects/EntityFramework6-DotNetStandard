@@ -19,10 +19,10 @@ namespace System.Data.Entity.Internal
     using System.Data.Entity.Internal.Linq;
     using System.Data.Entity.Internal.MockingProxies;
     using System.Data.Entity.Internal.Validation;
-    //using System.Data.Entity.Migrations;
-    //using System.Data.Entity.Migrations.History;
-    //using System.Data.Entity.Migrations.Infrastructure;
-    //using System.Data.Entity.Migrations.Utilities;
+    using System.Data.Entity.Migrations;
+    using System.Data.Entity.Migrations.History;
+    using System.Data.Entity.Migrations.Infrastructure;
+    using System.Data.Entity.Migrations.Utilities;
     using System.Data.Entity.ModelConfiguration.Utilities;
     using System.Data.Entity.Resources;
     using System.Data.Entity.Utilities;
@@ -86,8 +86,8 @@ namespace System.Data.Entity.Internal
         public static readonly MethodInfo CreateInitializationActionMethod
             = typeof(InternalContext).GetOnlyDeclaredMethod("CreateInitializationAction");
 
-        //// The configuration to use for initializers, connection strings and default connection factory
-        //private AppConfig _appConfig = AppConfig.DefaultInstance;
+        // The configuration to use for initializers, connection strings and default connection factory
+        private AppConfig _appConfig = AppConfig.DefaultInstance;
 
         // The DbContext that owns this InternalContext instance
         private readonly DbContext _owner;
@@ -118,8 +118,8 @@ namespace System.Data.Entity.Internal
 
         private DatabaseLogFormatter _logFormatter;
 
-        //private Func<DbMigrationsConfiguration> _migrationsConfiguration;
-        //private bool? _migrationsConfigurationDiscovered;
+        private Func<DbMigrationsConfiguration> _migrationsConfiguration;
+        private bool? _migrationsConfigurationDiscovered;
 
         private DbContextInfo _contextInfo;
 
@@ -253,17 +253,17 @@ namespace System.Data.Entity.Internal
             get { return null; }
         }
 
-        //// <summary>
-        //// Called by methods of <see cref="Database" /> to create a database either using the Migrations pipeline
-        //// if possible and the core provider otherwise.
-        //// </summary>
-        //// <param name="objectContext"> The context to use for core provider calls. </param>
-        //public virtual void CreateDatabase(ObjectContext objectContext, DatabaseExistenceState existenceState)
-        //{
-        //    // objectContext may be null when testing.
-        //    new DatabaseCreator().CreateDatabase(
-        //        this, (config, context) => new DbMigrator(config, context, existenceState, calledByCreateDatabase: true), objectContext);
-        //}
+        // <summary>
+        // Called by methods of <see cref="Database" /> to create a database either using the Migrations pipeline
+        // if possible and the core provider otherwise.
+        // </summary>
+        // <param name="objectContext"> The context to use for core provider calls. </param>
+        public virtual void CreateDatabase(ObjectContext objectContext, DatabaseExistenceState existenceState)
+        {
+            // objectContext may be null when testing.
+            new DatabaseCreator().CreateDatabase(
+                this, (config, context) => new DbMigrator(config, context, existenceState, calledByCreateDatabase: true), objectContext);
+        }
 
         public virtual bool CompatibleWithModel(bool throwIfNoMetadata, DatabaseExistenceState existenceState)
         {
@@ -271,15 +271,15 @@ namespace System.Data.Entity.Internal
                 this, new ModelHashCalculator(), throwIfNoMetadata, existenceState);
         }
 
-        //// <summary>
-        //// Checks whether the given model (an EDMX document) matches the current model.
-        //// </summary>
-        //public virtual bool ModelMatches(VersionedModel model)
-        //{
-        //    DebugCheck.NotNull(model);
+        // <summary>
+        // Checks whether the given model (an EDMX document) matches the current model.
+        // </summary>
+        public virtual bool ModelMatches(VersionedModel model)
+        {
+            DebugCheck.NotNull(model);
 
-        //    return !new EdmModelDiffer().Diff(model.Model, Owner.GetModel(), sourceModelVersion: model.Version).Any();
-        //}
+            return !new EdmModelDiffer().Diff(model.Model, Owner.GetModel(), sourceModelVersion: model.Version).Any();
+        }
 
         // <summary>
         // Queries the database for a model hash and returns it if found or returns null if the table
@@ -292,50 +292,50 @@ namespace System.Data.Entity.Internal
             return repository.QueryForModelHash(c => new EdmMetadataContext(c));
         }
 
-        //// <summary>
-        //// Queries the database for a model stored in the MigrationHistory table and returns it as an EDMX, or returns
-        //// null if the database does not contain a model.
-        //// </summary>
-        //public virtual VersionedModel QueryForModel(DatabaseExistenceState existenceState)
-        //{
-        //    string _, productVersion;
-        //    var lastModel = CreateHistoryRepository(existenceState).GetLastModel(out _, out productVersion);
+        // <summary>
+        // Queries the database for a model stored in the MigrationHistory table and returns it as an EDMX, or returns
+        // null if the database does not contain a model.
+        // </summary>
+        public virtual VersionedModel QueryForModel(DatabaseExistenceState existenceState)
+        {
+            string _, productVersion;
+            var lastModel = CreateHistoryRepository(existenceState).GetLastModel(out _, out productVersion);
 
-        //    return lastModel != null ? new VersionedModel(lastModel, productVersion) : null;
-        //}
+            return lastModel != null ? new VersionedModel(lastModel, productVersion) : null;
+        }
 
-        //// <summary>
-        //// Saves the model hash from the context to the database.
-        //// </summary>
-        //public virtual void SaveMetadataToDatabase()
-        //{
-        //    if (CodeFirstModel != null)
-        //    {
-        //        PerformInitializationAction(
-        //            () => CreateHistoryRepository().BootstrapUsingEFProviderDdl(new VersionedModel(Owner.GetModel())));
-        //    }
-        //}
+        // <summary>
+        // Saves the model hash from the context to the database.
+        // </summary>
+        public virtual void SaveMetadataToDatabase()
+        {
+            if (CodeFirstModel != null)
+            {
+                PerformInitializationAction(
+                    () => CreateHistoryRepository().BootstrapUsingEFProviderDdl(new VersionedModel(Owner.GetModel())));
+            }
+        }
 
-        //public virtual bool HasHistoryTableEntry()
-        //{
-        //    return CreateHistoryRepository().HasMigrations();
-        //}
+        public virtual bool HasHistoryTableEntry()
+        {
+            return CreateHistoryRepository().HasMigrations();
+        }
 
-        //private HistoryRepository CreateHistoryRepository(DatabaseExistenceState existenceState = DatabaseExistenceState.Unknown)
-        //{
-        //    DiscoverMigrationsConfiguration();
+        private HistoryRepository CreateHistoryRepository(DatabaseExistenceState existenceState = DatabaseExistenceState.Unknown)
+        {
+            DiscoverMigrationsConfiguration();
 
-        //    return new HistoryRepository(
-        //        this,
-        //        OriginalConnectionString,
-        //        ProviderFactory,
-        //        _migrationsConfiguration().ContextKey,
-        //        CommandTimeout,
-        //        HistoryContextFactory,
-        //        schemas: DefaultSchema != null ? new[] { DefaultSchema } : Enumerable.Empty<string>(),
-        //        contextForInterception: Owner,
-        //        initialExistence: existenceState);
-        //}
+            return new HistoryRepository(
+                this,
+                OriginalConnectionString,
+                ProviderFactory,
+                _migrationsConfiguration().ContextKey,
+                CommandTimeout,
+                HistoryContextFactory,
+                schemas: DefaultSchema != null ? new[] { DefaultSchema } : Enumerable.Empty<string>(),
+                contextForInterception: Owner,
+                initialExistence: existenceState);
+        }
 
         public virtual DbTransaction TryGetCurrentStoreTransaction()
         {
@@ -624,11 +624,11 @@ namespace System.Data.Entity.Internal
 
         protected void LoadContextConfigs()
         {
-            //var configCommandTimeout = AppConfig.ContextConfigs.TryGetCommandTimeout(Owner.GetType());
-            //if (configCommandTimeout.HasValue)
-            //{
-            //    CommandTimeout = configCommandTimeout.Value;
-            //}
+            var configCommandTimeout = AppConfig.ContextConfigs.TryGetCommandTimeout(Owner.GetType());
+            if (configCommandTimeout.HasValue)
+            {
+                CommandTimeout = configCommandTimeout.Value;
+            }
         }
 
         #endregion
@@ -1187,23 +1187,23 @@ namespace System.Data.Entity.Internal
         // <param name="connection"> The new connection. </param>
         public abstract void OverrideConnection(IInternalConnection connection);
 
-        //// <summary>
-        //// Gets or sets an object representing a config file used for looking for DefaultConnectionFactory entries,
-        //// database intializers and connection strings.
-        //// </summary>
-        //public virtual AppConfig AppConfig
-        //{
-        //    get
-        //    {
-        //        CheckContextNotDisposed();
-        //        return _appConfig;
-        //    }
-        //    set
-        //    {
-        //        CheckContextNotDisposed();
-        //        _appConfig = value;
-        //    }
-        //}
+        // <summary>
+        // Gets or sets an object representing a config file used for looking for DefaultConnectionFactory entries,
+        // database intializers and connection strings.
+        // </summary>
+        public virtual AppConfig AppConfig
+        {
+            get
+            {
+                CheckContextNotDisposed();
+                return _appConfig;
+            }
+            set
+            {
+                CheckContextNotDisposed();
+                _appConfig = value;
+            }
+        }
 
         // <summary>
         // Gets or sets the provider details to be used when building the EDM model.
@@ -1428,64 +1428,64 @@ namespace System.Data.Entity.Internal
             set { _defaultContextKey = value; }
         }
 
-        //public DbMigrationsConfiguration MigrationsConfiguration
-        //{
-        //    get
-        //    {
-        //        DiscoverMigrationsConfiguration();
-        //        return _migrationsConfiguration();
-        //    }
-        //}
+        public DbMigrationsConfiguration MigrationsConfiguration
+        {
+            get
+            {
+                DiscoverMigrationsConfiguration();
+                return _migrationsConfiguration();
+            }
+        }
 
-        //public Func<DbConnection, string, HistoryContext> HistoryContextFactory
-        //{
-        //    get
-        //    {
-        //        DiscoverMigrationsConfiguration();
-        //        return _migrationsConfiguration().GetHistoryContextFactory(ProviderName);
-        //    }
-        //}
+        public Func<DbConnection, string, HistoryContext> HistoryContextFactory
+        {
+            get
+            {
+                DiscoverMigrationsConfiguration();
+                return _migrationsConfiguration().GetHistoryContextFactory(ProviderName);
+            }
+        }
 
-        //public virtual bool MigrationsConfigurationDiscovered
-        //{
-        //    get
-        //    {
-        //        DiscoverMigrationsConfiguration();
-        //        return _migrationsConfigurationDiscovered.Value;
-        //    }
-        //}
+        public virtual bool MigrationsConfigurationDiscovered
+        {
+            get
+            {
+                DiscoverMigrationsConfiguration();
+                return _migrationsConfigurationDiscovered.Value;
+            }
+        }
 
-        //private void DiscoverMigrationsConfiguration()
-        //{
-        //    if (!_migrationsConfigurationDiscovered.HasValue)
-        //    {
-        //        var contextType = Owner.GetType();
-        //        var discoveredConfig
-        //            = new MigrationsConfigurationFinder(new TypeFinder(contextType.Assembly))
-        //                .FindMigrationsConfiguration(contextType, null);
+        private void DiscoverMigrationsConfiguration()
+        {
+            if (!_migrationsConfigurationDiscovered.HasValue)
+            {
+                var contextType = Owner.GetType();
+                var discoveredConfig
+                    = new MigrationsConfigurationFinder(new TypeFinder(contextType.Assembly))
+                        .FindMigrationsConfiguration(contextType, null);
 
-        //        if (discoveredConfig != null)
-        //        {
-        //            _migrationsConfiguration = () => discoveredConfig;
-        //            _migrationsConfigurationDiscovered = true;
-        //        }
-        //        else
-        //        {
-        //            _migrationsConfiguration = () => new Lazy<DbMigrationsConfiguration>(
-        //                () => new DbMigrationsConfiguration
-        //                {
-        //                    ContextType = contextType,
-        //                    AutomaticMigrationsEnabled = true,
-        //                    MigrationsAssembly = contextType.Assembly,
-        //                    MigrationsNamespace = contextType.Namespace,
-        //                    ContextKey = DefaultContextKey,
-        //                    TargetDatabase = new DbConnectionInfo(OriginalConnectionString, ProviderName),
-        //                    CommandTimeout = CommandTimeout
-        //                }).Value;
-        //            _migrationsConfigurationDiscovered = false;
-        //        }
-        //    }
-        //}
+                if (discoveredConfig != null)
+                {
+                    _migrationsConfiguration = () => discoveredConfig;
+                    _migrationsConfigurationDiscovered = true;
+                }
+                else
+                {
+                    _migrationsConfiguration = () => new Lazy<DbMigrationsConfiguration>(
+                        () => new DbMigrationsConfiguration
+                        {
+                            ContextType = contextType,
+                            AutomaticMigrationsEnabled = true,
+                            MigrationsAssembly = contextType.Assembly,
+                            MigrationsNamespace = contextType.Namespace,
+                            ContextKey = DefaultContextKey,
+                            TargetDatabase = new DbConnectionInfo(OriginalConnectionString, ProviderName),
+                            CommandTimeout = CommandTimeout
+                        }).Value;
+                    _migrationsConfigurationDiscovered = false;
+                }
+            }
+        }
 
         internal virtual string OwnerShortTypeName
         {

@@ -14069,125 +14069,125 @@ namespace System.Data.Entity.Resources
     [GeneratedCode("Resources.tt", "1.0.0.0")]
     internal static class Error
     {
-        //// <summary>
-        //// Migrations.Infrastructure.AutomaticDataLossException with message like "Automatic migration was not applied because it would result in data loss. Set AutomaticMigrationDataLossAllowed to 'true' on your DbMigrationsConfiguration to allow application of automatic migrations even if they might cause data loss. Alternately, use Update-Database with the '-Force' option, or scaffold an explicit migration."
-        //// </summary>
-        //internal static Exception AutomaticDataLoss()
-        //{
-        //    return new Migrations.Infrastructure.AutomaticDataLossException(Strings.AutomaticDataLoss);
-        //}
+        // <summary>
+        // Migrations.Infrastructure.AutomaticDataLossException with message like "Automatic migration was not applied because it would result in data loss. Set AutomaticMigrationDataLossAllowed to 'true' on your DbMigrationsConfiguration to allow application of automatic migrations even if they might cause data loss. Alternately, use Update-Database with the '-Force' option, or scaffold an explicit migration."
+        // </summary>
+        internal static Exception AutomaticDataLoss()
+        {
+            return new Migrations.Infrastructure.AutomaticDataLossException(Strings.AutomaticDataLoss);
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "Cannot scaffold the next migration because the target database was created with a version of Code First earlier than EF 4.3 and does not contain the migrations history table. To start using migrations against this database, ensure the current model is compatible with the target database and execute the migrations Update process. (In Visual Studio you can use the Update-Database command from Package Manager Console to execute the migrations Update process)."
-        //// </summary>
-        //internal static Exception MetadataOutOfDate()
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.MetadataOutOfDate);
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "Cannot scaffold the next migration because the target database was created with a version of Code First earlier than EF 4.3 and does not contain the migrations history table. To start using migrations against this database, ensure the current model is compatible with the target database and execute the migrations Update process. (In Visual Studio you can use the Update-Database command from Package Manager Console to execute the migrations Update process)."
+        // </summary>
+        internal static Exception MetadataOutOfDate()
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.MetadataOutOfDate);
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "The specified target migration '{0}' does not exist. Ensure that target migration refers to an existing migration id."
-        //// </summary>
-        //internal static Exception MigrationNotFound(object p0)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.MigrationNotFound(p0));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "The specified target migration '{0}' does not exist. Ensure that target migration refers to an existing migration id."
+        // </summary>
+        internal static Exception MigrationNotFound(object p0)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.MigrationNotFound(p0));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "The Foreign Key on table '{0}' with columns '{1}' could not be created because the principal key columns could not be determined. Use the AddForeignKey fluent API to fully specify the Foreign Key."
-        //// </summary>
-        //internal static Exception PartialFkOperation(object p0, object p1)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.PartialFkOperation(p0, p1));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "The Foreign Key on table '{0}' with columns '{1}' could not be created because the principal key columns could not be determined. Use the AddForeignKey fluent API to fully specify the Foreign Key."
+        // </summary>
+        internal static Exception PartialFkOperation(object p0, object p1)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.PartialFkOperation(p0, p1));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "'{0}' is not a valid target migration. When targeting a previously applied automatic migration, use the full migration id including timestamp."
-        //// </summary>
-        //internal static Exception AutoNotValidTarget(object p0)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.AutoNotValidTarget(p0));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "'{0}' is not a valid target migration. When targeting a previously applied automatic migration, use the full migration id including timestamp."
+        // </summary>
+        internal static Exception AutoNotValidTarget(object p0)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.AutoNotValidTarget(p0));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "'{0}' is not a valid migration. Explicit migrations must be used for both source and target when scripting the upgrade between them."
-        //// </summary>
-        //internal static Exception AutoNotValidForScriptWindows(object p0)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.AutoNotValidForScriptWindows(p0));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "'{0}' is not a valid migration. Explicit migrations must be used for both source and target when scripting the upgrade between them."
+        // </summary>
+        internal static Exception AutoNotValidForScriptWindows(object p0)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.AutoNotValidForScriptWindows(p0));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "The target context '{0}' is not constructible. Add a default constructor or provide an implementation of IDbContextFactory."
-        //// </summary>
-        //internal static Exception ContextNotConstructible(object p0)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.ContextNotConstructible(p0));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "The target context '{0}' is not constructible. Add a default constructor or provide an implementation of IDbContextFactory."
+        // </summary>
+        internal static Exception ContextNotConstructible(object p0)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.ContextNotConstructible(p0));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "The specified migration name '{0}' is ambiguous. Specify the full migration id including timestamp instead."
-        //// </summary>
-        //internal static Exception AmbiguousMigrationName(object p0)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.AmbiguousMigrationName(p0));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "The specified migration name '{0}' is ambiguous. Specify the full migration id including timestamp instead."
+        // </summary>
+        internal static Exception AmbiguousMigrationName(object p0)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.AmbiguousMigrationName(p0));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.AutomaticMigrationsDisabledException with message like "Unable to update database to match the current model because there are pending changes and automatic migration is disabled. Either write the pending model changes to a code-based migration or enable automatic migration. Set DbMigrationsConfiguration.AutomaticMigrationsEnabled to true to enable automatic migration."
-        //// </summary>
-        //internal static Exception AutomaticDisabledException()
-        //{
-        //    return new Migrations.Infrastructure.AutomaticMigrationsDisabledException(Strings.AutomaticDisabledException);
-        //}
+        // <summary>
+        // Migrations.Infrastructure.AutomaticMigrationsDisabledException with message like "Unable to update database to match the current model because there are pending changes and automatic migration is disabled. Either write the pending model changes to a code-based migration or enable automatic migration. Set DbMigrationsConfiguration.AutomaticMigrationsEnabled to true to enable automatic migration."
+        // </summary>
+        internal static Exception AutomaticDisabledException()
+        {
+            return new Migrations.Infrastructure.AutomaticMigrationsDisabledException(Strings.AutomaticDisabledException);
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "Scripting the downgrade between two specified migrations is not supported."
-        //// </summary>
-        //internal static Exception DownScriptWindowsNotSupported()
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.DownScriptWindowsNotSupported);
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "Scripting the downgrade between two specified migrations is not supported."
+        // </summary>
+        internal static Exception DownScriptWindowsNotSupported()
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.DownScriptWindowsNotSupported);
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "The migrations configuration type '{0}' was not be found in the assembly '{1}'."
-        //// </summary>
-        //internal static Exception AssemblyMigrator_NoConfigurationWithName(object p0, object p1)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.AssemblyMigrator_NoConfigurationWithName(p0, p1));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "The migrations configuration type '{0}' was not be found in the assembly '{1}'."
+        // </summary>
+        internal static Exception AssemblyMigrator_NoConfigurationWithName(object p0, object p1)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.AssemblyMigrator_NoConfigurationWithName(p0, p1));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "More than one migrations configuration type '{0}' was found in the assembly '{1}'. Specify the fully qualified name of the one to use."
-        //// </summary>
-        //internal static Exception AssemblyMigrator_MultipleConfigurationsWithName(object p0, object p1)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.AssemblyMigrator_MultipleConfigurationsWithName(p0, p1));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "More than one migrations configuration type '{0}' was found in the assembly '{1}'. Specify the fully qualified name of the one to use."
+        // </summary>
+        internal static Exception AssemblyMigrator_MultipleConfigurationsWithName(object p0, object p1)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.AssemblyMigrator_MultipleConfigurationsWithName(p0, p1));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "No migrations configuration type was found in the assembly '{0}'. (In Visual Studio you can use the Enable-Migrations command from Package Manager Console to add a migrations configuration)."
-        //// </summary>
-        //internal static Exception AssemblyMigrator_NoConfiguration(object p0)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.AssemblyMigrator_NoConfiguration(p0));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "No migrations configuration type was found in the assembly '{0}'. (In Visual Studio you can use the Enable-Migrations command from Package Manager Console to add a migrations configuration)."
+        // </summary>
+        internal static Exception AssemblyMigrator_NoConfiguration(object p0)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.AssemblyMigrator_NoConfiguration(p0));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "More than one migrations configuration type was found in the assembly '{0}'. Specify the name of the one to use."
-        //// </summary>
-        //internal static Exception AssemblyMigrator_MultipleConfigurations(object p0)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.AssemblyMigrator_MultipleConfigurations(p0));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "More than one migrations configuration type was found in the assembly '{0}'. Specify the name of the one to use."
+        // </summary>
+        internal static Exception AssemblyMigrator_MultipleConfigurations(object p0)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.AssemblyMigrator_MultipleConfigurations(p0));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "In VB.NET projects, the migrations namespace '{0}' must be under the root namespace '{1}'. Update the migrations project's root namespace to allow classes under the migrations namespace to be added."
-        //// </summary>
-        //internal static Exception MigrationsNamespaceNotUnderRootNamespace(object p0, object p1)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.MigrationsNamespaceNotUnderRootNamespace(p0, p1));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "In VB.NET projects, the migrations namespace '{0}' must be under the root namespace '{1}'. Update the migrations project's root namespace to allow classes under the migrations namespace to be added."
+        // </summary>
+        internal static Exception MigrationsNamespaceNotUnderRootNamespace(object p0, object p1)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.MigrationsNamespaceNotUnderRootNamespace(p0, p1));
+        }
 
         // <summary>
         // InvalidOperationException with message like "Unable to call public, instance method AddOrUpdate on derived IDbSet<T> type '{0}'. Method not found."
@@ -14197,13 +14197,13 @@ namespace System.Data.Entity.Resources
             return new InvalidOperationException(Strings.UnableToDispatchAddOrUpdate(p0));
         }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "No MigrationSqlGenerator found for provider '{0}'. Use the SetSqlGenerator method in the target migrations configuration class to register additional SQL generators."
-        //// </summary>
-        //internal static Exception NoSqlGeneratorForProvider(object p0)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.NoSqlGeneratorForProvider(p0));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "No MigrationSqlGenerator found for provider '{0}'. Use the SetSqlGenerator method in the target migrations configuration class to register additional SQL generators."
+        // </summary>
+        internal static Exception NoSqlGeneratorForProvider(object p0)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.NoSqlGeneratorForProvider(p0));
+        }
 
         // <summary>
         // InvalidOperationException with message like "The type '{0}' has already been configured as a complex type. It cannot be reconfigured as an entity type."
@@ -15509,29 +15509,29 @@ namespace System.Data.Entity.Resources
             return new ArgumentException(Strings.InvalidEdmMemberInstance);
         }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "More than one context type '{0}' was found in the assembly '{1}'. Specify the fully qualified name of the context."
-        //// </summary>
-        //internal static Exception EnableMigrations_MultipleContextsWithName(object p0, object p1)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.EnableMigrations_MultipleContextsWithName(p0, p1));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "More than one context type '{0}' was found in the assembly '{1}'. Specify the fully qualified name of the context."
+        // </summary>
+        internal static Exception EnableMigrations_MultipleContextsWithName(object p0, object p1)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.EnableMigrations_MultipleContextsWithName(p0, p1));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "No context type was found in the assembly '{0}'."
-        //// </summary>
-        //internal static Exception EnableMigrations_NoContext(object p0)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.EnableMigrations_NoContext(p0));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "No context type was found in the assembly '{0}'."
+        // </summary>
+        internal static Exception EnableMigrations_NoContext(object p0)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.EnableMigrations_NoContext(p0));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "The context type '{0}' was not found in the assembly '{1}'."
-        //// </summary>
-        //internal static Exception EnableMigrations_NoContextWithName(object p0, object p1)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.EnableMigrations_NoContextWithName(p0, p1));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "The context type '{0}' was not found in the assembly '{1}'."
+        // </summary>
+        internal static Exception EnableMigrations_NoContextWithName(object p0, object p1)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.EnableMigrations_NoContextWithName(p0, p1));
+        }
 
         // <summary>
         // InvalidOperationException with message like "Sequence contains more than one element"
@@ -15565,13 +15565,13 @@ namespace System.Data.Entity.Resources
             return new InvalidOperationException(Strings.EmptySequence);
         }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "Automatic migrations that affect the location of the migrations history system table (such as default schema changes) are not supported. Please use code-based migrations for operations that affect the location of the migrations history system table."
-        //// </summary>
-        //internal static Exception UnableToMoveHistoryTableWithAuto()
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.UnableToMoveHistoryTableWithAuto);
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "Automatic migrations that affect the location of the migrations history system table (such as default schema changes) are not supported. Please use code-based migrations for operations that affect the location of the migrations history system table."
+        // </summary>
+        internal static Exception UnableToMoveHistoryTableWithAuto()
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.UnableToMoveHistoryTableWithAuto);
+        }
 
         // <summary>
         // InvalidOperationException with message like "Sequence contains no matching element"
@@ -15597,13 +15597,13 @@ namespace System.Data.Entity.Resources
             return new InvalidOperationException(Strings.ModelBuilder_PropertyFilterTypeMustBePrimitive(p0));
         }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsPendingException with message like "Unable to generate an explicit migration because the following explicit migrations are pending: [{0}]. Apply the pending explicit migrations before attempting to generate a new explicit migration."
-        //// </summary>
-        //internal static Exception MigrationsPendingException(object p0)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsPendingException(Strings.MigrationsPendingException(p0));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsPendingException with message like "Unable to generate an explicit migration because the following explicit migrations are pending: [{0}]. Apply the pending explicit migrations before attempting to generate a new explicit migration."
+        // </summary>
+        internal static Exception MigrationsPendingException(object p0)
+        {
+            return new Migrations.Infrastructure.MigrationsPendingException(Strings.MigrationsPendingException(p0));
+        }
 
         // <summary>
         // InvalidOperationException with message like "The base type '{0}' must be mapped to functions because its derived type '{1}' is mapped to functions. When mapping an inheritance hierarchy to functions, ensure that the root type of the hierarchy is also mapped to functions."
@@ -15661,21 +15661,21 @@ namespace System.Data.Entity.Resources
             return new InvalidOperationException(Strings.ConflictingFunctionsMapping(p0, p1));
         }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "Could not apply auto-migration '{0}' because it includes modification function creation operations. When using auto-migrations, modification function creation operations are only supported when migrating to the current model."
-        //// </summary>
-        //internal static Exception AutomaticStaleFunctions(object p0)
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.AutomaticStaleFunctions(p0));
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "Could not apply auto-migration '{0}' because it includes modification function creation operations. When using auto-migrations, modification function creation operations are only supported when migrating to the current model."
+        // </summary>
+        internal static Exception AutomaticStaleFunctions(object p0)
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.AutomaticStaleFunctions(p0));
+        }
 
-        //// <summary>
-        //// Migrations.Infrastructure.MigrationsException with message like "An existing EF5 migrations history table was detected but could not be upgraded because a custom history context factory has been configured. To upgrade an existing EF5 database, ensure there is no custom history context factory configured."
-        //// </summary>
-        //internal static Exception UnableToUpgradeHistoryWhenCustomFactory()
-        //{
-        //    return new Migrations.Infrastructure.MigrationsException(Strings.UnableToUpgradeHistoryWhenCustomFactory);
-        //}
+        // <summary>
+        // Migrations.Infrastructure.MigrationsException with message like "An existing EF5 migrations history table was detected but could not be upgraded because a custom history context factory has been configured. To upgrade an existing EF5 database, ensure there is no custom history context factory configured."
+        // </summary>
+        internal static Exception UnableToUpgradeHistoryWhenCustomFactory()
+        {
+            return new Migrations.Infrastructure.MigrationsException(Strings.UnableToUpgradeHistoryWhenCustomFactory);
+        }
 
         // <summary>
         // InvalidOperationException with message like "The store type '{0}' could not be found in the {1} provider manifest"

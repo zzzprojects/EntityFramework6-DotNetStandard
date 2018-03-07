@@ -10,31 +10,30 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.ProviderManifest.xml" />
-    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinition.ssdl" />
-    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinitionVersion3.ssdl" />
-    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinitionVersion3_Sql8.ssdl" />
-    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinition_Sql8.ssdl" />
-    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaMapping.msl" />
-    <None Remove="Resources\System\Data\SqlClient\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaMappingVersion3.msl" />
+    <Compile Include="..\Common\ByteExtensions.cs" Link="Utilities\ByteExtensions.cs" />
+    <Compile Include="..\Common\Check.cs" Link="Utilities\Check.cs" />
+    <Compile Include="..\Common\DatabaseName.cs" Link="Utilities\DatabaseName.cs" />
+    <Compile Include="..\Common\DebugCheck.cs" Link="Utilities\DebugCheck.cs" />
+    <Compile Include="..\Common\IEnumerableExtensions.cs" Link="Utilities\IEnumerableExtensions.cs" />
+    <Compile Include="..\Common\PropertyInfoExtensions.cs" Link="Utilities\PropertyInfoExtensions.cs" />
+    <Compile Include="..\Common\StringExtensions.cs" Link="Utilities\StringExtensions.cs" />
+    <Compile Include="..\Common\TypeExtensions.cs" Link="Utilities\TypeExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.ProviderManifest.xml" />
-    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinition.ssdl" />
-    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinitionVersion3.ssdl" />
-    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinitionVersion3_Sql8.ssdl" />
-    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaDefinition_Sql8.ssdl" />
-    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaMapping.msl" />
-    <EmbeddedResource Include="Properties\System.Data.Resources.SqlClient.SqlProviderServices.StoreSchemaMappingVersion3.msl" />
+    <EmbeddedResource Include="Resources\**\*.msl">
+      <LogicalName>%(Filename).msl</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\**\*.ssdl">
+      <LogicalName>%(Filename).ssdl</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\**\*.xml">
+      <LogicalName>%(Filename).xml</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EntityFramework\EntityFramework.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\System\Data\SqlClient\" />
   </ItemGroup>
 
 </Project>

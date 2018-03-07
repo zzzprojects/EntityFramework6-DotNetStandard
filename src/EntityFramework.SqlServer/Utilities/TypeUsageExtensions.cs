@@ -5,7 +5,6 @@ namespace System.Data.Entity.SqlServer.Utilities
     using System.Collections.Generic;
     using System.Data.Entity.Core.Common;
     using System.Data.Entity.Core.Metadata.Edm;
-    using System.Data.Entity.Utilities;
     using System.Linq;
 
     internal static class TypeUsageExtensions

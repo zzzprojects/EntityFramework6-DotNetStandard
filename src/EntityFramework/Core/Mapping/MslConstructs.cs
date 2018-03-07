@@ -84,9 +84,9 @@ namespace System.Data.Entity.Core.Mapping
         internal const string ConditionIsNullAttribute = "IsNull";
         internal const string CollectionPropertyNameAttribute = "Name";
         internal const string CollectionPropertyIsPartialAttribute = "IsPartial";
-        internal const string ResourceXsdNameV1 = "System.Data.Entity.Properties.System.Data.Resources.CSMSL_1.xsd";
-        internal const string ResourceXsdNameV2 = "System.Data.Entity.Properties.System.Data.Resources.CSMSL_2.xsd";
-        internal const string ResourceXsdNameV3 = "System.Data.Entity.Properties.System.Data.Resources.CSMSL_3.xsd";
+        internal const string ResourceXsdNameV1 = "System.Data.Resources.CSMSL_1.xsd";
+        internal const string ResourceXsdNameV2 = "System.Data.Resources.CSMSL_2.xsd";
+        internal const string ResourceXsdNameV3 = "System.Data.Resources.CSMSL_3.xsd";
         internal const string IsTypeOf = "IsTypeOf(";
         internal const string IsTypeOfTerminal = ")";
         internal const string IsTypeOfOnly = "IsTypeOfOnly(";

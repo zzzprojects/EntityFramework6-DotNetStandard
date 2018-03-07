@@ -11,6 +11,10 @@ namespace System.Data.Entity
     using System.Data.Entity.Infrastructure.DependencyResolution;
     using System.Data.Entity.Infrastructure.Interception;
     using System.Data.Entity.Infrastructure.Pluralization;
+    using System.Data.Entity.Migrations;
+    using System.Data.Entity.Migrations.Design;
+    using System.Data.Entity.Migrations.History;
+    using System.Data.Entity.Migrations.Sql;
     using System.Data.Entity.Resources;
     using System.Data.Entity.Spatial;
     using System.Data.Entity.Utilities;
@@ -407,30 +411,30 @@ namespace System.Data.Entity
             _internalConfiguration.RegisterSingleton(initializer ?? new NullDatabaseInitializer<TContext>());
         }
 
-        ///// <summary>
-        ///// Call this method from the constructor of a class derived from <see cref="DbConfiguration" /> to register a
-        ///// <see cref="Migrations.Sql.MigrationSqlGenerator" /> for use with the provider represented by the given invariant name.
-        ///// </summary>
-        ///// <remarks>
-        ///// This method is typically used by providers to register an associated SQL generator for Code First Migrations.
-        ///// It is different from setting the generator in the <see cref="DbMigrationsConfiguration" /> because it allows
-        ///// EF to use the Migrations pipeline to create a database even when there is no Migrations configuration in the project
-        ///// and/or Migrations are not being explicitly used.
-        ///// This method is provided as a convenient and discoverable way to add configuration to the Entity Framework.
-        ///// Internally it works in the same way as using AddDependencyResolver to add an appropriate resolver for
-        ///// <see cref="Migrations.Sql.MigrationSqlGenerator" />. This means that, if desired, the same functionality can be achieved using
-        ///// a custom resolver or a resolver backed by an Inversion-of-Control container.
-        ///// </remarks>
-        ///// <param name="providerInvariantName"> The invariant name of the ADO.NET provider for which this generator should be used. </param>
-        ///// <param name="sqlGenerator"> A delegate that returns a new instance of the SQL generator each time it is called. </param>
-        //protected internal void SetMigrationSqlGenerator(string providerInvariantName, Func<MigrationSqlGenerator> sqlGenerator)
-        //{
-        //    Check.NotEmpty(providerInvariantName, "providerInvariantName");
-        //    Check.NotNull(sqlGenerator, "sqlGenerator");
+        /// <summary>
+        /// Call this method from the constructor of a class derived from <see cref="DbConfiguration" /> to register a
+        /// <see cref="Migrations.Sql.MigrationSqlGenerator" /> for use with the provider represented by the given invariant name.
+        /// </summary>
+        /// <remarks>
+        /// This method is typically used by providers to register an associated SQL generator for Code First Migrations.
+        /// It is different from setting the generator in the <see cref="DbMigrationsConfiguration" /> because it allows
+        /// EF to use the Migrations pipeline to create a database even when there is no Migrations configuration in the project
+        /// and/or Migrations are not being explicitly used.
+        /// This method is provided as a convenient and discoverable way to add configuration to the Entity Framework.
+        /// Internally it works in the same way as using AddDependencyResolver to add an appropriate resolver for
+        /// <see cref="Migrations.Sql.MigrationSqlGenerator" />. This means that, if desired, the same functionality can be achieved using
+        /// a custom resolver or a resolver backed by an Inversion-of-Control container.
+        /// </remarks>
+        /// <param name="providerInvariantName"> The invariant name of the ADO.NET provider for which this generator should be used. </param>
+        /// <param name="sqlGenerator"> A delegate that returns a new instance of the SQL generator each time it is called. </param>
+        protected internal void SetMigrationSqlGenerator(string providerInvariantName, Func<MigrationSqlGenerator> sqlGenerator)
+        {
+            Check.NotEmpty(providerInvariantName, "providerInvariantName");
+            Check.NotNull(sqlGenerator, "sqlGenerator");
 
-        //    _internalConfiguration.CheckNotLocked("SetMigrationSqlGenerator");
-        //    _internalConfiguration.RegisterSingleton(sqlGenerator, providerInvariantName);
-        //}
+            _internalConfiguration.CheckNotLocked("SetMigrationSqlGenerator");
+            _internalConfiguration.RegisterSingleton(sqlGenerator, providerInvariantName);
+        }
 
         /// <summary>
         /// Call this method from the constructor of a class derived from <see cref="DbConfiguration" /> to set
@@ -517,59 +521,59 @@ namespace System.Data.Entity
             _internalConfiguration.RegisterSingleton(keyFactory);
         }
 
-        ///// <summary>
-        ///// Call this method from the constructor of a class derived from <see cref="DbConfiguration" /> to set
-        ///// a <see cref="Func{DbConnection, String, HistoryContext}" /> delegate which which be used for 
-        ///// creation of the default  <see cref="Migrations.History.HistoryContext" /> for a any
-        ///// <see cref="DbMigrationsConfiguration" />. This default factory will only be used if no factory is
-        ///// set explicitly in the <see cref="DbMigrationsConfiguration" /> and if no factory has been registered
-        ///// for the provider in use using the
-        ///// <see cref="SetHistoryContext(string,System.Func{System.Data.Common.DbConnection,string,System.Data.Entity.Migrations.History.HistoryContext})"/>
-        ///// method.
-        ///// </summary>
-        ///// <remarks>
-        ///// This method is provided as a convenient and discoverable way to add configuration to the Entity Framework.
-        ///// Internally it works in the same way as using AddDependencyResolver to add an appropriate resolver for
-        ///// <see cref="Func{DbConnection, String, HistoryContext}" />. This means that, if desired, the same functionality
-        ///// can be achieved using a custom resolver or a resolver backed by an Inversion-of-Control container.
-        ///// </remarks>
-        ///// <param name="factory"> 
-        ///// A factory for creating <see cref="Migrations.History.HistoryContext"/> instances for a given <see cref="DbConnection"/> and
-        ///// <see cref="String"/> representing the default schema.
-        ///// </param>
-        //protected internal void SetDefaultHistoryContext(Func<DbConnection, string, HistoryContext> factory)
-        //{
-        //    Check.NotNull(factory, "factory");
+        /// <summary>
+        /// Call this method from the constructor of a class derived from <see cref="DbConfiguration" /> to set
+        /// a <see cref="Func{DbConnection, String, HistoryContext}" /> delegate which which be used for 
+        /// creation of the default  <see cref="Migrations.History.HistoryContext" /> for a any
+        /// <see cref="DbMigrationsConfiguration" />. This default factory will only be used if no factory is
+        /// set explicitly in the <see cref="DbMigrationsConfiguration" /> and if no factory has been registered
+        /// for the provider in use using the
+        /// <see cref="SetHistoryContext(string,System.Func{System.Data.Common.DbConnection,string,System.Data.Entity.Migrations.History.HistoryContext})"/>
+        /// method.
+        /// </summary>
+        /// <remarks>
+        /// This method is provided as a convenient and discoverable way to add configuration to the Entity Framework.
+        /// Internally it works in the same way as using AddDependencyResolver to add an appropriate resolver for
+        /// <see cref="Func{DbConnection, String, HistoryContext}" />. This means that, if desired, the same functionality
+        /// can be achieved using a custom resolver or a resolver backed by an Inversion-of-Control container.
+        /// </remarks>
+        /// <param name="factory"> 
+        /// A factory for creating <see cref="Migrations.History.HistoryContext"/> instances for a given <see cref="DbConnection"/> and
+        /// <see cref="String"/> representing the default schema.
+        /// </param>
+        protected internal void SetDefaultHistoryContext(Func<DbConnection, string, HistoryContext> factory)
+        {
+            Check.NotNull(factory, "factory");
 
-        //    _internalConfiguration.CheckNotLocked("SetDefaultHistoryContext");
-        //    _internalConfiguration.RegisterSingleton(factory);
-        //}
+            _internalConfiguration.CheckNotLocked("SetDefaultHistoryContext");
+            _internalConfiguration.RegisterSingleton(factory);
+        }
 
-        ///// <summary>
-        ///// Call this method from the constructor of a class derived from <see cref="DbConfiguration" /> to set
-        ///// a <see cref="Func{DbConnection, String, HistoryContext}" /> delegate which allows for creation of a customized
-        ///// <see cref="Migrations.History.HistoryContext" /> for the given provider for any <see cref="DbMigrationsConfiguration" /> 
-        ///// that does not have an explicit factory set.
-        ///// </summary>
-        ///// <remarks>
-        ///// This method is provided as a convenient and discoverable way to add configuration to the Entity Framework.
-        ///// Internally it works in the same way as using AddDependencyResolver to add an appropriate resolver for
-        ///// <see cref="Func{DbConnection, String, HistoryContext}" />. This means that, if desired, the same functionality
-        ///// can be achieved using a custom resolver or a resolver backed by an Inversion-of-Control container.
-        ///// </remarks>
-        ///// <param name="providerInvariantName"> The invariant name of the ADO.NET provider for which this generator should be used. </param>
-        ///// <param name="factory"> 
-        ///// A factory for creating <see cref="Migrations.History.HistoryContext"/> instances for a given <see cref="DbConnection"/> and
-        ///// <see cref="String"/> representing the default schema.
-        ///// </param>
-        //protected internal void SetHistoryContext(string providerInvariantName, Func<DbConnection, string, HistoryContext> factory)
-        //{
-        //    Check.NotEmpty(providerInvariantName, "providerInvariantName");
-        //    Check.NotNull(factory, "factory");
+        /// <summary>
+        /// Call this method from the constructor of a class derived from <see cref="DbConfiguration" /> to set
+        /// a <see cref="Func{DbConnection, String, HistoryContext}" /> delegate which allows for creation of a customized
+        /// <see cref="Migrations.History.HistoryContext" /> for the given provider for any <see cref="DbMigrationsConfiguration" /> 
+        /// that does not have an explicit factory set.
+        /// </summary>
+        /// <remarks>
+        /// This method is provided as a convenient and discoverable way to add configuration to the Entity Framework.
+        /// Internally it works in the same way as using AddDependencyResolver to add an appropriate resolver for
+        /// <see cref="Func{DbConnection, String, HistoryContext}" />. This means that, if desired, the same functionality
+        /// can be achieved using a custom resolver or a resolver backed by an Inversion-of-Control container.
+        /// </remarks>
+        /// <param name="providerInvariantName"> The invariant name of the ADO.NET provider for which this generator should be used. </param>
+        /// <param name="factory"> 
+        /// A factory for creating <see cref="Migrations.History.HistoryContext"/> instances for a given <see cref="DbConnection"/> and
+        /// <see cref="String"/> representing the default schema.
+        /// </param>
+        protected internal void SetHistoryContext(string providerInvariantName, Func<DbConnection, string, HistoryContext> factory)
+        {
+            Check.NotEmpty(providerInvariantName, "providerInvariantName");
+            Check.NotNull(factory, "factory");
 
-        //    _internalConfiguration.CheckNotLocked("SetHistoryContext");
-        //    _internalConfiguration.RegisterSingleton(factory, providerInvariantName);
-        //}
+            _internalConfiguration.CheckNotLocked("SetHistoryContext");
+            _internalConfiguration.RegisterSingleton(factory, providerInvariantName);
+        }
 
         /// <summary>
         /// Call this method from the constructor of a class derived from <see cref="DbConfiguration" /> to set

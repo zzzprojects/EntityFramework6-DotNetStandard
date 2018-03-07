@@ -50,7 +50,7 @@ namespace System.Data.Entity.Internal
             DebugCheck.NotEmpty(nameOrConnectionString);
 
             _nameOrConnectionString = nameOrConnectionString;
-            //AppConfig = AppConfig.DefaultInstance;
+            AppConfig = AppConfig.DefaultInstance;
         }
 
         // <summary>
@@ -65,7 +65,7 @@ namespace System.Data.Entity.Internal
             DebugCheck.NotNull(connectionInfo);
 
             _connectionInfo = connectionInfo;
-            //AppConfig = AppConfig.DefaultInstance;
+            AppConfig = AppConfig.DefaultInstance;
         }
 
         #endregion
@@ -164,24 +164,24 @@ namespace System.Data.Entity.Internal
                         string name;
                         if (_connectionInfo != null)
                         {
-                            connectionString = _connectionInfo.GetConnectionString();
+                            connectionString = _connectionInfo.GetConnectionString(AppConfig).ConnectionString;
                         }
-                        //else if (DbHelpers.TryGetConnectionName(_nameOrConnectionString, out name))
-                        //{
-                        //    var setting = FindConnectionInConfig(name, AppConfig);
+                        else if (DbHelpers.TryGetConnectionName(_nameOrConnectionString, out name))
+                        {
+                            var setting = FindConnectionInConfig(name, AppConfig);
 
-                        //    // If the connection string is of the form name=, but the name was not found in the config file
-                        //    if (setting == null
-                        //        && DbHelpers.TreatAsConnectionString(_nameOrConnectionString))
-                        //    {
-                        //        throw Error.DbContext_ConnectionStringNotFound(name);
-                        //    }
+                            // If the connection string is of the form name=, but the name was not found in the config file
+                            if (setting == null
+                                && DbHelpers.TreatAsConnectionString(_nameOrConnectionString))
+                            {
+                                throw Error.DbContext_ConnectionStringNotFound(name);
+                            }
 
-                        //    if (setting != null)
-                        //    {
-                        //        connectionString = setting.ConnectionString;
-                        //    }
-                        //}
+                            if (setting != null)
+                            {
+                                connectionString = setting.ConnectionString;
+                            }
+                        }
 
                         _hasModel = DbHelpers.IsFullEFConnectionString(connectionString);
                     }
@@ -252,20 +252,21 @@ namespace System.Data.Entity.Internal
         {
             if (UnderlyingConnection == null)
             {
-                //Debug.Assert(AppConfig != null);
+                Debug.Assert(AppConfig != null);
 
                 string name;
                 if (_connectionInfo != null)
                 {
-                    var connection = _connectionInfo.GetConnectionString();
-                    //InitializeFromConnectionStringSetting(connection);
+                    var connection = _connectionInfo.GetConnectionString(AppConfig);
+                    InitializeFromConnectionStringSetting(connection);
 
                     _connectionStringOrigin = DbConnectionStringOrigin.DbContextInfo;
-                    //_connectionStringName = connection.Name;
+                    _connectionStringName = connection.Name;
                 }
-                //    // If the name or connection string is a simple name or is in the form "name=xyz" then use
-                //    // that name to try to load from the app/web config file. 
-                else if (!DbHelpers.TryGetConnectionName(_nameOrConnectionString, out name))
+                    // If the name or connection string is a simple name or is in the form "name=xyz" then use
+                    // that name to try to load from the app/web config file. 
+                else if (!DbHelpers.TryGetConnectionName(_nameOrConnectionString, out name)
+                         || !TryInitializeFromAppConfig(name, AppConfig))
                 {
                     // If the connection string is of the form name=, but the name was not found in the config file
                     // then always throw since we always interpret name= to mean find in the config file only.
@@ -317,84 +318,84 @@ namespace System.Data.Entity.Internal
             Debug.Assert(UnderlyingConnection != null, "Connection should have been initialized by some mechanism.");
         }
 
-        //// <summary>
-        //// Searches the app.config/web.config file for a connection that matches the given name.
-        //// The connection might be a store connection or an EF connection.
-        //// </summary>
-        //// <param name="name"> The connection name. </param>
-        //// <returns> True if a connection from the app.config file was found and used. </returns>
-        //private bool TryInitializeFromAppConfig(string name, AppConfig config)
-        //{
-        //    DebugCheck.NotNull(config);
+        // <summary>
+        // Searches the app.config/web.config file for a connection that matches the given name.
+        // The connection might be a store connection or an EF connection.
+        // </summary>
+        // <param name="name"> The connection name. </param>
+        // <returns> True if a connection from the app.config file was found and used. </returns>
+        private bool TryInitializeFromAppConfig(string name, AppConfig config)
+        {
+            DebugCheck.NotNull(config);
 
-        //    var appConfigConnection = FindConnectionInConfig(name, config);
-        //    if (appConfigConnection != null)
-        //    {
-        //        InitializeFromConnectionStringSetting(appConfigConnection);
-        //        _connectionStringOrigin = DbConnectionStringOrigin.Configuration;
-        //        _connectionStringName = appConfigConnection.Name;
+            var appConfigConnection = FindConnectionInConfig(name, config);
+            if (appConfigConnection != null)
+            {
+                InitializeFromConnectionStringSetting(appConfigConnection);
+                _connectionStringOrigin = DbConnectionStringOrigin.Configuration;
+                _connectionStringName = appConfigConnection.Name;
 
-        //        return true;
-        //    }
+                return true;
+            }
 
-        //    return false;
-        //}
+            return false;
+        }
 
-        //// <summary>
-        //// Attempts to locate a connection entry in the configuration based on the supplied context name.
-        //// </summary>
-        //// <param name="name"> The name to search for. </param>
-        //// <param name="config"> The configuration to search in. </param>
-        //// <returns> Connection string if found, otherwise null. </returns>
-        //private static ConnectionStringSettings FindConnectionInConfig(string name, AppConfig config)
-        //{
-        //    // Build a list of candidate names that might be found in the app.config/web.config file.
-        //    // The first entry is the full name.
-        //    var candidates = new List<string>
-        //    {
-        //        name
-        //    };
+        // <summary>
+        // Attempts to locate a connection entry in the configuration based on the supplied context name.
+        // </summary>
+        // <param name="name"> The name to search for. </param>
+        // <param name="config"> The configuration to search in. </param>
+        // <returns> Connection string if found, otherwise null. </returns>
+        private static ConnectionStringSettings FindConnectionInConfig(string name, AppConfig config)
+        {
+            // Build a list of candidate names that might be found in the app.config/web.config file.
+            // The first entry is the full name.
+            var candidates = new List<string>
+            {
+                name
+            };
 
-        //    // Second entry is full name with namespace stripped out.
-        //    var lastDot = name.LastIndexOf('.');
-        //    if (lastDot >= 0
-        //        && lastDot + 1 < name.Length)
-        //    {
-        //        candidates.Add(name.Substring(lastDot + 1));
-        //    }
+            // Second entry is full name with namespace stripped out.
+            var lastDot = name.LastIndexOf('.');
+            if (lastDot >= 0
+                && lastDot + 1 < name.Length)
+            {
+                candidates.Add(name.Substring(lastDot + 1));
+            }
 
-        //    // Now go through each candidate.  As soon as we find one that matches, stop.
-        //    var appConfigConnection = (from c in candidates
-        //        where config.GetConnectionString(c) != null
-        //        select config.GetConnectionString(c)).FirstOrDefault();
-        //    return appConfigConnection;
-        //}
+            // Now go through each candidate.  As soon as we find one that matches, stop.
+            var appConfigConnection = (from c in candidates
+                where config.GetConnectionString(c) != null
+                select config.GetConnectionString(c)).FirstOrDefault();
+            return appConfigConnection;
+        }
 
         // <summary>
         // Initializes the connection based on a connection string.
         // </summary>
         // <param name="appConfigConnection"> The settings to initialize from. </param>
-        //private void InitializeFromConnectionStringSetting(ConnectionStringSettings appConfigConnection)
-        //{
-        //    var providerInvariantName = appConfigConnection.ProviderName;
-        //    if (String.IsNullOrWhiteSpace(providerInvariantName))
-        //    {
-        //        throw Error.DbContext_ProviderNameMissing(appConfigConnection.Name);
-        //    }
+        private void InitializeFromConnectionStringSetting(ConnectionStringSettings appConfigConnection)
+        {
+            var providerInvariantName = appConfigConnection.ProviderName;
+            if (String.IsNullOrWhiteSpace(providerInvariantName))
+            {
+                throw Error.DbContext_ProviderNameMissing(appConfigConnection.Name);
+            }
 
-        //    if (String.Equals(providerInvariantName, "System.Data.EntityClient", StringComparison.OrdinalIgnoreCase))
-        //    {
-        //        UnderlyingConnection = new EntityConnection(appConfigConnection.ConnectionString);
-        //    }
-        //    else
-        //    {
-        //        CreateConnectionFromProviderName(providerInvariantName);
+            if (String.Equals(providerInvariantName, "System.Data.EntityClient", StringComparison.OrdinalIgnoreCase))
+            {
+                UnderlyingConnection = new EntityConnection(appConfigConnection.ConnectionString);
+            }
+            else
+            {
+                CreateConnectionFromProviderName(providerInvariantName);
 
-        //        DbInterception.Dispatch.Connection.SetConnectionString(
-        //            UnderlyingConnection,
-        //            new DbConnectionPropertyInterceptionContext<string>().WithValue(appConfigConnection.ConnectionString));
-        //    }
-        //}
+                DbInterception.Dispatch.Connection.SetConnectionString(
+                    UnderlyingConnection,
+                    new DbConnectionPropertyInterceptionContext<string>().WithValue(appConfigConnection.ConnectionString));
+            }
+        }
 
         private void CreateConnectionFromProviderName(string providerInvariantName)
         {

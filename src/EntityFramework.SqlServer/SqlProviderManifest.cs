@@ -129,22 +129,22 @@ namespace System.Data.Entity.SqlServer
 
         internal static XmlReader GetProviderManifest()
         {
-            return GetXmlResource("System.Data.Entity.SqlServer.Properties.System.Data.Resources.SqlClient.SqlProviderServices.ProviderManifest.xml");
+            return GetXmlResource("System.Data.Resources.SqlClient.SqlProviderServices.ProviderManifest.xml");
         }
 
         internal static XmlReader GetStoreSchemaMapping(string mslName)
         {
-            return GetXmlResource("System.Data.Entity.SqlServer.Properties.System.Data.Resources.SqlClient.SqlProviderServices." + mslName + ".msl");
+            return GetXmlResource("System.Data.Resources.SqlClient.SqlProviderServices." + mslName + ".msl");
         }
 
         internal XmlReader GetStoreSchemaDescription(string ssdlName)
         {
             if (_version == SqlVersion.Sql8)
             {
-                return GetXmlResource("System.Data.Entity.SqlServer.Properties.System.Data.Resources.SqlClient.SqlProviderServices." + ssdlName + "_Sql8.ssdl");
+                return GetXmlResource("System.Data.Resources.SqlClient.SqlProviderServices." + ssdlName + "_Sql8.ssdl");
             }
 
-            return GetXmlResource("System.Data.Entity.SqlServer.Properties.System.Data.Resources.SqlClient.SqlProviderServices." + ssdlName + ".ssdl");
+            return GetXmlResource("System.Data.Resources.SqlClient.SqlProviderServices." + ssdlName + ".ssdl");
         }
 
         #endregion

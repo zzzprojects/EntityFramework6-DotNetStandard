@@ -97,16 +97,16 @@ namespace System.Data.Entity.Infrastructure
             get { return !Suspended; }
         }
 
+        private static AsyncLocal<bool?> _suspended = new AsyncLocal<bool?>();
+
         /// <summary>
         ///     Indicates whether the strategy is suspended. The strategy is typically suspending while executing to avoid
         ///     recursive execution from nested operations.
         /// </summary>
         protected internal static bool Suspended
         {
-            get { return false; }
-            set { }
-            //get { return (bool?)CallContext.LogicalGetData(ContextName) ?? false; }
-            //set { CallContext.LogicalSetData(ContextName, value); }
+            get { return _suspended.Value ?? false; }
+            set { _suspended.Value = value; }
         }
 
         /// <summary>

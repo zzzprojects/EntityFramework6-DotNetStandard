@@ -9,40 +9,40 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
 
     internal class DbConfigurationLoader
     {
-        //public virtual Type TryLoadFromConfig(AppConfig config)
-        //{
-        //    DebugCheck.NotNull(config);
+        public virtual Type TryLoadFromConfig(AppConfig config)
+        {
+            DebugCheck.NotNull(config);
 
-        //    var typeName = config.ConfigurationTypeName;
-        //    if (string.IsNullOrWhiteSpace(typeName))
-        //    {
-        //        return null;
-        //    }
+            var typeName = config.ConfigurationTypeName;
+            if (string.IsNullOrWhiteSpace(typeName))
+            {
+                return null;
+            }
 
-        //    Type type;
-        //    try
-        //    {
-        //        type = Type.GetType(typeName, throwOnError: true);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new InvalidOperationException(Strings.DbConfigurationTypeNotFound(typeName), ex);
-        //    }
+            Type type;
+            try
+            {
+                type = Type.GetType(typeName, throwOnError: true);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(Strings.DbConfigurationTypeNotFound(typeName), ex);
+            }
 
-        //    if (!typeof(DbConfiguration).IsAssignableFrom(type))
-        //    {
-        //        throw new InvalidOperationException(
-        //            Strings.CreateInstance_BadDbConfigurationType(type.ToString(), typeof(DbConfiguration).ToString()));
-        //    }
+            if (!typeof(DbConfiguration).IsAssignableFrom(type))
+            {
+                throw new InvalidOperationException(
+                    Strings.CreateInstance_BadDbConfigurationType(type.ToString(), typeof(DbConfiguration).ToString()));
+            }
 
-        //    return type;
-        //}
+            return type;
+        }
 
-        //public virtual bool AppConfigContainsDbConfigurationType(AppConfig config)
-        //{
-        //    DebugCheck.NotNull(config);
+        public virtual bool AppConfigContainsDbConfigurationType(AppConfig config)
+        {
+            DebugCheck.NotNull(config);
 
-        //    return !string.IsNullOrWhiteSpace(config.ConfigurationTypeName);
-        //}
+            return !string.IsNullOrWhiteSpace(config.ConfigurationTypeName);
+        }
     }
 }

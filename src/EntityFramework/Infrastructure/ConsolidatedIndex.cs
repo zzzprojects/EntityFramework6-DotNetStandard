@@ -6,7 +6,7 @@ namespace System.Data.Entity.Infrastructure
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Core.Metadata.Edm;
     using System.Data.Entity.Infrastructure.Annotations;
-    //using System.Data.Entity.Migrations.Model;
+    using System.Data.Entity.Migrations.Model;
     using System.Data.Entity.Resources;
     using System.Data.Entity.Utilities;
     using System.Diagnostics;
@@ -105,39 +105,39 @@ namespace System.Data.Entity.Infrastructure
             _index = _index.MergeWith(index, ignoreOrder: true);
         }
 
-        //public CreateIndexOperation CreateCreateIndexOperation()
-        //{
-        //    var columnNames = Columns.ToArray();
-        //    Debug.Assert(columnNames.Length > 0);
-        //    Debug.Assert(_index.Name != null || columnNames.Length == 1);
+        public CreateIndexOperation CreateCreateIndexOperation()
+        {
+            var columnNames = Columns.ToArray();
+            Debug.Assert(columnNames.Length > 0);
+            Debug.Assert(_index.Name != null || columnNames.Length == 1);
 
-        //    var operation = new CreateIndexOperation
-        //    {
-        //        Name = _index.Name ?? IndexOperation.BuildDefaultName(columnNames),
-        //        Table = _table
-        //    };
+            var operation = new CreateIndexOperation
+            {
+                Name = _index.Name ?? IndexOperation.BuildDefaultName(columnNames),
+                Table = _table
+            };
 
-        //    foreach (var columnName in columnNames)
-        //    {
-        //        operation.Columns.Add(columnName);
-        //    }
+            foreach (var columnName in columnNames)
+            {
+                operation.Columns.Add(columnName);
+            }
 
-        //    if (_index.IsClusteredConfigured)
-        //    {
-        //        operation.IsClustered = _index.IsClustered;
-        //    }
+            if (_index.IsClusteredConfigured)
+            {
+                operation.IsClustered = _index.IsClustered;
+            }
 
-        //    if (_index.IsUniqueConfigured)
-        //    {
-        //        operation.IsUnique = _index.IsUnique;
-        //    }
+            if (_index.IsUniqueConfigured)
+            {
+                operation.IsUnique = _index.IsUnique;
+            }
 
-        //    return operation;
-        //}
+            return operation;
+        }
 
-        //public DropIndexOperation CreateDropIndexOperation()
-        //{
-        //    return (DropIndexOperation)CreateCreateIndexOperation().Inverse;
-        //}
+        public DropIndexOperation CreateDropIndexOperation()
+        {
+            return (DropIndexOperation)CreateCreateIndexOperation().Inverse;
+        }
     }
 }

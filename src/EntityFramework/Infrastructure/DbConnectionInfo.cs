@@ -3,6 +3,7 @@
 namespace System.Data.Entity.Infrastructure
 {
     using System.ComponentModel;
+    using System.Configuration;
     using System.Data.Entity.Internal;
     using System.Data.Entity.Resources;
     using System.Data.Entity.Utilities;
@@ -18,16 +19,16 @@ namespace System.Data.Entity.Infrastructure
         private readonly string _connectionString;
         private readonly string _providerInvariantName;
 
-        ///// <summary>
-        ///// Creates a new instance of DbConnectionInfo representing a connection that is specified in the application configuration file.
-        ///// </summary>
-        ///// <param name="connectionName"> The name of the connection string in the application configuration. </param>
-        //public DbConnectionInfo(string connectionName)
-        //{
-        //    Check.NotEmpty(connectionName, "connectionName");
+        /// <summary>
+        /// Creates a new instance of DbConnectionInfo representing a connection that is specified in the application configuration file.
+        /// </summary>
+        /// <param name="connectionName"> The name of the connection string in the application configuration. </param>
+        public DbConnectionInfo(string connectionName)
+        {
+            Check.NotEmpty(connectionName, "connectionName");
 
-        //    _connectionName = connectionName;
-        //}
+            _connectionName = connectionName;
+        }
 
         /// <summary>
         /// Creates a new instance of DbConnectionInfo based on a connection string.
@@ -47,24 +48,22 @@ namespace System.Data.Entity.Infrastructure
         // Gets the connection information represented by this instance.
         // </summary>
         // <param name="config"> Configuration to use if connection comes from the configuration file. </param>
-        internal string GetConnectionString()
+        internal ConnectionStringSettings GetConnectionString(AppConfig config)
         {
-            //DebugCheck.NotNull(config);
+            DebugCheck.NotNull(config);
 
-            //if (_connectionName != null)
-            //{
-            //    var result = config.GetConnectionString(_connectionName);
-            //    if (result == null)
-            //    {
-            //        throw Error.DbConnectionInfo_ConnectionStringNotFound(_connectionName);
-            //    }
+            if (_connectionName != null)
+            {
+                var result = config.GetConnectionString(_connectionName);
+                if (result == null)
+                {
+                    throw Error.DbConnectionInfo_ConnectionStringNotFound(_connectionName);
+                }
 
-            //    return result;
-            //}
+                return result;
+            }
 
-            //return new ConnectionStringSettings(null, _connectionString, _providerInvariantName);
-
-            return _connectionString;
+            return new ConnectionStringSettings(null, _connectionString, _providerInvariantName);
         }
 
         #region Hidden Object methods

@@ -7,7 +7,6 @@ namespace System.Data.Entity.ModelConfiguration.Configuration
     using System.Data.Entity.ModelConfiguration.Conventions;
     using System.Data.Entity.Utilities;
     using System.Diagnostics.CodeAnalysis;
-    
     using System.Reflection;
 
     /// <summary>

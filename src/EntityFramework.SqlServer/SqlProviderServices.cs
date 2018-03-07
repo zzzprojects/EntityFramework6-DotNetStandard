@@ -12,12 +12,11 @@ namespace System.Data.Entity.SqlServer
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Infrastructure.DependencyResolution;
     using System.Data.Entity.Infrastructure.Interception;
-    //using System.Data.Entity.Migrations.Sql;
+    using System.Data.Entity.Migrations.Sql;
     using System.Data.Entity.Spatial;
     using System.Data.Entity.SqlServer.Resources;
     using System.Data.Entity.SqlServer.SqlGen;
     using System.Data.Entity.SqlServer.Utilities;
-    using System.Data.Entity.Utilities;
     using System.Data.SqlClient;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
@@ -68,9 +67,9 @@ namespace System.Data.Entity.SqlServer
                 new ExecutionStrategyResolver<DefaultSqlExecutionStrategy>(
                     ProviderInvariantName, null, () => new DefaultSqlExecutionStrategy()));
 
-            //AddDependencyResolver(
-            //    new SingletonDependencyResolver<Func<MigrationSqlGenerator>>(
-            //        () => new SqlServerMigrationSqlGenerator(), ProviderInvariantName));
+            AddDependencyResolver(
+                new SingletonDependencyResolver<Func<MigrationSqlGenerator>>(
+                    () => new SqlServerMigrationSqlGenerator(), ProviderInvariantName));
 
             AddDependencyResolver(
                 new SingletonDependencyResolver<TableExistenceChecker>(

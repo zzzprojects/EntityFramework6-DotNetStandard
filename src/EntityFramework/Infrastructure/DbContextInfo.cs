@@ -28,7 +28,7 @@ namespace System.Data.Entity.Infrastructure
         private readonly Type _contextType;
         private readonly DbProviderInfo _modelProviderInfo;
         private readonly DbConnectionInfo _connectionInfo;
-        //private readonly AppConfig _appConfig;
+        private readonly AppConfig _appConfig;
         private readonly Func<DbContext> _activator;
         private readonly string _connectionString;
         private readonly string _connectionProviderName;
@@ -51,7 +51,7 @@ namespace System.Data.Entity.Infrastructure
         }
 
         internal DbContextInfo(Type contextType, Func<IDbDependencyResolver> resolver)
-            : this(Check.NotNull(contextType, "contextType"), null, null, resolver)
+            : this(Check.NotNull(contextType, "contextType"), null, AppConfig.DefaultInstance, null, resolver)
         {
         }
 
@@ -64,64 +64,64 @@ namespace System.Data.Entity.Infrastructure
         /// <param name="connectionInfo"> Connection information for the database to be used. </param>
         public DbContextInfo(Type contextType, DbConnectionInfo connectionInfo)
             : this(
-                Check.NotNull(contextType, "contextType"), null, Check.NotNull(connectionInfo, "connectionInfo"))
+                Check.NotNull(contextType, "contextType"), null, AppConfig.DefaultInstance, Check.NotNull(connectionInfo, "connectionInfo"))
         {
         }
 
-        ///// <summary>
-        ///// Creates a new instance representing a given <see cref="DbContext" /> type. An external list of
-        ///// connection strings can be supplied and will be used during connection string resolution in place
-        ///// of any connection strings specified in external configuration files.
-        ///// </summary>
-        ///// <remarks>
-        ///// It is preferable to use the constructor that accepts the entire config document instead of using this
-        ///// constructor. Providing the entire config document allows DefaultConnectionFactroy entries in the config
-        ///// to be found in addition to explicitly specified connection strings.
-        ///// </remarks>
-        ///// <param name="contextType">
-        ///// The type deriving from <see cref="DbContext" />.
-        ///// </param>
-        ///// <param name="connectionStringSettings"> A collection of connection strings. </param>
-        //[Obsolete(
-        //    @"The application configuration can contain multiple settings that affect the connection used by a DbContext. To ensure all configuration is taken into account, use a DbContextInfo constructor that accepts System.Configuration.Configuration"
-        //    )]
-        //public DbContextInfo(Type contextType, ConnectionStringSettingsCollection connectionStringSettings)
-        //    : this(
-        //        Check.NotNull(contextType, "contextType"), null,
-        //        new AppConfig(Check.NotNull(connectionStringSettings, "connectionStringSettings")), null)
-        //{
-        //}
+        /// <summary>
+        /// Creates a new instance representing a given <see cref="DbContext" /> type. An external list of
+        /// connection strings can be supplied and will be used during connection string resolution in place
+        /// of any connection strings specified in external configuration files.
+        /// </summary>
+        /// <remarks>
+        /// It is preferable to use the constructor that accepts the entire config document instead of using this
+        /// constructor. Providing the entire config document allows DefaultConnectionFactroy entries in the config
+        /// to be found in addition to explicitly specified connection strings.
+        /// </remarks>
+        /// <param name="contextType">
+        /// The type deriving from <see cref="DbContext" />.
+        /// </param>
+        /// <param name="connectionStringSettings"> A collection of connection strings. </param>
+        [Obsolete(
+            @"The application configuration can contain multiple settings that affect the connection used by a DbContext. To ensure all configuration is taken into account, use a DbContextInfo constructor that accepts System.Configuration.Configuration"
+            )]
+        public DbContextInfo(Type contextType, ConnectionStringSettingsCollection connectionStringSettings)
+            : this(
+                Check.NotNull(contextType, "contextType"), null,
+                new AppConfig(Check.NotNull(connectionStringSettings, "connectionStringSettings")), null)
+        {
+        }
 
-        ///// <summary>
-        ///// Creates a new instance representing a given <see cref="DbContext" /> type. An external config
-        ///// object (e.g. app.config or web.config) can be supplied and will be used during connection string
-        ///// resolution. This includes looking for connection strings and DefaultConnectionFactory entries.
-        ///// </summary>
-        ///// <param name="contextType">
-        ///// The type deriving from <see cref="DbContext" />.
-        ///// </param>
-        ///// <param name="config"> An object representing the config file. </param>
-        //public DbContextInfo(Type contextType, Configuration config)
-        //    : this(Check.NotNull(contextType, "contextType"), null, new AppConfig(Check.NotNull(config, "config")), null)
-        //{
-        //}
+        /// <summary>
+        /// Creates a new instance representing a given <see cref="DbContext" /> type. An external config
+        /// object (e.g. app.config or web.config) can be supplied and will be used during connection string
+        /// resolution. This includes looking for connection strings and DefaultConnectionFactory entries.
+        /// </summary>
+        /// <param name="contextType">
+        /// The type deriving from <see cref="DbContext" />.
+        /// </param>
+        /// <param name="config"> An object representing the config file. </param>
+        public DbContextInfo(Type contextType, Configuration config)
+            : this(Check.NotNull(contextType, "contextType"), null, new AppConfig(Check.NotNull(config, "config")), null)
+        {
+        }
 
-        ///// <summary>
-        ///// Creates a new instance representing a given <see cref="DbContext" />, targeting a specific database.
-        ///// An external config object (e.g. app.config or web.config) can be supplied and will be used during connection string
-        ///// resolution. This includes looking for connection strings and DefaultConnectionFactory entries.
-        ///// </summary>
-        ///// <param name="contextType">
-        ///// The type deriving from <see cref="DbContext" />.
-        ///// </param>
-        ///// <param name="config"> An object representing the config file. </param>
-        ///// <param name="connectionInfo"> Connection information for the database to be used. </param>
-        //public DbContextInfo(Type contextType, Configuration config, DbConnectionInfo connectionInfo)
-        //    : this(
-        //        Check.NotNull(contextType, "contextType"), null, new AppConfig(Check.NotNull(config, "config")),
-        //        Check.NotNull(connectionInfo, "connectionInfo"))
-        //{
-        //}
+        /// <summary>
+        /// Creates a new instance representing a given <see cref="DbContext" />, targeting a specific database.
+        /// An external config object (e.g. app.config or web.config) can be supplied and will be used during connection string
+        /// resolution. This includes looking for connection strings and DefaultConnectionFactory entries.
+        /// </summary>
+        /// <param name="contextType">
+        /// The type deriving from <see cref="DbContext" />.
+        /// </param>
+        /// <param name="config"> An object representing the config file. </param>
+        /// <param name="connectionInfo"> Connection information for the database to be used. </param>
+        public DbContextInfo(Type contextType, Configuration config, DbConnectionInfo connectionInfo)
+            : this(
+                Check.NotNull(contextType, "contextType"), null, new AppConfig(Check.NotNull(config, "config")),
+                Check.NotNull(connectionInfo, "connectionInfo"))
+        {
+        }
 
         /// <summary>
         /// Creates a new instance representing a given <see cref="DbContext" /> type.  A <see cref="DbProviderInfo" />
@@ -136,32 +136,32 @@ namespace System.Data.Entity.Infrastructure
         /// </param>
         public DbContextInfo(Type contextType, DbProviderInfo modelProviderInfo)
             : this(
-                Check.NotNull(contextType, "contextType"), Check.NotNull(modelProviderInfo, "modelProviderInfo"),
+                Check.NotNull(contextType, "contextType"), Check.NotNull(modelProviderInfo, "modelProviderInfo"), AppConfig.DefaultInstance,
                 null)
         {
         }
 
-        ///// <summary>
-        ///// Creates a new instance representing a given <see cref="DbContext" /> type. An external config
-        ///// object (e.g. app.config or web.config) can be supplied and will be used during connection string
-        ///// resolution. This includes looking for connection strings and DefaultConnectionFactory entries.
-        ///// A <see cref="DbProviderInfo" /> can be supplied in order to override the default determined
-        ///// provider used when constructing the underlying EDM model. This can be useful to prevent EF from
-        ///// connecting to discover a manifest token.
-        ///// </summary>
-        ///// <param name="contextType">
-        ///// The type deriving from <see cref="DbContext" />.
-        ///// </param>
-        ///// <param name="config"> An object representing the config file. </param>
-        ///// <param name="modelProviderInfo">
-        ///// A <see cref="DbProviderInfo" /> specifying the underlying ADO.NET provider to target.
-        ///// </param>
-        //public DbContextInfo(Type contextType, Configuration config, DbProviderInfo modelProviderInfo)
-        //    : this(
-        //        Check.NotNull(contextType, "contextType"), Check.NotNull(modelProviderInfo, "modelProviderInfo"),
-        //        new AppConfig(Check.NotNull(config, "config")), null)
-        //{
-        //}
+        /// <summary>
+        /// Creates a new instance representing a given <see cref="DbContext" /> type. An external config
+        /// object (e.g. app.config or web.config) can be supplied and will be used during connection string
+        /// resolution. This includes looking for connection strings and DefaultConnectionFactory entries.
+        /// A <see cref="DbProviderInfo" /> can be supplied in order to override the default determined
+        /// provider used when constructing the underlying EDM model. This can be useful to prevent EF from
+        /// connecting to discover a manifest token.
+        /// </summary>
+        /// <param name="contextType">
+        /// The type deriving from <see cref="DbContext" />.
+        /// </param>
+        /// <param name="config"> An object representing the config file. </param>
+        /// <param name="modelProviderInfo">
+        /// A <see cref="DbProviderInfo" /> specifying the underlying ADO.NET provider to target.
+        /// </param>
+        public DbContextInfo(Type contextType, Configuration config, DbProviderInfo modelProviderInfo)
+            : this(
+                Check.NotNull(contextType, "contextType"), Check.NotNull(modelProviderInfo, "modelProviderInfo"),
+                new AppConfig(Check.NotNull(config, "config")), null)
+        {
+        }
 
         // <summary>
         // Called internally when a context info is needed for an existing context, which may not be constructable.
@@ -174,7 +174,7 @@ namespace System.Data.Entity.Infrastructure
             _resolver = resolver ?? (() => DbConfiguration.DependencyResolver);
 
             _contextType = context.GetType();
-            //_appConfig = AppConfig.DefaultInstance;
+            _appConfig = AppConfig.DefaultInstance;
 
             var internalContext = context.InternalContext;
             _connectionProviderName = internalContext.ProviderName;
@@ -190,7 +190,7 @@ namespace System.Data.Entity.Infrastructure
         private DbContextInfo(
             Type contextType,
             DbProviderInfo modelProviderInfo,
-            //AppConfig config,
+            AppConfig config,
             DbConnectionInfo connectionInfo,
             Func<IDbDependencyResolver> resolver = null)
         {
@@ -203,7 +203,7 @@ namespace System.Data.Entity.Infrastructure
 
             _contextType = contextType;
             _modelProviderInfo = modelProviderInfo;
-            //_appConfig = config;
+            _appConfig = config;
             _connectionInfo = connectionInfo;
 
             _activator = CreateActivator();
@@ -296,7 +296,7 @@ namespace System.Data.Entity.Infrastructure
         /// </returns>
         public virtual DbContext CreateInstance()
         {
-            //var configPushed = DbConfigurationManager.Instance.PushConfiguration(_appConfig, _contextType);
+            var configPushed = DbConfigurationManager.Instance.PushConfiguration(_appConfig, _contextType);
             CurrentInfo = this;
 
             DbContext context = null;
@@ -322,11 +322,11 @@ namespace System.Data.Entity.Infrastructure
 
                 context.InternalContext.OnDisposing += (_, __) => CurrentInfo = null;
 
-                //if (configPushed)
-                //{
-                //    //context.InternalContext.OnDisposing +=
-                //    //    (_, __) => DbConfigurationManager.Instance.PopConfiguration(_appConfig);
-                //}
+                if (configPushed)
+                {
+                    context.InternalContext.OnDisposing +=
+                        (_, __) => DbConfigurationManager.Instance.PopConfiguration(_appConfig);
+                }
 
                 context.InternalContext.ApplyContextInfo(this);
 
@@ -347,10 +347,10 @@ namespace System.Data.Entity.Infrastructure
                 {
                     CurrentInfo = null;
 
-                    //if (configPushed)
-                    //{
-                    //    DbConfigurationManager.Instance.PopConfiguration(_appConfig);
-                    //}
+                    if (configPushed)
+                    {
+                        DbConfigurationManager.Instance.PopConfiguration(_appConfig);
+                    }
                 }
             }
         }
@@ -365,13 +365,14 @@ namespace System.Data.Entity.Infrastructure
                 context.InternalContext.ModelProviderInfo = _modelProviderInfo;
             }
 
-            //context.InternalContext.AppConfig = _appConfig;
+            context.InternalContext.AppConfig = _appConfig;
 
             if (_connectionInfo != null)
             {
                 context.InternalContext.OverrideConnection(new LazyInternalConnection(context, _connectionInfo));
             }
-            else if (_modelProviderInfo != null)
+            else if (_modelProviderInfo != null
+                     && _appConfig == AppConfig.DefaultInstance)
             {
                 context.InternalContext.OverrideConnection(
                     new EagerInternalConnection(

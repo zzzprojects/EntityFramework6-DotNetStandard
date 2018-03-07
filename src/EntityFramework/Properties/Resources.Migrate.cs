@@ -325,29 +325,32 @@ namespace System.Data.Entity.Migrations.Console.Resources
             return new InvalidOperationException(Strings.AmbiguousAttributeValues(p0, p1));
         }
 
-        //// <summary>
-        //// CmdLine.CommandLineException with message like "Only one of /connectionStringName or /connectionString can be specified."
-        //// </summary>
-        //internal static Exception AmbiguousConnectionString()
-        //{
-        //    return new CmdLine.CommandLineException(Strings.AmbiguousConnectionString);
-        //}
+        // <summary>
+        // CmdLine.CommandLineException with message like "Only one of /connectionStringName or /connectionString can be specified."
+        // </summary>
+        internal static Exception AmbiguousConnectionString()
+        {
+            //return new CmdLine.CommandLineException(Strings.AmbiguousConnectionString);
+            return new ArgumentException(Strings.AmbiguousConnectionString);
+        }
 
-        //// <summary>
-        //// CmdLine.CommandLineException with message like "/connectionString and /connectionProviderName must be specified together."
-        //// </summary>
-        //internal static Exception MissingConnectionInfo()
-        //{
-        //    return new CmdLine.CommandLineException(Strings.MissingConnectionInfo);
-        //}
+        // <summary>
+        // CmdLine.CommandLineException with message like "/connectionString and /connectionProviderName must be specified together."
+        // </summary>
+        internal static Exception MissingConnectionInfo()
+        {
+            //return new CmdLine.CommandLineException(Strings.MissingConnectionInfo);
+            return new ArgumentException(Strings.MissingConnectionInfo);
+        }
 
-        //// <summary>
-        //// CmdLine.CommandLineException with message like "Invalid ParameterIndex value"
-        //// </summary>
-        //internal static Exception InvalidParameterIndexValue()
-        //{
-        //    return new CmdLine.CommandLineException(Strings.InvalidParameterIndexValue);
-        //}
+        // <summary>
+        // CmdLine.CommandLineException with message like "Invalid ParameterIndex value"
+        // </summary>
+        internal static Exception InvalidParameterIndexValue()
+        {
+            //return new CmdLine.CommandLineException(Strings.InvalidParameterIndexValue);
+            return new ArgumentException(Strings.InvalidParameterIndexValue);
+        }
 
         // <summary>
         // The exception that is thrown when the value of an argument is outside the allowable range of values as defined by the invoked method.

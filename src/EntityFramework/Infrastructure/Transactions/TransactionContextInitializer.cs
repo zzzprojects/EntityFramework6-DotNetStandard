@@ -7,10 +7,10 @@ namespace System.Data.Entity.Infrastructure
     using System.Data.Entity.Core.EntityClient;
     using System.Data.Entity.Infrastructure.DependencyResolution;
     using System.Data.Entity.Internal;
-    //using System.Data.Entity.Migrations;
-    //using System.Data.Entity.Migrations.Infrastructure;
-    //using System.Data.Entity.Migrations.Model;
-    //using System.Data.Entity.Migrations.Sql;
+    using System.Data.Entity.Migrations;
+    using System.Data.Entity.Migrations.Infrastructure;
+    using System.Data.Entity.Migrations.Model;
+    using System.Data.Entity.Migrations.Sql;
     using System.Data.Entity.Utilities;
     using System.Linq;
     using System.Transactions;
@@ -41,14 +41,14 @@ namespace System.Data.Entity.Infrastructure
                     DbContextInfo.CurrentInfo = null;
                     try
                     {
-                        //var sqlStatements = GenerateMigrationStatements(context);
-                        //var migrator = new DbMigrator(
-                        //    context.InternalContext.MigrationsConfiguration, context, DatabaseExistenceState.Exists,
-                        //    calledByCreateDatabase: true);
-                        //using (new TransactionScope(TransactionScopeOption.Suppress))
-                        //{
-                        //    migrator.ExecuteStatements(sqlStatements, entityConnection.CurrentTransaction.StoreTransaction);
-                        //}
+                        var sqlStatements = GenerateMigrationStatements(context);
+                        var migrator = new DbMigrator(
+                            context.InternalContext.MigrationsConfiguration, context, DatabaseExistenceState.Exists,
+                            calledByCreateDatabase: true);
+                        using (new TransactionScope(TransactionScopeOption.Suppress))
+                        {
+                            migrator.ExecuteStatements(sqlStatements, entityConnection.CurrentTransaction.StoreTransaction);
+                        }
                     }
                     finally
                     {
@@ -58,39 +58,39 @@ namespace System.Data.Entity.Infrastructure
             }
         }
         
-        //internal static IEnumerable<MigrationStatement> GenerateMigrationStatements(TransactionContext context)
-        //{
-        //    if (DbConfiguration.DependencyResolver.GetService<Func<MigrationSqlGenerator>>(context.InternalContext.ProviderName) != null)
-        //    {
-        //        var migrationSqlGenerator =
-        //            context.InternalContext.MigrationsConfiguration.GetSqlGenerator(context.InternalContext.ProviderName);
+        internal static IEnumerable<MigrationStatement> GenerateMigrationStatements(TransactionContext context)
+        {
+            if (DbConfiguration.DependencyResolver.GetService<Func<MigrationSqlGenerator>>(context.InternalContext.ProviderName) != null)
+            {
+                var migrationSqlGenerator =
+                    context.InternalContext.MigrationsConfiguration.GetSqlGenerator(context.InternalContext.ProviderName);
 
-        //        var connection = context.Database.Connection;
-        //        var emptyModel = new DbModelBuilder().Build(connection).GetModel();
-        //        var createTableOperation = (CreateTableOperation)
-        //            new EdmModelDiffer().Diff(emptyModel, context.GetModel()).Single();
+                var connection = context.Database.Connection;
+                var emptyModel = new DbModelBuilder().Build(connection).GetModel();
+                var createTableOperation = (CreateTableOperation)
+                    new EdmModelDiffer().Diff(emptyModel, context.GetModel()).Single();
 
-        //        var providerManifestToken
-        //            = context.InternalContext.ModelProviderInfo != null
-        //                ? context.InternalContext.ModelProviderInfo.ProviderManifestToken
-        //                : DbConfiguration
-        //                    .DependencyResolver
-        //                    .GetService<IManifestTokenResolver>()
-        //                    .ResolveManifestToken(connection);
+                var providerManifestToken
+                    = context.InternalContext.ModelProviderInfo != null
+                        ? context.InternalContext.ModelProviderInfo.ProviderManifestToken
+                        : DbConfiguration
+                            .DependencyResolver
+                            .GetService<IManifestTokenResolver>()
+                            .ResolveManifestToken(connection);
 
-        //        return migrationSqlGenerator.Generate(new[] { createTableOperation }, providerManifestToken);
-        //    }
-        //    else
-        //    {
-        //        return new[]
-        //        {
-        //            new MigrationStatement
-        //            {
-        //                Sql = ((IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript(),
-        //                SuppressTransaction = true
-        //            }
-        //        };
-        //    }
-        //}
+                return migrationSqlGenerator.Generate(new[] { createTableOperation }, providerManifestToken);
+            }
+            else
+            {
+                return new[]
+                {
+                    new MigrationStatement
+                    {
+                        Sql = ((IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript(),
+                        SuppressTransaction = true
+                    }
+                };
+            }
+        }
     }
 }

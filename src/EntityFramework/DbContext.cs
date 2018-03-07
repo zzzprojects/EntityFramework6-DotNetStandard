@@ -64,48 +64,48 @@ namespace System.Data.Entity
         private Database _database;
 
         
-        ///// <summary>
-        ///// Constructs a new context instance using conventions to create the name of the database to
-        ///// which a connection will be made.  The by-convention name is the full name (namespace + class name)
-        ///// of the derived context class.
-        ///// See the class remarks for how this is used to create a connection.
-        ///// </summary>
-        //[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        //[SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        //protected DbContext()
-        //{
-        //    InitializeLazyInternalContext(new LazyInternalConnection(this, GetType().DatabaseName()));
-        //}
+        /// <summary>
+        /// Constructs a new context instance using conventions to create the name of the database to
+        /// which a connection will be made.  The by-convention name is the full name (namespace + class name)
+        /// of the derived context class.
+        /// See the class remarks for how this is used to create a connection.
+        /// </summary>
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        protected DbContext()
+        {
+            InitializeLazyInternalContext(new LazyInternalConnection(this, GetType().DatabaseName()));
+        }
 
-        ///// <summary>
-        ///// Constructs a new context instance using conventions to create the name of the database to
-        ///// which a connection will be made, and initializes it from the given model.
-        ///// The by-convention name is the full name (namespace + class name) of the derived context class.
-        ///// See the class remarks for how this is used to create a connection.
-        ///// </summary>
-        ///// <param name="model"> The model that will back this context. </param>
-        //[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        //[SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        //protected DbContext(DbCompiledModel model)
-        //{
-        //    Check.NotNull(model, "model");
+        /// <summary>
+        /// Constructs a new context instance using conventions to create the name of the database to
+        /// which a connection will be made, and initializes it from the given model.
+        /// The by-convention name is the full name (namespace + class name) of the derived context class.
+        /// See the class remarks for how this is used to create a connection.
+        /// </summary>
+        /// <param name="model"> The model that will back this context. </param>
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        protected DbContext(DbCompiledModel model)
+        {
+            Check.NotNull(model, "model");
 
-        //    InitializeLazyInternalContext(new LazyInternalConnection(this, GetType().DatabaseName()), model);
-        //}
+            InitializeLazyInternalContext(new LazyInternalConnection(this, GetType().DatabaseName()), model);
+        }
 
         /// <summary>
         /// Constructs a new context instance using the given string as the name or connection string for the
         /// database to which a connection will be made.
         /// See the class remarks for how this is used to create a connection.
         /// </summary>
-        /// <param name="connectionString"> Either the database name or a connection string. </param>
+        /// <param name="nameOrConnectionString"> Either the database name or a connection string. </param>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DbContext(string connectionString)
+        public DbContext(string nameOrConnectionString)
         {
-            Check.NotEmpty(connectionString, "nameOrConnectionString");
+            Check.NotEmpty(nameOrConnectionString, "nameOrConnectionString");
 
-            InitializeLazyInternalContext(new LazyInternalConnection(this, connectionString));
+            InitializeLazyInternalContext(new LazyInternalConnection(this, nameOrConnectionString));
         }
 
         /// <summary>
@@ -113,16 +113,16 @@ namespace System.Data.Entity
         /// database to which a connection will be made, and initializes it from the given model.
         /// See the class remarks for how this is used to create a connection.
         /// </summary>
-        /// <param name="connectionString"> Either the database name or a connection string. </param>
+        /// <param name="nameOrConnectionString"> Either the database name or a connection string. </param>
         /// <param name="model"> The model that will back this context. </param>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DbContext(string connectionString, DbCompiledModel model)
+        public DbContext(string nameOrConnectionString, DbCompiledModel model)
         {
-            Check.NotEmpty(connectionString, "nameOrConnectionString");
+            Check.NotEmpty(nameOrConnectionString, "nameOrConnectionString");
             Check.NotNull(model, "model");
 
-            InitializeLazyInternalContext(new LazyInternalConnection(this, connectionString), model);
+            InitializeLazyInternalContext(new LazyInternalConnection(this, nameOrConnectionString), model);
         }
 
         /// <summary>

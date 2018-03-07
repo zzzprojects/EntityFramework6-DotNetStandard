@@ -2,10 +2,9 @@
 
 namespace System.Data.Entity.Infrastructure.Annotations
 {
-    using System.CodeDom.Compiler;
     using System.Collections.Generic;
-    //using System.Data.Entity.Migrations.Design;
-    //using System.Data.Entity.Migrations.Utilities;
+    using System.Data.Entity.Migrations.Design;
+    using System.Data.Entity.Migrations.Utilities;
     using System.Data.Entity.Utilities;
     using System.Linq;
 

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
+// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
 
 namespace System.Data.Entity.Infrastructure.DependencyResolution
 {
@@ -68,10 +68,10 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
 
         public virtual IEnumerable<Func<object>> GetServicesFactory(Type type, object key)
         {
-            //if (type == typeof(IDbInterceptor))
-            //{
-            //    return _appConfig.Interceptors.Select(i => (Func<object>)(() => i)).ToList();
-            //}
+            if (type == typeof(IDbInterceptor))
+            {
+                return _appConfig.Interceptors.Select(i => (Func<object>)(() => i)).ToList();
+            }
 
             return new List<Func<object>> { GetServiceFactory(type, key as string) };
         }
@@ -127,33 +127,33 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
                 return () => Database.DefaultConnectionFactoryChanged ? Database.SetDefaultConnectionFactory : null;
             }
 
-            //var contextType = type.TryGetElementType(typeof(IDatabaseInitializer<>));
-            //if (contextType != null)
-            //{
-            //    var initializer = _appConfig.Initializers.TryGetInitializer(contextType);
-            //    return () => initializer;
-            //}
+            var contextType = type.TryGetElementType(typeof(IDatabaseInitializer<>));
+            if (contextType != null)
+            {
+                var initializer = _appConfig.Initializers.TryGetInitializer(contextType);
+                return () => initializer;
+            }
 
             return () => null;
         }
 
         private void RegisterDbProviderServices()
         {
-            //var providers = _appConfig.DbProviderServices;
+            var providers = _appConfig.DbProviderServices;
 
-            //if (providers.All(p => p.InvariantName != "System.Data.SqlClient"))
-            //{
+            if (providers.All(p => p.InvariantName != "System.Data.SqlClient"))
+            {
                 // If no SQL Server provider is registered, then make sure the SQL Server provider is available
                 // by convention (if it can be loaded) as it would have been in previous versions of EF.
                 RegisterSqlServerProvider();
-            //}
+            }
 
-            //providers.Each(
-            //    p =>
-            //    {
-            //        _providerFactories[p.InvariantName] = p.ProviderServices;
-            //        _internalConfiguration.AddDefaultResolver(p.ProviderServices);
-            //    });
+            providers.Each(
+                p =>
+                    {
+                        _providerFactories[p.InvariantName] = p.ProviderServices;
+                        _internalConfiguration.AddDefaultResolver(p.ProviderServices);
+                    });
         }
 
         private void RegisterSqlServerProvider()

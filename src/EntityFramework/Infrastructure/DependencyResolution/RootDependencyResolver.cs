@@ -11,7 +11,7 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
     using System.Data.Entity.Infrastructure.Interception;
     using System.Data.Entity.Infrastructure.Pluralization;
     using System.Data.Entity.Internal;
-    //using System.Data.Entity.Migrations.History;
+    using System.Data.Entity.Migrations.History;
     using System.Data.Entity.ModelConfiguration.Utilities;
     using System.Data.Entity.Utilities;
     using System.Diagnostics.CodeAnalysis;
@@ -54,7 +54,7 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
             _resolvers.Add(new SingletonDependencyResolver<IDbConnectionFactory>(new SqlConnectionFactory()));
             _resolvers.Add(new SingletonDependencyResolver<Func<DbContext, IDbModelCacheKey>>(new DefaultModelCacheKeyFactory().Create));
             _resolvers.Add(new SingletonDependencyResolver<IManifestTokenResolver>(new DefaultManifestTokenResolver()));
-            //_resolvers.Add(new SingletonDependencyResolver<Func<DbConnection, string, HistoryContext>>(HistoryContext.DefaultFactory));
+            _resolvers.Add(new SingletonDependencyResolver<Func<DbConnection, string, HistoryContext>>(HistoryContext.DefaultFactory));
             _resolvers.Add(new SingletonDependencyResolver<IPluralizationService>(new EnglishPluralizationService()));
             _resolvers.Add(new SingletonDependencyResolver<AttributeProvider>(new AttributeProvider()));
             _resolvers.Add(new SingletonDependencyResolver<Func<DbContext, Action<string>, DatabaseLogFormatter>>((c, w) => new DatabaseLogFormatter(c, w)));
