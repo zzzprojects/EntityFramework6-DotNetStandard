@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
+    <Compile Include="..\SharedAssemblyVersionInfo.cs" Link="Properties\SharedAssemblyVersionInfo.cs" />
     <Compile Include="..\Common\AssemblyExtensions.cs" Link="Utilities\AssemblyExtensions.cs" />
     <Compile Include="..\Common\ByteExtensions.cs" Link="Utilities\ByteExtensions.cs" />
     <Compile Include="..\Common\Check.cs" Link="Utilities\Check.cs" />
