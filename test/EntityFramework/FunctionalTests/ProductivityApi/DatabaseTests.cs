@@ -1207,6 +1207,7 @@ END");
             }
         }
 
+#if nope
 #if !NET40
 
         [Fact]
@@ -1222,6 +1223,7 @@ END");
                 changedConnectionString);
         }
 
+#endif
 #endif
 
         private void If_connection_is_changed_then_operations_that_use_OriginalConnectionString_pick_up_this_change(

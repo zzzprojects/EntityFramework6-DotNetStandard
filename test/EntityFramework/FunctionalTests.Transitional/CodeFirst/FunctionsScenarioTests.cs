@@ -2085,6 +2085,7 @@ namespace FunctionalTests
             }
         }
 
+#if nope
         public class BasicMapping : BasicMappingScenarioTests
         {
             public override void Abstract_in_middle_of_hierarchy_with_TPC()
@@ -2097,6 +2098,7 @@ namespace FunctionalTests
                 modelBuilder.Types().Configure(c => c.MapToStoredProcedures());
             }
         }
+#endif
 
         public class ComplexTypes : ComplexTypeScenarioTests
         {

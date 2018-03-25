@@ -10,7 +10,7 @@ namespace System.Data.Entity
     using System.Data.Entity.Core.Metadata.Edm;
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-    //using System.Data.Entity.Internal.ConfigFile;
+    using System.Data.Entity.Internal.ConfigFile;
     using System.Data.Entity.Migrations;
     using System.Data.Entity.SqlServer;
     using System.Data.Entity.TestHelpers;
@@ -549,23 +549,23 @@ namespace System.Data.Entity
 
         #region Creating config documents
 
-        //public static Configuration CreateEmptyConfig()
-        //{
-        //    var tempFileName = Path.GetTempFileName();
-        //    var doc = new XDocument(new XElement("configuration"));
-        //    doc.Save(tempFileName);
+        public static Configuration CreateEmptyConfig()
+        {
+            var tempFileName = Path.GetTempFileName();
+            var doc = new XDocument(new XElement("configuration"));
+            doc.Save(tempFileName);
 
-        //    var config = ConfigurationManager.OpenMappedExeConfiguration(
-        //        new ExeConfigurationFileMap
-        //            {
-        //                ExeConfigFilename = tempFileName
-        //            },
-        //        ConfigurationUserLevel.None);
+            var config = ConfigurationManager.OpenMappedExeConfiguration(
+                new ExeConfigurationFileMap
+                    {
+                        ExeConfigFilename = tempFileName
+                    },
+                ConfigurationUserLevel.None);
 
-        //    config.Sections.Add("entityFramework", new EntityFrameworkSection());
+            config.Sections.Add("entityFramework", new EntityFrameworkSection());
 
-        //    return config;
-        //}
+            return config;
+        }
 
         #endregion
 

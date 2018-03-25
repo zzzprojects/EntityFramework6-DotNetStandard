@@ -14,6 +14,8 @@ namespace System.Data.Entity.ModelConfiguration.Internal.UnitTests
 
         public static void Initialize()
         {
+            DbProviderFactoriesCore.RegisterFactory("System.Data.FakeSqlClient", FakeSqlProviderFactory.Instance);
+
             // Does nothing but ensures that the singleton instance has been created.
         }
 

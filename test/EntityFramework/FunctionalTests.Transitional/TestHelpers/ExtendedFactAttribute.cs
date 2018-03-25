@@ -42,23 +42,23 @@ namespace System.Data.Entity
             }
 #endif
 
-            //if (SkipForSqlAzure)
-            //{
-            //    var connectionString = ConfigurationManager.AppSettings["BaseConnectionString"];
-            //    if (DatabaseTestHelpers.IsSqlAzure(connectionString))
-            //    {
-            //        return false;
-            //    }
-            //}
+            if (SkipForSqlAzure)
+            {
+                var connectionString = ConfigurationManager.AppSettings["BaseConnectionString"];
+                if (DatabaseTestHelpers.IsSqlAzure(connectionString))
+                {
+                    return false;
+                }
+            }
 
-            //if (SkipForLocalDb)
-            //{
-            //    var connectionString = ConfigurationManager.AppSettings["BaseConnectionString"];
-            //    if (DatabaseTestHelpers.IsLocalDb(connectionString))
-            //    {
-            //        return false;
-            //    }
-            //}
+            if (SkipForLocalDb)
+            {
+                var connectionString = ConfigurationManager.AppSettings["BaseConnectionString"];
+                if (DatabaseTestHelpers.IsLocalDb(connectionString))
+                {
+                    return false;
+                }
+            }
 
             return true;
         }

@@ -18,11 +18,11 @@ namespace System.Data.Entity.SqlServer
             Assert.True(new SqlProviderManifest(SqlProviderManifest.TokenSql11).SupportsParameterOptimizationInSchemaQueries());
         }
 
-        //[Fact]
-        //public void SqlCe_provider_manifest_supports_parameter_optimization()
-        //{
-        //    Assert.True(new SqlCeProviderManifest(false).SupportsParameterOptimizationInSchemaQueries());
-        //}
+        [Fact]
+        public void SqlCe_provider_manifest_supports_parameter_optimization()
+        {
+            Assert.True(new SqlCeProviderManifest(false).SupportsParameterOptimizationInSchemaQueries());
+        }
 
         [Fact]
         public void Default_for_provider_manifest_is_to_not_support_parameter_optimization()

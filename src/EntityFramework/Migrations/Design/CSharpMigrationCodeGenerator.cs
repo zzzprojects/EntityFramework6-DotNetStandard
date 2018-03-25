@@ -86,65 +86,63 @@ namespace System.Data.Entity.Migrations.Design
         protected virtual string Generate(
             IEnumerable<MigrationOperation> operations, string @namespace, string className)
         {
-            throw new NotImplementedException("Generating migrations is not implemented");
+            Check.NotNull(operations, "operations");
+            Check.NotEmpty(className, "className");
 
-            //Check.NotNull(operations, "operations");
-            //Check.NotEmpty(className, "className");
+            using (var stringWriter = new StringWriter(CultureInfo.InvariantCulture))
+            {
+                using (var writer = new IndentedTextWriter(stringWriter))
+                {
+                    WriteClassStart(
+                        @namespace, className, writer, "DbMigration", designer: false,
+                        namespaces: GetNamespaces(operations));
 
-            //using (var stringWriter = new StringWriter(CultureInfo.InvariantCulture))
-            //{
-            //    using (var writer = new IndentedTextWriter(stringWriter))
-            //    {
-            //        WriteClassStart(
-            //            @namespace, className, writer, "DbMigration", designer: false,
-            //            namespaces: GetNamespaces(operations));
+                    writer.WriteLine("public override void Up()");
+                    writer.WriteLine("{");
+                    writer.Indent++;
 
-            //        writer.WriteLine("public override void Up()");
-            //        writer.WriteLine("{");
-            //        writer.Indent++;
+                    operations
+                        .Except(_newTableForeignKeys.Select(t => t.Item2))
+                        .Except(_newTableIndexes.Select(t => t.Item2))
+                        .Each(o => GenerateOperationByType(o, writer));
 
-            //        operations
-            //            .Except(_newTableForeignKeys.Select(t => t.Item2))
-            //            .Except(_newTableIndexes.Select(t => t.Item2))
-            //            .Each<dynamic>(o => Generate(o, writer));
+                    writer.Indent--;
+                    writer.WriteLine("}");
 
-            //        writer.Indent--;
-            //        writer.WriteLine("}");
+                    writer.WriteLine();
 
-            //        writer.WriteLine();
+                    writer.WriteLine("public override void Down()");
+                    writer.WriteLine("{");
+                    writer.Indent++;
 
-            //        writer.WriteLine("public override void Down()");
-            //        writer.WriteLine("{");
-            //        writer.Indent++;
+                    operations
+                        = operations
+                            .Select(o => o.Inverse)
+                            .Where(o => o != null)
+                            .Reverse();
 
-            //        operations
-            //            = operations
-            //                .Select(o => o.Inverse)
-            //                .Where(o => o != null)
-            //                .Reverse();
+                    var hasUnsupportedOperations
+                        = operations.Any(o => o is NotSupportedOperation);
 
-            //        var hasUnsupportedOperations
-            //            = operations.Any(o => o is NotSupportedOperation);
+                    operations
+                        .Where(o => !(o is NotSupportedOperation))
+                        .Each(o => GenerateOperationByType(o, writer));
 
-            //        operations
-            //            .Where(o => !(o is NotSupportedOperation))
-            //            .Each<dynamic>(o => Generate(o, writer));
+                    if (hasUnsupportedOperations)
+                    {
+                        writer.Write("throw new NotSupportedException(");
+                        writer.Write(Generate(Strings.ScaffoldSprocInDownNotSupported));
+                        writer.WriteLine(");");
+                    }
 
-            //        if (hasUnsupportedOperations)
-            //        {
-            //            writer.Write("throw new NotSupportedException(");
-            //            writer.Write(Generate(Strings.ScaffoldSprocInDownNotSupported));
-            //            writer.WriteLine(");");
-            //        }
+                    writer.Indent--;
+                    writer.WriteLine("}");
 
-            //        writer.Indent--;
-            //        writer.WriteLine("}");
+                    WriteClassEnd(@namespace, writer);
+                }
 
-            //        WriteClassEnd(@namespace, writer);
-            //    }
-
-            //    return stringWriter.ToString();
-            //}
+                return stringWriter.ToString();
+            }
         }
 
         /// <summary>
@@ -446,27 +444,25 @@ namespace System.Data.Entity.Migrations.Design
         /// <param name="writer">The writer to which generated code should be written.</param>
         protected internal virtual void GenerateAnnotation(string name, object annotation, IndentedTextWriter writer)
         {
-            throw new NotImplementedException();
+            Check.NotEmpty(name, "name");
+            Check.NotNull(writer, "writer");
 
-            //Check.NotEmpty(name, "name");
-            //Check.NotNull(writer, "writer");
+            if (annotation == null)
+            {
+                writer.Write("null");
+                return;
+            }
 
-            //if (annotation == null)
-            //{
-            //    writer.Write("null");
-            //    return;
-            //}
-
-            //Func<AnnotationCodeGenerator> annotationGenerator;
-            //if (AnnotationGenerators.TryGetValue(name, out annotationGenerator)
-            //    && annotationGenerator != null)
-            //{
-            //    annotationGenerator().Generate(name, annotation, writer);
-            //}
-            //else
-            //{
-            //    writer.Write(Quote(annotation.ToString()));
-            //}
+            Func<AnnotationCodeGenerator> annotationGenerator;
+            if (AnnotationGenerators.TryGetValue(name, out annotationGenerator)
+                && annotationGenerator != null)
+            {
+                annotationGenerator().Generate(name, annotation, writer);
+            }
+            else
+            {
+                writer.Write(Quote(annotation.ToString()));
+            }
         }
 
         /// <summary>Generates code to perform a <see cref="T:System.Data.Entity.Migrations.Model.CreateProcedureOperation" />.</summary>
@@ -563,69 +559,67 @@ namespace System.Data.Entity.Migrations.Design
         [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
         protected virtual void Generate(ParameterModel parameterModel, IndentedTextWriter writer, bool emitName = false)
         {
-            throw new NotImplementedException("Generating migrations is not implemented");
+            Check.NotNull(parameterModel, "parameterModel");
+            Check.NotNull(writer, "writer");
 
-            //Check.NotNull(parameterModel, "parameterModel");
-            //Check.NotNull(writer, "writer");
+            writer.Write(" p.");
+            writer.Write(TranslateColumnType(parameterModel.Type));
+            writer.Write("(");
 
-            //writer.Write(" p.");
-            //writer.Write(TranslateColumnType(parameterModel.Type));
-            //writer.Write("(");
+            var args = new List<string>();
 
-            //var args = new List<string>();
+            if (emitName)
+            {
+                args.Add("name: " + Quote(parameterModel.Name));
+            }
 
-            //if (emitName)
-            //{
-            //    args.Add("name: " + Quote(parameterModel.Name));
-            //}
+            if (parameterModel.MaxLength != null)
+            {
+                args.Add("maxLength: " + parameterModel.MaxLength);
+            }
 
-            //if (parameterModel.MaxLength != null)
-            //{
-            //    args.Add("maxLength: " + parameterModel.MaxLength);
-            //}
+            if (parameterModel.Precision != null)
+            {
+                args.Add("precision: " + parameterModel.Precision);
+            }
 
-            //if (parameterModel.Precision != null)
-            //{
-            //    args.Add("precision: " + parameterModel.Precision);
-            //}
+            if (parameterModel.Scale != null)
+            {
+                args.Add("scale: " + parameterModel.Scale);
+            }
 
-            //if (parameterModel.Scale != null)
-            //{
-            //    args.Add("scale: " + parameterModel.Scale);
-            //}
+            if (parameterModel.IsFixedLength != null)
+            {
+                args.Add("fixedLength: " + parameterModel.IsFixedLength.ToString().ToLowerInvariant());
+            }
 
-            //if (parameterModel.IsFixedLength != null)
-            //{
-            //    args.Add("fixedLength: " + parameterModel.IsFixedLength.ToString().ToLowerInvariant());
-            //}
+            if (parameterModel.IsUnicode != null)
+            {
+                args.Add("unicode: " + parameterModel.IsUnicode.ToString().ToLowerInvariant());
+            }
 
-            //if (parameterModel.IsUnicode != null)
-            //{
-            //    args.Add("unicode: " + parameterModel.IsUnicode.ToString().ToLowerInvariant());
-            //}
+            if (parameterModel.DefaultValue != null)
+            {
+                args.Add("defaultValue: " + GenerateDefaultValueByType(parameterModel.DefaultValue));
+            }
 
-            //if (parameterModel.DefaultValue != null)
-            //{
-            //    args.Add("defaultValue: " + Generate((dynamic)parameterModel.DefaultValue));
-            //}
+            if (!string.IsNullOrWhiteSpace(parameterModel.DefaultValueSql))
+            {
+                args.Add("defaultValueSql: " + Quote(parameterModel.DefaultValueSql));
+            }
 
-            //if (!string.IsNullOrWhiteSpace(parameterModel.DefaultValueSql))
-            //{
-            //    args.Add("defaultValueSql: " + Quote(parameterModel.DefaultValueSql));
-            //}
+            if (!string.IsNullOrWhiteSpace(parameterModel.StoreType))
+            {
+                args.Add("storeType: " + Quote(parameterModel.StoreType));
+            }
 
-            //if (!string.IsNullOrWhiteSpace(parameterModel.StoreType))
-            //{
-            //    args.Add("storeType: " + Quote(parameterModel.StoreType));
-            //}
+            if (parameterModel.IsOutParameter)
+            {
+                args.Add("outParameter: true");
+            }
 
-            //if (parameterModel.IsOutParameter)
-            //{
-            //    args.Add("outParameter: true");
-            //}
-
-            //writer.Write(args.Join());
-            //writer.Write(")");
+            writer.Write(args.Join());
+            writer.Write(")");
         }
 
         /// <summary>Generates code to perform a <see cref="T:System.Data.Entity.Migrations.Model.DropProcedureOperation" />.</summary>
@@ -1097,91 +1091,134 @@ namespace System.Data.Entity.Migrations.Design
         [SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
         protected virtual void Generate(ColumnModel column, IndentedTextWriter writer, bool emitName = false)
         {
-            throw new NotImplementedException("Generating migrations is not implemented");
+            Check.NotNull(column, "column");
+            Check.NotNull(writer, "writer");
 
-            //Check.NotNull(column, "column");
-            //Check.NotNull(writer, "writer");
+            writer.Write(" c.");
+            writer.Write(TranslateColumnType(column.Type));
+            writer.Write("(");
 
-            //writer.Write(" c.");
-            //writer.Write(TranslateColumnType(column.Type));
-            //writer.Write("(");
+            var args = new List<string>();
 
-            //var args = new List<string>();
+            if (emitName)
+            {
+                args.Add("name: " + Quote(column.Name));
+            }
 
-            //if (emitName)
-            //{
-            //    args.Add("name: " + Quote(column.Name));
-            //}
+            if (column.IsNullable == false)
+            {
+                args.Add("nullable: false");
+            }
 
-            //if (column.IsNullable == false)
-            //{
-            //    args.Add("nullable: false");
-            //}
+            if (column.MaxLength != null)
+            {
+                args.Add("maxLength: " + column.MaxLength);
+            }
 
-            //if (column.MaxLength != null)
-            //{
-            //    args.Add("maxLength: " + column.MaxLength);
-            //}
+            if (column.Precision != null)
+            {
+                args.Add("precision: " + column.Precision);
+            }
 
-            //if (column.Precision != null)
-            //{
-            //    args.Add("precision: " + column.Precision);
-            //}
+            if (column.Scale != null)
+            {
+                args.Add("scale: " + column.Scale);
+            }
 
-            //if (column.Scale != null)
-            //{
-            //    args.Add("scale: " + column.Scale);
-            //}
+            if (column.IsFixedLength != null)
+            {
+                args.Add("fixedLength: " + column.IsFixedLength.ToString().ToLowerInvariant());
+            }
 
-            //if (column.IsFixedLength != null)
-            //{
-            //    args.Add("fixedLength: " + column.IsFixedLength.ToString().ToLowerInvariant());
-            //}
+            if (column.IsUnicode != null)
+            {
+                args.Add("unicode: " + column.IsUnicode.ToString().ToLowerInvariant());
+            }
 
-            //if (column.IsUnicode != null)
-            //{
-            //    args.Add("unicode: " + column.IsUnicode.ToString().ToLowerInvariant());
-            //}
+            if (column.IsIdentity)
+            {
+                args.Add("identity: true");
+            }
 
-            //if (column.IsIdentity)
-            //{
-            //    args.Add("identity: true");
-            //}
+            if (column.DefaultValue != null)
+            {
+                args.Add("defaultValue: " + GenerateDefaultValueByType(column.DefaultValue));
+            }
 
-            //if (column.DefaultValue != null)
-            //{
-            //    args.Add("defaultValue: " + Generate((dynamic)column.DefaultValue));
-            //}
+            if (!string.IsNullOrWhiteSpace(column.DefaultValueSql))
+            {
+                args.Add("defaultValueSql: " + Quote(column.DefaultValueSql));
+            }
 
-            //if (!string.IsNullOrWhiteSpace(column.DefaultValueSql))
-            //{
-            //    args.Add("defaultValueSql: " + Quote(column.DefaultValueSql));
-            //}
+            if (column.IsTimestamp)
+            {
+                args.Add("timestamp: true");
+            }
 
-            //if (column.IsTimestamp)
-            //{
-            //    args.Add("timestamp: true");
-            //}
+            if (!string.IsNullOrWhiteSpace(column.StoreType))
+            {
+                args.Add("storeType: " + Quote(column.StoreType));
+            }
 
-            //if (!string.IsNullOrWhiteSpace(column.StoreType))
-            //{
-            //    args.Add("storeType: " + Quote(column.StoreType));
-            //}
+            writer.Write(args.Join());
 
-            //writer.Write(args.Join());
+            if (column.Annotations.Any())
+            {
+                writer.Indent++;
 
-            //if (column.Annotations.Any())
-            //{
-            //    writer.Indent++;
+                writer.WriteLine(args.Any() ? "," : "");
+                writer.Write("annotations: ");
+                GenerateAnnotations(column.Annotations, writer);
 
-            //    writer.WriteLine(args.Any() ? "," : "");
-            //    writer.Write("annotations: ");
-            //    GenerateAnnotations(column.Annotations, writer);
+                writer.Indent--;
+            }
 
-            //    writer.Indent--;
-            //}
+            writer.Write(")");
+        }
 
-            //writer.Write(")");
+        protected virtual void GenerateOperationByType(MigrationOperation operation, IndentedTextWriter writer)
+        {
+                 if (operation is DropColumnOperation x1)                               Generate(x1, writer);
+            else if (operation is AlterColumnOperation x2)                              Generate(x2, writer);
+            else if (operation is CreateProcedureOperation x5)                          Generate(x5, writer);
+            else if (operation is AlterProcedureOperation x6)                           Generate(x6, writer);
+            else if (operation is DropProcedureOperation x8)                            Generate(x8, writer);
+            else if (operation is CreateTableOperation x9)                              Generate(x9, writer);
+            else if (operation is AlterTableOperation x10)                              Generate(x10, writer);
+            else if (operation is AddPrimaryKeyOperation x11)                           Generate(x11, writer);
+            else if (operation is IEnumerable<string> x12)                              Generate(x12, writer);
+            else if (operation is DropPrimaryKeyOperation x14)                          Generate(x14, writer);
+            else if (operation is AddForeignKeyOperation x15)                           Generate(x15, writer);
+            else if (operation is DropForeignKeyOperation x16)                          Generate(x16, writer);
+            else if (operation is CreateIndexOperation x17)                             Generate(x17, writer);
+            else if (operation is DropIndexOperation x18)                               Generate(x18, writer);
+            else if (operation is DropTableOperation x20)                               Generate(x20, writer);
+            else if (operation is MoveTableOperation x21)                               Generate(x21, writer);
+            else if (operation is MoveProcedureOperation x22)                           Generate(x22, writer);
+            else if (operation is RenameTableOperation x23)                             Generate(x23, writer);
+            else if (operation is RenameProcedureOperation x24)                         Generate(x24, writer);
+            else if (operation is RenameColumnOperation x25)                            Generate(x25, writer);
+            else if (operation is RenameIndexOperation x26)                             Generate(x26, writer);
+            else if (operation is SqlOperation x27)                                     Generate(x27, writer);
+            else if (operation is AddColumnOperation x28)                               Generate(x28, writer);
+        }
+
+        protected virtual string GenerateDefaultValueByType(object defaultValue)
+        {
+                 if (defaultValue is byte[] x1)             return Generate(x1);
+            else if (defaultValue is bool x2)               return Generate(x2);
+            else if (defaultValue is DateTime x3)           return Generate(x3);
+            else if (defaultValue is DateTimeOffset x4)     return Generate(x4);
+            else if (defaultValue is decimal x5)            return Generate(x5);
+            else if (defaultValue is Guid x6)               return Generate(x6);
+            else if (defaultValue is long x7)               return Generate(x7);
+            else if (defaultValue is float x8)              return Generate(x8);
+            else if (defaultValue is string x9)             return Generate(x9);
+            else if (defaultValue is TimeSpan x10)          return Generate(x10);
+            else if (defaultValue is DbGeography x11)       return Generate(x11);
+            else if (defaultValue is DbGeometry x12)        return Generate(x12);
+
+            else return Generate(defaultValue);
         }
 
         /// <summary>
@@ -1498,25 +1535,23 @@ namespace System.Data.Entity.Migrations.Design
         [SuppressMessage("Microsoft.Security", "CA2141:TransparentMethodsMustNotSatisfyLinkDemandsFxCopRule")]
         protected virtual string ScrubName(string name)
         {
-            throw new NotImplementedException();
+            Check.NotEmpty(name, "name");
 
-            //Check.NotEmpty(name, "name");
+            var invalidChars
+                = new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
 
-            //var invalidChars
-            //    = new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
-
-            //name = invalidChars.Replace(name, string.Empty);
+            name = invalidChars.Replace(name, string.Empty);
 
             //using (var codeProvider = new CSharpCodeProvider())
-            //{
-            //    if ((!char.IsLetter(name[0]) && name[0] != '_')
-            //        || !codeProvider.IsValidIdentifier(name))
-            //    {
-            //        name = "_" + name;
-            //    }
-            //}
+            {
+                if ((!char.IsLetter(name[0]) && name[0] != '_')
+                    || IsCsharpKeyword(name))
+                {
+                    name = "_" + name;
+                }
+            }
 
-            //return name;
+            return name;
         }
 
         /// <summary>
@@ -1548,5 +1583,121 @@ namespace System.Data.Entity.Migrations.Design
         {
             return "\"" + identifier + "\"";
         }
+
+        private static bool IsCsharpKeyword(string name)
+        {
+            if (name == null) return false;
+
+            var length = name.Length - 1;
+            var group = keywords.ElementAtOrDefault(length);
+
+            if (group == null) return false;
+
+            return group.Any(k => string.Equals(k, name, StringComparison.Ordinal));
+        }
+
+        // Source: https://referencesource.microsoft.com/#system/compmod/microsoft/csharp/csharpcodeprovider.cs
+        private static readonly string[][] keywords = new string[][] {
+            null,           // 1 character
+            new string[] {  // 2 characters
+                "as",
+                "do",
+                "if",
+                "in",
+                "is",
+            },
+            new string[] {  // 3 characters
+                "for",
+                "int",
+                "new",
+                "out",
+                "ref",
+                "try",
+            },
+            new string[] {  // 4 characters
+                "base",
+                "bool",
+                "byte",
+                "case",
+                "char",
+                "else",
+                "enum",
+                "goto",
+                "lock",
+                "long",
+                "null",
+                "this",
+                "true",
+                "uint",
+                "void",
+            },
+            new string[] {  // 5 characters
+                "break",
+                "catch",
+                "class",
+                "const",
+                "event",
+                "false",
+                "fixed",
+                "float",
+                "sbyte",
+                "short",
+                "throw",
+                "ulong",
+                "using",
+                "while",
+            },
+            new string[] {  // 6 characters
+                "double",
+                "extern",
+                "object",
+                "params",
+                "public",
+                "return",
+                "sealed",
+                "sizeof",
+                "static",
+                "string",
+                "struct",
+                "switch",
+                "typeof",
+                "unsafe",
+                "ushort",
+            },
+            new string[] {  // 7 characters
+                "checked",
+                "decimal",
+                "default",
+                "finally",
+                "foreach",
+                "private",
+                "virtual",
+            },
+            new string[] {  // 8 characters
+                "abstract",
+                "continue",
+                "delegate",
+                "explicit",
+                "implicit",
+                "internal",
+                "operator",
+                "override",
+                "readonly",
+                "volatile",
+            },
+            new string[] {  // 9 characters
+                "__arglist",
+                "__makeref",
+                "__reftype",
+                "interface",
+                "namespace",
+                "protected",
+                "unchecked",
+            },
+            new string[] {  // 10 characters
+                "__refvalue",
+                "stackalloc",
+            },
+        };
     }
 }

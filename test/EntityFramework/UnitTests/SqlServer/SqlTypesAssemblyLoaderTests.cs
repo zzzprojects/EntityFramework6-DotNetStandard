@@ -36,6 +36,7 @@ namespace System.Data.Entity.SqlServer
             Assert.True(assemblyName == SQL2012TypesName, assemblyName);
         }
 
+#if nope
         [Fact]
         public void GetSqlTypesAssembly_returns_specified_assembly()
         {
@@ -51,6 +52,7 @@ namespace System.Data.Entity.SqlServer
                 SqlProviderServices.SqlServerTypesAssemblyName = null;
             }
         }
+#endif
 
         [Fact]
         public void GetSqlTypesAssembly_throws_if_native_types_are_not_available()

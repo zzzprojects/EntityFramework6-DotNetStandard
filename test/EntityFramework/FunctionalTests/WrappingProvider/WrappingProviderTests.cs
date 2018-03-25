@@ -23,9 +23,9 @@ namespace System.Data.Entity.WrappingProvider
     {
         private const string SqlClientInvariantName = "System.Data.SqlClient";
 
-        private static readonly DataTable _providerTable =
-            (DataTable)typeof(DbProviderFactories).GetDeclaredMethod("GetProviderTable")
-                                                  .Invoke(null, BindingFlags.NonPublic | BindingFlags.Static, null, null, null);
+        //private static readonly DataTable _providerTable =
+        //    (DataTable)typeof(DbProviderFactoriesCore).GetDeclaredMethod("GetProviderTable")
+        //                                          .Invoke(null, BindingFlags.NonPublic | BindingFlags.Static, null, null, null);
 
         public WrappingProviderTests()
         {
@@ -38,6 +38,7 @@ namespace System.Data.Entity.WrappingProvider
             RegisterAdoNetProvider(typeof(SqlClientFactory));
         }
 
+#if nope
         [Fact]
         public void Wrapping_provider_can_be_found_using_net40_style_table_lookup_even_after_first_asking_for_non_wrapped_provider()
         {
@@ -59,6 +60,8 @@ namespace System.Data.Entity.WrappingProvider
                                .ResolveProviderFactory(new WrappingConnection<SqlClientFactory>(new SqlConnection())));
         }
 
+#endif
+
         [Fact]
         public void Correct_services_are_returned_when_setup_by_replacing_ADO_NET_provider()
         {
@@ -67,7 +70,7 @@ namespace System.Data.Entity.WrappingProvider
 
             Assert.Same(
                 WrappingAdoNetProvider<SqlClientFactory>.Instance,
-                DbProviderFactories.GetFactory(SqlClientInvariantName));
+                DbProviderFactoriesCore.GetFactory(SqlClientInvariantName));
 
             Assert.Same(
                 WrappingAdoNetProvider<SqlClientFactory>.Instance,
@@ -110,7 +113,7 @@ namespace System.Data.Entity.WrappingProvider
                                .ResolveProviderFactory(new WrappingConnection<SqlClientFactory>(new SqlConnection())));
 
             // Should still report what is in the providers table
-            Assert.Same(SqlClientFactory.Instance, DbProviderFactories.GetFactory(SqlClientInvariantName));
+            Assert.Same(SqlClientFactory.Instance, DbProviderFactoriesCore.GetFactory(SqlClientInvariantName));
         }
 
         [Fact]
@@ -328,14 +331,16 @@ namespace System.Data.Entity.WrappingProvider
 
         private static void RegisterAdoNetProvider(Type providerFactoryType)
         {
-            var row = _providerTable.NewRow();
-            row["Name"] = "SqlClient Data Provider";
-            row["Description"] = ".Net Framework Data Provider for SqlServer";
-            row["InvariantName"] = SqlClientInvariantName;
-            row["AssemblyQualifiedName"] = providerFactoryType.AssemblyQualifiedName;
+            DbProviderFactoriesCore.RegisterFactory(SqlClientInvariantName, providerFactoryType);
 
-            _providerTable.Rows.Remove(_providerTable.Rows.Find(SqlClientInvariantName));
-            _providerTable.Rows.Add(row);
+            //var row = _providerTable.NewRow();
+            //row["Name"] = "SqlClient Data Provider";
+            //row["Description"] = ".Net Framework Data Provider for SqlServer";
+            //row["InvariantName"] = SqlClientInvariantName;
+            //row["AssemblyQualifiedName"] = providerFactoryType.AssemblyQualifiedName;
+
+            //_providerTable.Rows.Remove(_providerTable.Rows.Find(SqlClientInvariantName));
+            //_providerTable.Rows.Add(row);
         }
 
         private static void RegisterResolvers()

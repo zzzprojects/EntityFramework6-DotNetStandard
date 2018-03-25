@@ -141,6 +141,9 @@ namespace System.Data.Entity.Objects
                     GenerateInMemory = true
                 };
 
+            var netstandardPath = AppDomain.CurrentDomain.GetAssemblies().Single(x => x.GetName().Name == "netstandard").Location;
+            options.ReferencedAssemblies.Add(netstandardPath);
+
             options.ReferencedAssemblies.Add(typeof(string).Assembly.Location);
             options.ReferencedAssemblies.Add(typeof(DbContext).Assembly.Location);
             options.ReferencedAssemblies.Add(typeof(DbConnection).Assembly.Location);

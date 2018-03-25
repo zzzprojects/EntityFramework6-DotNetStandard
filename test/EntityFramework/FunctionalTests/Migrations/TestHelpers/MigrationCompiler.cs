@@ -34,6 +34,9 @@ namespace System.Data.Entity.Migrations
                                   GenerateInMemory = true
                               };
 
+            var netstandardPath = AppDomain.CurrentDomain.GetAssemblies().Single(x => x.GetName().Name == "netstandard").Location;
+
+            options.ReferencedAssemblies.Add(netstandardPath);
             options.ReferencedAssemblies.Add(typeof(string).Assembly().Location);
             options.ReferencedAssemblies.Add(typeof(Expression).Assembly().Location);
             options.ReferencedAssemblies.Add(typeof(DbMigrator).Assembly().Location);
@@ -63,8 +66,8 @@ namespace System.Data.Entity.Migrations
             {
                 foreach (var migration in scaffoldedMigrations)
                 {
-                    Console.WriteLine(migration.UserCode);
-                    Console.WriteLine(migration.DesignerCode);
+                    System.Console.WriteLine(migration.UserCode);
+                    System.Console.WriteLine(migration.DesignerCode);
                 }
 
                 throw new InvalidOperationException(BuildCompileErrorMessage(compilerResults.Errors));

@@ -563,10 +563,12 @@ namespace System.Data.Entity.SqlServer
                 result.SqlDbType = sqlDbType;
             }
 
-            //if (sqlDbType == SqlDbType.Udt)
-            //{
-            //    result.UdtTypeName = udtTypeName;
-            //}
+            if (sqlDbType == SqlDbType.Udt)
+            {
+                //result.UdtTypeName = udtTypeName;
+                var udtTypeProp = typeof(SqlParameter).GetProperty("UdtTypeName");
+                udtTypeProp?.SetValue(result, udtTypeName);
+            }
 
             // Note that we overwrite 'facet' parameters where either the value is different or
             // there is an output parameter. This is because output parameters in SqlClient have their

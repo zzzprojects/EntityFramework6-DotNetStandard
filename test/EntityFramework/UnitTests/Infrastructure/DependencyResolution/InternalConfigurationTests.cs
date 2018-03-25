@@ -19,7 +19,7 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
 
                 new InternalConfiguration(
                     mockAppConfigChain.Object, new Mock<ResolverChain>().Object,
-                    new RootDependencyResolver())
+                    new RootDependencyResolver(), new Mock<AppConfigDependencyResolver>().Object)
                     .AddAppConfigResolver(resolver);
 
                 mockAppConfigChain.Verify(m => m.Add(resolver));
@@ -35,7 +35,8 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
 
                 new InternalConfiguration(
                     new Mock<ResolverChain>().Object, mockNormalChain.Object,
-                    new RootDependencyResolver()).RegisterSingleton(new object());
+                    new RootDependencyResolver(),
+                    new Mock<AppConfigDependencyResolver>().Object).RegisterSingleton(new object());
 
                 mockNormalChain.Verify(m => m.Add(It.IsAny<SingletonDependencyResolver<object>>()));
             }
@@ -47,7 +48,8 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
 
                 new InternalConfiguration(
                     new Mock<ResolverChain>().Object, normalChain,
-                    new RootDependencyResolver()).RegisterSingleton("Bilbo", "Baggins");
+                    new RootDependencyResolver(),
+                    new Mock<AppConfigDependencyResolver>().Object).RegisterSingleton("Bilbo", "Baggins");
 
                 Assert.Equal("Bilbo", normalChain.GetService<string>("Baggins"));
                 Assert.Null(normalChain.GetService<string>("Biggins"));
@@ -60,7 +62,8 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
 
                 new InternalConfiguration(
                     new Mock<ResolverChain>().Object, normalChain,
-                    new RootDependencyResolver()).RegisterSingleton("Bilbo", k => ((string)k).StartsWith("B"));
+                    new RootDependencyResolver(),
+                    new Mock<AppConfigDependencyResolver>().Object).RegisterSingleton("Bilbo", k => ((string)k).StartsWith("B"));
 
                 Assert.Equal("Bilbo", normalChain.GetService<string>("Baggins"));
                 Assert.Equal("Bilbo", normalChain.GetService<string>("Biggins"));
@@ -77,7 +80,8 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
 
                 new InternalConfiguration(
                     new Mock<ResolverChain>().Object, mockNormalChain.Object,
-                    new RootDependencyResolver()).GetService<object>(42);
+                    new RootDependencyResolver(),
+                    new Mock<AppConfigDependencyResolver>().Object).GetService<object>(42);
 
                 mockNormalChain.Verify(m => m.GetService(typeof(object), 42));
             }
@@ -93,7 +97,8 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
 
                 new InternalConfiguration(
                     new Mock<ResolverChain>().Object, mockNormalChain.Object,
-                    new RootDependencyResolver()).AddDependencyResolver(resolver);
+                    new RootDependencyResolver(),
+                    new Mock<AppConfigDependencyResolver>().Object).AddDependencyResolver(resolver);
 
                 mockNormalChain.Verify(m => m.Add(resolver));
             }
@@ -106,7 +111,8 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
 
                 new InternalConfiguration(
                     mockAppConfigChain.Object, new Mock<ResolverChain>().Object,
-                    new RootDependencyResolver()).AddDependencyResolver(resolver, overrideConfigFile: true);
+                    new RootDependencyResolver(),
+                    new Mock<AppConfigDependencyResolver>().Object).AddDependencyResolver(resolver, overrideConfigFile: true);
 
                 mockAppConfigChain.Verify(m => m.Add(resolver));
             }
@@ -123,7 +129,8 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
                 new InternalConfiguration(
                     new Mock<ResolverChain>().Object,
                     new Mock<ResolverChain>().Object,
-                    mockRootResolver.Object).AddDefaultResolver(resolver);
+                    mockRootResolver.Object,
+                    new Mock<AppConfigDependencyResolver>().Object).AddDefaultResolver(resolver);
 
                 mockRootResolver.Verify(m => m.AddDefaultResolver(resolver));
             }
@@ -140,7 +147,8 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
                 new InternalConfiguration(
                     new Mock<ResolverChain>().Object,
                     new Mock<ResolverChain>().Object,
-                    mockRootResolver.Object).SetDefaultProviderServices(provider, "My.Provider");
+                    mockRootResolver.Object,
+                    new Mock<AppConfigDependencyResolver>().Object).SetDefaultProviderServices(provider, "My.Provider");
 
                 mockRootResolver.Verify(m => m.SetDefaultProviderServices(provider, "My.Provider"));
             }
@@ -156,7 +164,8 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
 
                 var config = new InternalConfiguration(
                     mockAppConfigChain.Object, mockNormalChain.Object,
-                    new RootDependencyResolver());
+                    new RootDependencyResolver(),
+                    new Mock<AppConfigDependencyResolver>().Object);
                 var resolver = (CompositeResolver<ResolverChain, ResolverChain>)config.DependencyResolver;
 
                 Assert.Same(mockAppConfigChain.Object, resolver.First);
@@ -198,7 +207,7 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
                 var config = new InternalConfiguration(
                     mockAppConfigChain.Object, normalChain,
                     new RootDependencyResolver(),
-                    //new Mock<AppConfigDependencyResolver>().Object,
+                    new Mock<AppConfigDependencyResolver>().Object,
                     () => mockDispatchers.Object);
 
                 config.Lock();
@@ -224,7 +233,8 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
                 var config = new InternalConfiguration(
                     new Mock<ResolverChain>().Object,
                     new Mock<ResolverChain>().Object,
-                    rootResolver);
+                    rootResolver,
+                    new Mock<AppConfigDependencyResolver>().Object);
 
                 Assert.Same(rootResolver, config.RootResolver);
             }
@@ -237,7 +247,8 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
 
                 new InternalConfiguration(
                     new Mock<ResolverChain>().Object,
-                    normalChain, mockRootResolver.Object);
+                    normalChain, mockRootResolver.Object,
+                    new Mock<AppConfigDependencyResolver>().Object);
 
                 normalChain.GetService<object>("Foo");
 
@@ -310,7 +321,8 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
                     new InternalConfiguration(
                         configChain,
                         new ResolverChain(),
-                        rootResolver.Object)).InternalConfiguration;
+                        rootResolver.Object,
+                        new Mock<AppConfigDependencyResolver>().Object)).InternalConfiguration;
 
                 var normalResolver = new Mock<IDbDependencyResolver>();
                 normalResolver.Setup(m => m.GetService(typeof(object), "Foo")).Callback(() => callOrder += " Normal");

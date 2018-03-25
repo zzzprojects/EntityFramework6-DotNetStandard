@@ -66,9 +66,9 @@ namespace System.Data.Entity.Migrations.Infrastructure
 
         private DbModificationCommandTree ConvertInternalByType(DbModificationCommandTree commandTree)
         {
-            if (commandTree is DbInsertCommandTree ins) ConvertInternal(ins);
-            if (commandTree is DbUpdateCommandTree upd) ConvertInternal(upd);
-            if (commandTree is DbDeleteCommandTree del) ConvertInternal(del);
+            if (commandTree is DbInsertCommandTree ins) return ConvertInternal(ins);
+            if (commandTree is DbUpdateCommandTree upd) return ConvertInternal(upd);
+            if (commandTree is DbDeleteCommandTree del) return ConvertInternal(del);
 
             throw new ArgumentException("Unsupported command tree type", nameof(commandTree));
         }
