@@ -388,6 +388,7 @@ namespace System.Data.Entity.Objects
             }
         }
 
+#if nope
         [Fact]
         public void Graph_serialization_works_with_change_tracking_proxies_containing_ICollections_and_cycles()
         {
@@ -577,6 +578,7 @@ namespace System.Data.Entity.Objects
                 } 
             }
         }
+#endif
 
         //Helpers
         private MemoryStream BuildStreamFromBase64String(string base64String)

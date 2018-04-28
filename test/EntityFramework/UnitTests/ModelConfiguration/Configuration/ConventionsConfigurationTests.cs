@@ -708,6 +708,9 @@ namespace System.Data.Entity.ModelConfiguration.Configuration
             };
             parameters.ReferencedAssemblies.Add("EntityFramework.dll");
 
+            var netstandardPath = AppDomain.CurrentDomain.GetAssemblies().Single(x => x.GetName().Name == "netstandard").Location;
+            parameters.ReferencedAssemblies.Add(netstandardPath);
+
             return CodeDomProvider
                 .CreateProvider("C#")
                 .CompileAssemblyFromSource(

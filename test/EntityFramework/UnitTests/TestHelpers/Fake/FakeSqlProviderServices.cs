@@ -19,7 +19,12 @@ namespace System.Data.Entity.ModelConfiguration.Internal.UnitTests
         public static readonly FakeSqlProviderServices Instance = new FakeSqlProviderServices();
 
         internal EntityCommandDefinition EntityCommandDefinition;
-        
+
+        static FakeSqlProviderServices()
+        {
+            DbProviderFactoriesCore.RegisterFactory("System.Data.FakeSqlClient", FakeSqlProviderFactory.Instance);
+        }
+
         protected override DbCommandDefinition CreateDbCommandDefinition(DbProviderManifest providerManifest, DbCommandTree commandTree)
         {
             var entityCommandDefinition = EntityCommandDefinition;

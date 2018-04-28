@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -19,7 +19,7 @@
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -81,22 +81,33 @@
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.SqlServer.Types.11.0.2\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Configuration.ConfigurationManager.4.4.1\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlClient, Version=4.2.0.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Data.SqlClient.4.4.3\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
     <Reference Include="VSLangProj, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Moq">
-      <HintPath>..\..\..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
@@ -105,11 +116,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="xunit, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
     </Reference>
     <Reference Include="xunit.extensions, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -130,10 +139,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>UnitTestResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
     <Compile Include="AssemblyTests.cs" />
+    <Compile Include="ConnectionFactoryConfig\ConnectionFactoryConfigTests.cs" />
+    <Compile Include="ConnectionFactoryConfig\ReferenceRemoverTests.cs" />
     <Compile Include="Core\Common\CommandTrees\DbCommandTreeTests.cs" />
     <Compile Include="Core\Common\CommandTrees\DbExpressionBuilderTests.cs" />
     <Compile Include="Core\Common\CommandTrees\DbExpressionVisitorTests.cs" />
@@ -299,6 +307,7 @@
     <Compile Include="Infrastructure\Annotations\IndexAnnotationTests.cs" />
     <Compile Include="Infrastructure\DbModelStoreTests.cs" />
     <Compile Include="Infrastructure\DefaultDbModelStoreTests.cs" />
+    <Compile Include="Infrastructure\DependencyResolution\AppConfigDependencyResolverTests.cs" />
     <Compile Include="Infrastructure\DependencyResolution\TransactionContextInitializerResolverTests.cs" />
     <Compile Include="Infrastructure\DependencyResolution\TransactionHandlerResolverTests.cs" />
     <Compile Include="Infrastructure\Interception\DatabaseLoggerTests.cs" />
@@ -373,7 +382,16 @@
     <Compile Include="Infrastructure\Transactions\CommitFailureHandlerTests.cs" />
     <Compile Include="Infrastructure\Transactions\TransactionContextInitializerTests.cs" />
     <Compile Include="Infrastructure\Transactions\TransactionRowTests.cs" />
+    <Compile Include="Internal\AppConfigTests.cs" />
     <Compile Include="Internal\CommandTracerTests.cs" />
+    <Compile Include="Internal\ConfigFile\EntityFrameworkSectionTests.cs" />
+    <Compile Include="Internal\ConfigFile\InterceptorElementTests.cs" />
+    <Compile Include="Internal\ConfigFile\InterceptorsCollectionTests.cs" />
+    <Compile Include="Internal\ConfigFile\ParameterCollectionTests.cs" />
+    <Compile Include="Internal\ConfigFile\ParameterElementTests.cs" />
+    <Compile Include="Internal\ConfigFile\ProviderCollectionTests.cs" />
+    <Compile Include="Internal\ConfigFile\ProviderElementTests.cs" />
+    <Compile Include="Internal\ContextConfigTests.cs" />
     <Compile Include="Internal\DatabaseTableCheckerTests.cs" />
     <Compile Include="Internal\DbHelpersTests.cs" />
     <Compile Include="Internal\EagerInternalContextTests.cs" />
@@ -396,6 +414,64 @@
     <Compile Include="Internal\TestHelpers\NavigationEntryMetadataForMock.cs" />
     <Compile Include="Internal\TestHelpers\PropertyEntryMetadataForMock.cs" />
     <Compile Include="Internal\ThrowingMonitorTests.cs" />
+    <Compile Include="Migrations\AddMigrationCommandTests.cs" />
+    <Compile Include="Migrations\AnnotationValuesTests.cs" />
+    <Compile Include="Migrations\Builders\ColumnBuilderTests.cs" />
+    <Compile Include="Migrations\Builders\ParameterBuilderTests.cs" />
+    <Compile Include="Migrations\Builders\TableBuilderTests.cs" />
+    <Compile Include="Migrations\DbMigrationsConfigurationTests.cs" />
+    <Compile Include="Migrations\DbMigrationsConfiguration`Tests.cs" />
+    <Compile Include="Migrations\DbMigrationTests.cs" />
+    <Compile Include="Migrations\DbMigratorTests.cs" />
+    <Compile Include="Migrations\DbSetMigrationsExtensionsTests.cs" />
+    <Compile Include="Migrations\Design\CSharpMigrationCodeGeneratorTests.cs" />
+    <Compile Include="Migrations\Design\MigrationCodeGeneratorTests.cs" />
+    <Compile Include="Migrations\Design\ToolingExceptionTests.cs" />
+    <Compile Include="Migrations\Design\VisualBasicMigrationCodeGeneratorTests.cs" />
+    <Compile Include="Migrations\Edm\ModelCompressorTests.cs" />
+    <Compile Include="Migrations\History\HistoryRepositoryTests.cs" />
+    <Compile Include="Migrations\Infrastructure\DynamicToFunctionModificationCommandConverterTests.cs" />
+    <Compile Include="Migrations\Infrastructure\EdmModelDifferTests.cs" />
+    <Compile Include="Migrations\Infrastructure\FunctionsModel.cs" />
+    <Compile Include="Migrations\Infrastructure\MigrationAssemblyTests.cs" />
+    <Compile Include="Migrations\Infrastructure\MigratorLoggingDecoratorTests.cs" />
+    <Compile Include="Migrations\Infrastructure\MigratorScriptingDecoratorTests.cs" />
+    <Compile Include="Migrations\Infrastructure\ModificationCommandTreeGeneratorTests.cs" />
+    <Compile Include="Migrations\Model\AddColumnOperationTests.cs" />
+    <Compile Include="Migrations\Model\AddForeignKeyOperationTests.cs" />
+    <Compile Include="Migrations\Model\AddPrimaryKeyOperationTests.cs" />
+    <Compile Include="Migrations\Model\AlterColumnOperationTests.cs" />
+    <Compile Include="Migrations\Model\AlterProcedureOperationTests.cs" />
+    <Compile Include="Migrations\Model\AlterTableOperationTests.cs" />
+    <Compile Include="Migrations\Model\ColumnModelTests.cs" />
+    <Compile Include="Migrations\Model\CreateIndexOperationTests.cs" />
+    <Compile Include="Migrations\Model\CreateProcedureOperationTests.cs" />
+    <Compile Include="Migrations\Model\CreateTableOperationTests.cs" />
+    <Compile Include="Migrations\Model\DropColumnOperationTests.cs" />
+    <Compile Include="Migrations\Model\DropForeignKeyOperationTests.cs" />
+    <Compile Include="Migrations\Model\DropIndexOperationTests.cs" />
+    <Compile Include="Migrations\Model\DropPrimaryKeyOperationTests.cs" />
+    <Compile Include="Migrations\Model\DropProcedureOperationTests.cs" />
+    <Compile Include="Migrations\Model\DropTableOperationTests.cs" />
+    <Compile Include="Migrations\Model\HistoryOperationTests.cs" />
+    <Compile Include="Migrations\Model\MoveProcedureOperationTests.cs" />
+    <Compile Include="Migrations\Model\MoveTableOperationTests.cs" />
+    <Compile Include="Migrations\Model\ParameterModelTests.cs" />
+    <Compile Include="Migrations\Model\RenameColumnOperationTests.cs" />
+    <Compile Include="Migrations\Model\RenameIndexOperationTests.cs" />
+    <Compile Include="Migrations\Model\RenameProcedureOperationTests.cs" />
+    <Compile Include="Migrations\Model\RenameTableOperationTests.cs" />
+    <Compile Include="Migrations\Model\SqlOperationTests.cs" />
+    <Compile Include="Migrations\Model\UpdateDatabaseOperationTests.cs" />
+    <Compile Include="Migrations\Utilities\ConfigurationFileUpdaterTests.cs" />
+    <Compile Include="Migrations\Utilities\DatabaseCreatorTests.cs" />
+    <Compile Include="Migrations\Utilities\EmptyContextTests.cs" />
+    <Compile Include="Migrations\Utilities\IndentedTextWriterTests.cs" />
+    <Compile Include="Migrations\Utilities\MigrationsConfigurationFinderTests.cs" />
+    <Compile Include="Migrations\Utilities\MigrationWriterTests.cs" />
+    <Compile Include="Migrations\Utilities\PartialTrustMigrationsConfigurationFinderTests.cs" />
+    <Compile Include="Migrations\Utilities\TemplateProcessorTests.cs" />
+    <Compile Include="Migrations\Utilities\UtcNowGeneratorTests.cs" />
     <Compile Include="ModelConfiguration\Configuration\ConfigurationTypeActivatorTests.cs" />
     <Compile Include="ModelConfiguration\Configuration\ConfigurationTypeFilterTests.cs" />
     <Compile Include="ModelConfiguration\Configuration\ConfigurationTypesFinderTests.cs" />
@@ -444,9 +520,15 @@
     <Compile Include="ModelConfiguration\Edm\Services\FunctionParameterMappingGeneratorTests.cs" />
     <Compile Include="ModelConfiguration\Edm\Services\ModificationFunctionMappingGeneratorTests.cs" />
     <Compile Include="ModelConfiguration\Edm\Services\StructuralTypeMappingGeneratorTests.cs" />
+    <Compile Include="ModuleInitializer.cs" />
     <Compile Include="QueryableExtensionsTests.cs" />
     <Compile Include="Spatial\DefaultServicesTests.cs" />
     <Compile Include="Spatial\SpatialHelpersTests.cs" />
+    <Compile Include="SqlServerCompact\SqlCeMigrationSqlGeneratorTests.cs" />
+    <Compile Include="SqlServerCompact\SqlCeProviderServicesTests.cs" />
+    <Compile Include="SqlServerCompact\SqlGen\DmlSqlGeneratorTests.cs" />
+    <Compile Include="SqlServerCompact\SqlGen\SqlGeneratorTests.cs" />
+    <Compile Include="SqlServerCompact\SqlGen\SqlStringBuilderTests.cs" />
     <Compile Include="SqlServer\DefaultSqlExecutionStrategyTests.cs" />
     <Compile Include="SqlServer\SqlAzureExecutionStrategyTests.cs" />
     <Compile Include="SqlServer\SqlAzureRetriableExceptionDetectorTests.cs" />
@@ -737,8 +819,22 @@
     <EmbeddedResource Include="ModelConfiguration\Edm\Serialization\Xsd\System.Data.Resources.SSDLSchema_3.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\EntityFramework.PowerShell.Utility\EntityFramework.PowerShell.Utility.csproj">
+      <Project>{73636c32-5633-4d12-aa7b-88dcc26acdb7}</Project>
+      <Name>EntityFramework.PowerShell.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\EntityFramework.PowerShell\EntityFramework.PowerShell.csproj">
+      <Project>{1f3817e9-8070-4429-b134-9674698dd78c}</Project>
+      <Name>EntityFramework.PowerShell</Name>
+      <Aliases>global,efpowershell</Aliases>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\EntityFramework.SqlServerCompact\EntityFramework.SqlServerCompact.csproj">
+      <Project>{1ef9c524-7122-4677-b111-dd14bb2a9ea2}</Project>
+      <Name>EntityFramework.SqlServerCompact</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\EntityFramework.SqlServer\EntityFramework.SqlServer.csproj">
       <Project>{6f4bb80b-5f74-44d3-a77f-0025dfa48c1a}</Project>
       <Name>EntityFramework.SqlServer</Name>
@@ -764,6 +860,24 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\packages\Microsoft.SqlServer.Types.11.0.2\nativeBinaries\x64\msvcr100.dll">
+      <Link>SqlServerTypes\x64\msvcr100.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\packages\Microsoft.SqlServer.Types.11.0.2\nativeBinaries\x64\SqlServerSpatial110.dll">
+      <Link>SqlServerTypes\x64\SqlServerSpatial110.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\packages\Microsoft.SqlServer.Types.11.0.2\nativeBinaries\x86\msvcr100.dll">
+      <Link>SqlServerTypes\x86\msvcr100.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\packages\Microsoft.SqlServer.Types.11.0.2\nativeBinaries\x86\SqlServerSpatial110.dll">
+      <Link>SqlServerTypes\x86\SqlServerSpatial110.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
@@ -773,9 +887,16 @@
     <PostBuildEvent>if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
 xcopy /s /y /d "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
 if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
-xcopy /s /y /d "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+xcopy /s /y /d "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Target Name="InjectModuleInitializer" AfterTargets="AfterBuild">
+    <Exec Command="..\..\..\packages\InjectModuleInitializer.1.5\tools\InjectModuleInitializer.exe &quot;$(TargetPath)&quot;" />
+  </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>

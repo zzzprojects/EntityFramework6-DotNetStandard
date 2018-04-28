@@ -14,6 +14,11 @@ namespace System.Data.Entity.ModelConfiguration.Internal.UnitTests
         private string _dataSource;
         private string _database;
 
+        static FakeSqlConnection()
+        {
+            DbProviderFactoriesCore.RegisterFactory("System.Data.FakeSqlClient", FakeSqlProviderFactory.Instance);
+        }
+
         public FakeSqlConnection()
             : this("2008")
         {

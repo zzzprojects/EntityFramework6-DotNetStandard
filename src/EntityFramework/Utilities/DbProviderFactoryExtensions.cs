@@ -9,7 +9,6 @@ namespace System.Data.Entity.Utilities
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Infrastructure.DependencyResolution;
     using System.Data.Entity.Resources;
-    using System.Data.SqlClient;
     using System.Diagnostics;
     using System.Linq;
 
@@ -19,23 +18,21 @@ namespace System.Data.Entity.Utilities
         {
             DebugCheck.NotNull(factory);
 
-            return "System.Data.SqlClient";
+            const int invariantNameIndex = 2;
 
-            //const int invariantNameIndex = 2;
+            var dataRows = DbProviderFactoriesCore.GetFactoryClasses().Rows.OfType<DataRow>();
 
-            //var dataRows = DbProviderFactories.GetFactoryClasses().Rows.OfType<DataRow>();
+            var row = new ProviderRowFinder().FindRow(
+                factory.GetType(),
+                r => DbProviderFactoriesCore.GetFactory(r).GetType() == factory.GetType(),
+                dataRows);
 
-            //var row = new ProviderRowFinder().FindRow(
-            //    factory.GetType(),
-            //    r => DbProviderFactories.GetFactory(r).GetType() == factory.GetType(),
-            //    dataRows);
+            if (row == null)
+            {
+                throw new NotSupportedException(Strings.ProviderNameNotFound(factory));
+            }
 
-            //if (row == null)
-            //{
-            //    throw new NotSupportedException(Strings.ProviderNameNotFound(factory));
-            //}
-
-            //return (string)row[invariantNameIndex];
+            return (string)row[invariantNameIndex];
         }
 
         internal static DbProviderServices GetProviderServices(this DbProviderFactory factory)

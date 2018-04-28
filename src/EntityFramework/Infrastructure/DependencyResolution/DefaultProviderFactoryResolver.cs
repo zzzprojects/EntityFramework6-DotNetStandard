@@ -5,7 +5,6 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
     using System.Collections.Generic;
     using System.Data.Common;
     using System.Data.Entity.Resources;
-    using System.Data.SqlClient;
     using System.Linq;
 
     internal class DefaultProviderFactoryResolver : IDbDependencyResolver
@@ -28,7 +27,7 @@ namespace System.Data.Entity.Infrastructure.DependencyResolution
 
                 try
                 {
-                    return SqlClientFactory.Instance;
+                    return DbProviderFactoriesCore.GetFactory(name);
                 }
                 catch (ArgumentException e)
                 {

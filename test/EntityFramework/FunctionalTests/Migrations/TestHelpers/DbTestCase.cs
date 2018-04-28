@@ -88,7 +88,7 @@ namespace System.Data.Entity.Migrations
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                System.Console.WriteLine(e);
 
                 throw;
             }
@@ -302,7 +302,7 @@ namespace System.Data.Entity.Migrations
 
         public DbProviderFactory ProviderFactory
         {
-            get { return DbProviderFactories.GetFactory(TestDatabase.ProviderName); }
+            get { return DbProviderFactoriesCore.GetFactory(TestDatabase.ProviderName); }
         }
 
         public string ProviderManifestToken

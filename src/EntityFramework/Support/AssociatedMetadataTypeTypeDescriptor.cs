@@ -119,12 +119,12 @@
                     return associatedMetadataType;
                 }
 
-                //// Try association attribute
-                //MetadataTypeAttribute attribute = (MetadataTypeAttribute)Attribute.GetCustomAttribute(type, typeof(MetadataTypeAttribute));
-                //if (attribute != null)
-                //{
-                //    associatedMetadataType = attribute.MetadataClassType;
-                //}
+                // Try association attribute
+                var attribute = Attribute.GetCustomAttributes(type).FirstOrDefault(x => x.GetType().FullName == "System.ComponentModel.DataAnnotations.MetadataTypeAttribute");
+                if (attribute != null)
+                {
+                    associatedMetadataType = attribute.GetType().GetProperty("MetadataClassType").GetValue(attribute) as Type;
+                }
                 _metadataTypeCache.TryAdd(type, associatedMetadataType);
                 return associatedMetadataType;
             }

@@ -92,7 +92,8 @@ namespace System.Data.Entity
 
         #region Connection helpers
 
-        private static readonly string _baseConnectionString = @"Data Source=.\SQLEXPRESS; Integrated Security=True; MultipleActiveResultSets=True;";
+        private static readonly string _baseConnectionString = ConfigurationManager.AppSettings["BaseConnectionString"]
+                                                               ?? @"Data Source=.\SQLEXPRESS; Integrated Security=True; MultipleActiveResultSets=True;";
 
         public static string BaseConnectionString
         {

@@ -465,6 +465,9 @@ namespace System.Data.Entity.Migrations
 
             using (var compiler = new CSharpCodeProvider())
             {
+                var netstandardPath = AppDomain.CurrentDomain.GetAssemblies().Single(x => x.GetName().Name == "netstandard").Location;
+
+                additionalAssemblies.Add(netstandardPath);
                 additionalAssemblies.AddRange(
                     new List<string>
                         {

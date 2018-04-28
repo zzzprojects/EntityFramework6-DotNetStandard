@@ -55,9 +55,9 @@ namespace System.Data.Entity.Migrations
                 case DatabaseProvider.SqlClient:
                     testDatabase = new SqlTestDatabase(databaseName);
                     break;
-                //case DatabaseProvider.SqlServerCe:
-                //    testDatabase = new SqlCeTestDatabase(databaseName);
-                //    break;
+                case DatabaseProvider.SqlServerCe:
+                    testDatabase = new SqlCeTestDatabase(databaseName);
+                    break;
                 default:
                     throw new InvalidOperationException("Unsupported provider");
             }
